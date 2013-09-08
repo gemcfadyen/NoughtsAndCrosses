@@ -19,4 +19,8 @@ public class Grid {
 		return boardToPrint.toString();
 	}
 
+	public boolean hasFreeSlot() {
+		return board.contains("-");
+	}
+
 }
