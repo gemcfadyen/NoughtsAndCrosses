@@ -1,17 +1,8 @@
 package katas.learning_kata.noughtsAndCrosses;
 
-public class Player {
-
-	public Grid takesGo(Grid grid) {
-		return new Grid("");
+public interface Player {
+	 Grid takesGo(Grid grid);
+	 String getSymbol();
+	 String getName();
 	}
 
-	public String getSymbol() {
-		return "x";
-	}
-
-	public String getName() {
-		return "Mr X";
-	}
-
-}

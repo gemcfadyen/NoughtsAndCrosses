@@ -23,7 +23,7 @@ public class NoughtsAndCrosses {
 		players[1] = playerO;
 	}
 
-	public GameStatus startGame() {
+	public GameStatus playGame() {
 		determineTheOrderOfThePlayers();
 
 		int playersIndex = 0;

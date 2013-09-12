@@ -33,9 +33,9 @@ public class NoughtsAndCrossesTest {
 		when(grid.toString()).thenReturn("ooo\n---\n---");
 		when(playerO.getSymbol()).thenReturn("o");
 		when(playerX.getSymbol()).thenReturn("x");
-		when(playerO.getName()).thenReturn("O-Man");
+		when(playerO.getName()).thenReturn("O-Man"); 
 		
-		GameStatus gameOverMessage =  noughtsAndCrosses.startGame();
+		GameStatus gameOverMessage =  noughtsAndCrosses.playGame();
 
 		assertThat(gameOverMessage.getStatus(), is(GameStates.WINNER));		
 		assertThat(gameOverMessage.getMessage(), is("Congratulations [O-Man] you have won! \n [ooo\n---\n---]"));	
@@ -46,7 +46,7 @@ public class NoughtsAndCrossesTest {
 		when(grid.hasWinningRow()).thenReturn(false);
 		when(grid.hasFreeSlot()).thenReturn(false);
 
-		GameStatus gameStatus =  noughtsAndCrosses.startGame();
+		GameStatus gameStatus =  noughtsAndCrosses.playGame();
 
 		assertThat(gameStatus.getStatus(), is(GameStates.NO_WINNER));		
 		assertThat(gameStatus.getMessage(), is("Game Over, there was no winner!"));	
@@ -62,7 +62,7 @@ public class NoughtsAndCrossesTest {
 		.thenReturn(true).thenReturn(true).thenReturn(true)
 		.thenReturn(true).thenReturn(false);
 		
-		GameStatus gameStatus = noughtsAndCrosses.startGame();
+		GameStatus gameStatus = noughtsAndCrosses.playGame();
 		
 		assertThat(gameStatus.getStatus(), is(GameStates.NO_WINNER));		
 		assertThat(gameStatus.getMessage(), is("Game Over, there was no winner!"));		
@@ -80,7 +80,7 @@ public class NoughtsAndCrossesTest {
 		when(playerX.getName()).thenReturn("X-Man");
 		when(playerX.takesGo(grid)).thenReturn(new Grid("xxx------"));
 		
-		GameStatus winningMessage = noughtsAndCrosses.startGame();
+		GameStatus winningMessage = noughtsAndCrosses.playGame();
 		assertThat(winningMessage.getStatus(), is(GameStates.WINNER));		
 		assertThat(winningMessage.getMessage(), is("Congratulations [X-Man] you have won! \n [xxx\n---\n---]"));
 	}
