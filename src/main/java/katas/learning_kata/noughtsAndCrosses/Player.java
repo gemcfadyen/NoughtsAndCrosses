@@ -6,4 +6,12 @@ public class Player {
 		return new Grid("");
 	}
 
+	public String getSymbol() {
+		return "x";
+	}
+
+	public String getName() {
+		return "Mr X";
+	}
+
 }

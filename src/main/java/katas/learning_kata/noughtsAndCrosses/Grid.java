@@ -23,4 +23,8 @@ public class Grid {
 		return board.contains("-");
 	}
 
+	public String getWinningSymbol() {
+		return null;
+	}
+
 }

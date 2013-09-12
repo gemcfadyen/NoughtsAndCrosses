@@ -1,5 +1,10 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static java.lang.String.format;
+import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.NO_WINNER;
+import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.WINNER;
+import static katas.learning_kata.noughtsAndCrosses.GameStatusBuilder.aGameStatusBuilder;
+
 public class NoughtsAndCrosses {
 	private static final int FIRST_PLAYER = 0;
 	private static final int SECOND_PLAYER = 1;
@@ -18,7 +23,7 @@ public class NoughtsAndCrosses {
 		players[1] = playerO;
 	}
 
-	public Grid startGame() {
+	public GameStatus startGame() {
 		determineTheOrderOfThePlayers();
 
 		int playersIndex = 0;
@@ -26,7 +31,34 @@ public class NoughtsAndCrosses {
 			players[playersIndex].takesGo(grid);
 			playersIndex = (playersIndex == 0) ? SECOND_PLAYER : FIRST_PLAYER;
 		}
-		return grid;
+
+		return evaluateGame();
+	}
+
+	private GameStatus evaluateGame() {
+		return containsWinningRow(grid) ? createWinningStatus() : createNoWinnerGameStatus();
+	}
+
+	private GameStatus createNoWinnerGameStatus() {
+		return aGameStatusBuilder().withAStatusOf(NO_WINNER).withAMessageOf(NO_WINNER.getStatusMessage()).build();
+	}
+
+	private GameStatus createWinningStatus() {
+		return aGameStatusBuilder()
+				.withAStatusOf(WINNER)
+				.withAMessageOf(format(WINNER.getStatusMessage(),
+									   getTheNameOfThePlayerUsingThe(grid.getWinningSymbol()), 
+								       grid.toString()))
+									   .build();
+	}
+
+	private String getTheNameOfThePlayerUsingThe(String winningSymbol) {
+		for (Player player : players) {
+			if (player.getSymbol().equals(winningSymbol)) {
+				return player.getName();
+			}
+		}
+		return "";
 	}
 
 	private boolean gameIsInProgress() {

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,11 +29,15 @@ public class NoughtsAndCrossesTest {
 	@Test
 	public void gameShouldEndIfThereIsAWinningRowInTheGrid() {
 		when(grid.hasWinningRow()).thenReturn(true);
+		when(grid.getWinningSymbol()).thenReturn("x");
+		when(grid.toString()).thenReturn("xxx\n---\n---");
+		when(playerX.getSymbol()).thenReturn("x");
+		when(playerX.getName()).thenReturn("X-Man");
+		
+		GameStatus gameOverMessage =  noughtsAndCrosses.startGame();
 
-		grid = noughtsAndCrosses.startGame();
-
-		assertThat(grid.hasWinningRow(), is(true));
-		verifyNoMoreInteractions(playerX);
+		assertThat(gameOverMessage.getStatus(), is(GameStates.WINNER));		
+		assertThat(gameOverMessage.getMessage(), is("Congratulations [X-Man] you have won! \n [xxx\n---\n---]"));	
 		verifyNoMoreInteractions(playerO);
 	}
 
@@ -41,10 +46,10 @@ public class NoughtsAndCrossesTest {
 		when(grid.hasWinningRow()).thenReturn(false);
 		when(grid.hasFreeSlot()).thenReturn(false);
 
-		grid = noughtsAndCrosses.startGame();
+		GameStatus gameStatus =  noughtsAndCrosses.startGame();
 
-		assertThat(grid.hasWinningRow(), is(false));
-		assertThat(grid.hasFreeSlot(), is(false));
+		assertThat(gameStatus.getStatus(), is(GameStates.NO_WINNER));		
+		assertThat(gameStatus.getMessage(), is("Game Over, there was no winner!"));	
 		verifyNoMoreInteractions(playerX);
 		verifyNoMoreInteractions(playerO);
 	}
@@ -57,10 +62,26 @@ public class NoughtsAndCrossesTest {
 		.thenReturn(true).thenReturn(true).thenReturn(true)
 		.thenReturn(true).thenReturn(false);
 		
-		grid = noughtsAndCrosses.startGame();
+		GameStatus gameStatus = noughtsAndCrosses.startGame();
 		
-		assertThat(grid.hasFreeSlot(), is(false));		
+		assertThat(gameStatus.getStatus(), is(GameStates.NO_WINNER));		
+		assertThat(gameStatus.getMessage(), is("Game Over, there was no winner!"));		
 		verify(playerX, times(5)).takesGo(grid);
 		verify(playerO, times(4)).takesGo(grid);
+	}
+	
+	@Test
+	public void gameShouldAnnounceTheWinner(){
+		when(grid.hasWinningRow()).thenReturn(false).thenReturn(true);
+		when(grid.hasFreeSlot()).thenReturn(true);
+		when(grid.getWinningSymbol()).thenReturn("x");
+		when(grid.toString()).thenReturn("xxx\n---\n---");
+		when(playerX.getSymbol()).thenReturn("x");
+		when(playerX.getName()).thenReturn("X-Man");
+		when(playerX.takesGo(grid)).thenReturn(new Grid("xxx------"));
+		
+		GameStatus winningMessage = noughtsAndCrosses.startGame();
+		assertThat(winningMessage.getStatus(), is(GameStates.WINNER));		
+		assertThat(winningMessage.getMessage(), is("Congratulations [X-Man] you have won! \n [xxx\n---\n---]"));
 	}
 }
