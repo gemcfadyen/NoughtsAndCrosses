@@ -25,6 +25,9 @@ As this is very much work in progress, the code will go through various states. 
 
 Hopefully by the end a game of noughts and crosses will be in place!
 
+
+1. The Game algorithm was put in place. TDD was used to allow the dependant objects to be formed, and Mockito was used to mock out all the dependency interactions.
+
 ToDo:
 
 * Validation of the input 
