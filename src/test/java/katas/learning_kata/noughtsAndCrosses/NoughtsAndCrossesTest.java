@@ -29,16 +29,16 @@ public class NoughtsAndCrossesTest {
 	@Test
 	public void gameShouldEndIfThereIsAWinningRowInTheGrid() {
 		when(grid.hasWinningRow()).thenReturn(true);
-		when(grid.getWinningSymbol()).thenReturn("x");
-		when(grid.toString()).thenReturn("xxx\n---\n---");
+		when(grid.getWinningSymbol()).thenReturn("o");
+		when(grid.toString()).thenReturn("ooo\n---\n---");
+		when(playerO.getSymbol()).thenReturn("o");
 		when(playerX.getSymbol()).thenReturn("x");
-		when(playerX.getName()).thenReturn("X-Man");
+		when(playerO.getName()).thenReturn("O-Man");
 		
 		GameStatus gameOverMessage =  noughtsAndCrosses.startGame();
 
 		assertThat(gameOverMessage.getStatus(), is(GameStates.WINNER));		
-		assertThat(gameOverMessage.getMessage(), is("Congratulations [X-Man] you have won! \n [xxx\n---\n---]"));	
-		verifyNoMoreInteractions(playerO);
+		assertThat(gameOverMessage.getMessage(), is("Congratulations [O-Man] you have won! \n [ooo\n---\n---]"));	
 	}
 
 	@Test
