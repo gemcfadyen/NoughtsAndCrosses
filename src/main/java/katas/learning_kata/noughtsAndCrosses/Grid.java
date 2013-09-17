@@ -43,11 +43,6 @@ public class Grid {
 		return this;
 	}
 
-//	public boolean hasBlockingMoveFor(String playersSymbol) {
-//		String symbol = (playersSymbol.equals(X)) ? O : X;
-//		return hasWinningMoveFor(symbol);
-//	}
-
 	private int calculateIndexOfNextMove(String row, int offset) {
 		return row.indexOf(SPACE) + offset;
 	}
