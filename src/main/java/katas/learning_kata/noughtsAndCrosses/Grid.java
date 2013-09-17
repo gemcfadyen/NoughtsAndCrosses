@@ -4,6 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Grid {
+	private static final String SPACE = "-";
+	private static final String O = "o";
+	private static final String X = "x";
 	private String board;
 
 	public Grid(String board) {
@@ -23,7 +26,7 @@ public class Grid {
 	}
 
 	public boolean hasFreeSlot() {
-		return board.contains("-");
+		return board.contains(SPACE);
 	}
 
 	public String getWinningSymbol() {
@@ -31,8 +34,8 @@ public class Grid {
 	}
 
 	public Grid takeNextMove(String symbol) {
-		// not sure this is requird anymore. the responsability of the move
-		// isthe player... he can query the grid for its status but the player
+		// not sure this is required anymore. the responsibility of the move
+		// is the player... he can query the grid for its status but the player
 		// must decide on their own strategy.
 		// update the board by taking winning move
 		// update the board by taking a blocking move
@@ -40,38 +43,83 @@ public class Grid {
 		return this;
 	}
 
-	public boolean hasWinningMoveFor(String symbol) {
+//	public boolean hasBlockingMoveFor(String playersSymbol) {
+//		String symbol = (playersSymbol.equals(X)) ? O : X;
+//		return hasWinningMoveFor(symbol);
+//	}
+
+	private int calculateIndexOfNextMove(String row, int offset) {
+		return row.indexOf(SPACE) + offset;
+	}
+	
+	private int calculateIndexOfNextMove(String row, int[] positions) {
+		return positions[row.indexOf(SPACE)];
+	}
+	
+	public int getIndexOfBlockingMove(String symbol){
+		String opponentsSymbol = (symbol.equals(X)) ? O : X;
+		return getIndexOfWinningMove(opponentsSymbol);
+	}
+
+	public int getIndexOfWinningMove(String symbol) {
+		String firstRow = getHorizontalRowsAtIndexes(0, 3);
+		if (hasWinningMoveFor(firstRow, symbol)) {
+			return calculateIndexOfNextMove(firstRow, 0);
+		}
+
+		String middleRow = getHorizontalRowsAtIndexes(3, 6);
+		if (hasWinningMoveFor(middleRow, symbol)) {
+			return calculateIndexOfNextMove(middleRow, 3); 
+		}
+
+		String bottomRow = getHorizontalRowsAtIndexes(6, 9);
+		if (hasWinningMoveFor(bottomRow, symbol)) {
+			return calculateIndexOfNextMove(bottomRow, 6);
+		}
+
+		String leftVerticalRow = getVerticleRowsStartAtIndex(0);
+		if (hasWinningMoveFor(leftVerticalRow, symbol)) {
+			return calculateIndexOfNextMove(leftVerticalRow, new int[] { 0, 3, 6 });
+		}
+
+		String middleVerticalRow = getVerticleRowsStartAtIndex(1);
+		if (hasWinningMoveFor(middleVerticalRow, symbol)) {
+			return calculateIndexOfNextMove(middleVerticalRow, new int[] { 1, 4, 7 }); 
+		}
+
+		String rightVerticalRow = getVerticleRowsStartAtIndex(2);
+		if (hasWinningMoveFor(rightVerticalRow, symbol)) {
+			return calculateIndexOfNextMove(rightVerticalRow, new int[] { 2, 5, 8 });
+		}
+
+		String backslashDiagonalRow = getBackslashDiagonalRow();
+		if (hasWinningMoveFor(backslashDiagonalRow, symbol)) {
+			return calculateIndexOfNextMove(backslashDiagonalRow, new int[] { 0, 4, 8 });
+		}
+
+		String forwardslashDiagonalRow = getForwardslashDiagonalRow();
+		if (hasWinningMoveFor(forwardslashDiagonalRow, symbol)) {
+			return calculateIndexOfNextMove(forwardslashDiagonalRow,new int[] { 2, 4, 6 } );
+		}
+
+		return -1;
+	}
+
+	public boolean hasWinningMoveFor(String row, String symbol) {
 		// eg: there is a winning move to be make if any of these regex patterns
 		// are met: x-x|xx-|-xx
-		Pattern winningRowPattern = Pattern.compile(symbol + "-" + symbol + "|"
+		Pattern winningRowPattern = Pattern.compile(symbol + SPACE + symbol + "|"
 				+ symbol + symbol + "-|-" + symbol + symbol);
-		Matcher[] allPossibleRows = getMatchersForAllRowsInGridUsing(winningRowPattern);
 
-		for (Matcher matcher : allPossibleRows) {
-			while (matcher.find()) {
-				return true;
-			}
+		Matcher matcher = winningRowPattern.matcher(row);
+
+		while (matcher.find()) {
+			return true;
 		}
 
 		return false;
 	}
 
-	private Matcher[] getMatchersForAllRowsInGridUsing(Pattern pattern) {
-		String[] allRows = { getHorizontalRowsAtIndexes(0, 3),
-				getHorizontalRowsAtIndexes(3, 6),
-				getHorizontalRowsAtIndexes(6, 9),
-				getVerticleRowsStartAtIndex(0), getVerticleRowsStartAtIndex(1),
-				getVerticleRowsStartAtIndex(2), getBackslashDiagonalRow(),
-				getForwardslashDiagonalRow() };
-
-		Matcher[] matchersForAllRows = new Matcher[allRows.length];
-		for (int i = 0; i < allRows.length; i++) {
-			Matcher matcher = pattern.matcher(allRows[i]);
-			matchersForAllRows[i] = matcher;
-
-		}
-		return matchersForAllRows;
-	}
 
 	private String getBackslashDiagonalRow() {
 		StringBuffer diagonalRow = new StringBuffer();

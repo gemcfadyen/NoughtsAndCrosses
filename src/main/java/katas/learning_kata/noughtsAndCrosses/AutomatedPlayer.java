@@ -11,6 +11,7 @@ public class AutomatedPlayer implements Player {
 
 	@Override
 	public Grid takesGo(Grid grid) {
+		
 		return null;
 
 	}

@@ -24,4 +24,9 @@ public class PlayerTest {
 		assertThat(automatedPlayer.getName(), is("X-Man"));
 	}
 	
+	@Test
+	public void shouldIdentifyThereIsABlockingMoveToBeMade(){
+		//Grid updatedGrid = automatedPlayer.takesGo("x-x------");
+	}
+	
 }
