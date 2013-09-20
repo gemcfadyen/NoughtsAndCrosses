@@ -1,5 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,13 +45,6 @@ public class Grid {
 		return this;
 	}
 
-	private int calculateIndexOfNextMove(String row, int offset) {
-		return row.indexOf(SPACE) + offset;
-	}
-
-	private int calculateIndexOfNextMove(String row, int[] positions) {
-		return positions[row.indexOf(SPACE)];
-	}
 
 	public int getIndexOfBlockingMove(String symbol) {
 		String opponentsSymbol = (symbol.equals(X)) ? O : X;
@@ -57,51 +52,40 @@ public class Grid {
 	}
 
 	public int getIndexOfWinningMove(String symbol) {
-
 		for (int rowIndex = 1; rowIndex <= 3; rowIndex++) {
 			String row = getRowAtIndexes(3 * (rowIndex - 1), 3 * rowIndex);
 			int position = getIndexOfWinningMoveFor(row, symbol);
 			if (position != -1)
-				return 3 * (rowIndex -1) + position;
+				return 3 * (rowIndex - 1) + position;
 		}
-		
-		
-		for(int columnIndex = 0; columnIndex < 3; columnIndex++){
+
+		for (int columnIndex = 0; columnIndex < 3; columnIndex++) {
 			String leftColumn = getColumnStartingAtIndex(columnIndex);
 			int[] indexesOfLeftColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
 			int position = getIndexOfWinningMoveFor(leftColumn, symbol);
-			if(position != -1){
+			if (position != -1)
 				return indexesOfLeftColumn[position];
-			}
 		}
 
-
-		String backslashDiagonalRow = getBackslashDiagonalRow();
-		if (hasWinningMoveFor(backslashDiagonalRow, symbol)) {
-			return calculateIndexOfNextMove(backslashDiagonalRow, new int[] {
-					0, 4, 8 });
+		int[] forwardSlashDiagonalIndexes = new int[] { 2, 4, 6 };
+		int[] backslashDiagonalIndexes = new int[] { 0, 4, 8 };
+		List<int[]> diagonalIndexes = new ArrayList<int[]>();
+		diagonalIndexes.add(backslashDiagonalIndexes);
+		diagonalIndexes.add(forwardSlashDiagonalIndexes);
+		
+		for(int[] di : diagonalIndexes){
+			String backslashDiagonalRow = getDiagonalRow(di[0], di[1], di[2]);
+			int position = getIndexOfWinningMoveFor(backslashDiagonalRow, symbol);
+			if (position != -1)
+				return di[position];
 		}
-
-		String forwardslashDiagonalRow = getForwardslashDiagonalRow();
-		if (hasWinningMoveFor(forwardslashDiagonalRow, symbol)) {
-			return calculateIndexOfNextMove(forwardslashDiagonalRow, new int[] {
-					2, 4, 6 });
-		}
-
+	
 		return -1;
 	}
 
 	private int getIndexOfWinningMoveFor(String moves, String symbol) {
 		if (hasWinningMoveFor(moves, symbol)) {
 			return moves.indexOf('-');
-		}
-		return -1;
-	}
-
-	private int indexOfWinningPositionOnLine(String symbol, int index) {
-		String row = getRowAtIndexes(3 * (index - 1), 3 * index);
-		if (hasWinningMoveFor(row, symbol)) {
-			return calculateIndexOfNextMove(row, 3 * (index - 1));
 		}
 		return -1;
 	}
@@ -121,17 +105,17 @@ public class Grid {
 		return false;
 	}
 
-	private String getBackslashDiagonalRow() {
+	private String getDiagonalRow(int start, int middle, int end) {
 		StringBuffer diagonalRow = new StringBuffer();
-		diagonalRow.append(board.charAt(0)).append(board.charAt(4))
-				.append(board.charAt(8));
+		diagonalRow.append(board.charAt(start)).append(board.charAt(middle))
+				.append(board.charAt(end));
 		return diagonalRow.toString();
 	}
 
-	private String getForwardslashDiagonalRow() {
+	private String getForwardslashDiagonalRow(int start, int middle, int end) {
 		StringBuffer diagonalRow = new StringBuffer();
-		diagonalRow.append(board.charAt(2)).append(board.charAt(4))
-				.append(board.charAt(6));
+		diagonalRow.append(board.charAt(start)).append(board.charAt(middle))
+				.append(board.charAt(end));
 		return diagonalRow.toString();
 	}
 
