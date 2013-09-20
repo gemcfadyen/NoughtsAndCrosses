@@ -6,6 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Grid {
+	private static final int GRID_DIMENSION = 3;
+	private static final int NO_MATCH_FOUND = -1;
 	private static final String SPACE = "-";
 	private static final String O = "o";
 	private static final String X = "x";
@@ -35,13 +37,12 @@ public class Grid {
 		return null;
 	}
 
-	public Grid takeNextMove(String symbol) {
-		// not sure this is required anymore. the responsibility of the move
-		// is the player... he can query the grid for its status but the player
-		// must decide on their own strategy.
-		// update the board by taking winning move
-		// update the board by taking a blocking move
-		// update the board by take any move in a free slot
+	public Grid takeNextMove(String symbol, int index) {
+		System.out.println(board.toString());
+		if(board.charAt(index) == '-'){
+			board = board.substring(0, index) + symbol + board.substring(index+1, board.length());
+		}
+		
 		return this;
 	}
 
@@ -52,32 +53,41 @@ public class Grid {
 	}
 
 	public int getIndexOfWinningMove(String symbol) {
-		for (int rowIndex = 1; rowIndex <= 3; rowIndex++) {
-			String row = getRowAtIndexes(3 * (rowIndex - 1), 3 * rowIndex);
+		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
+			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
 			int position = getIndexOfWinningMoveFor(row, symbol);
-			if (position != -1)
-				return 3 * (rowIndex - 1) + position;
+			if (position != NO_MATCH_FOUND)
+				return startingIndex(rowIndex) + position;
 		}
 
-		for (int columnIndex = 0; columnIndex < 3; columnIndex++) {
+		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
 			String leftColumn = getColumnStartingAtIndex(columnIndex);
-			int[] indexesOfLeftColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
+			int[] indexesOfLeftColumn = new int[] { columnIndex, GRID_DIMENSION + columnIndex, GRID_DIMENSION * 2 + columnIndex };
 			int position = getIndexOfWinningMoveFor(leftColumn, symbol);
-			if (position != -1)
+			if (position != NO_MATCH_FOUND)
 				return indexesOfLeftColumn[position];
 		}
 
 		
 		List<int[]> diagonalIndexes = populateDiagonalIndices();
-		for(int[] di : diagonalIndexes){
-			String backslashDiagonalRow = getDiagonalRow(di[0], di[1], di[2]);
+		for(int[] diagonalIndex : diagonalIndexes){
+			String backslashDiagonalRow = getDiagonalRow(diagonalIndex[0], diagonalIndex[1], diagonalIndex[2]);
 			int position = getIndexOfWinningMoveFor(backslashDiagonalRow, symbol);
-			if (position != -1)
-				return di[position];
+			if (position != NO_MATCH_FOUND)
+				return diagonalIndex[position];
 		}
 	
-		return -1;
+		return NO_MATCH_FOUND;
 	}
+
+	private int finishingIndex(int rowIndex) {
+		return GRID_DIMENSION * rowIndex;
+	}
+
+	private int startingIndex(int rowIndex) {
+		return GRID_DIMENSION * (rowIndex - 1);
+	}
+
 
 	private List<int[]> populateDiagonalIndices(){
 		int[] forwardSlashDiagonalIndexes = new int[] { 2, 4, 6 };
@@ -92,7 +102,7 @@ public class Grid {
 		if (hasWinningMoveFor(moves, symbol)) {
 			return moves.indexOf(SPACE);
 		}
-		return -1;
+		return NO_MATCH_FOUND;
 	}
 
 	public boolean hasWinningMoveFor(String row, String symbol) {
@@ -126,7 +136,7 @@ public class Grid {
 		return verticleRow.toString();
 	}
 
-	private String getRowAtIndexes(int startOfRow, int endOfRow) {
+	private String getRowBetween(int startOfRow, int endOfRow) {
 		return board.substring(startOfRow, endOfRow);
 	}
 
