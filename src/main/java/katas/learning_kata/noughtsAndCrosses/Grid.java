@@ -57,29 +57,33 @@ public class Grid {
 	}
 
 	public int getIndexOfWinningMove(String symbol) {
-		for (int index = 1; index <= 3; index++) {
-			int position = indexOfWinningPositionOnLine(symbol, index);
+
+		for (int rowIndex = 1; rowIndex <= 3; rowIndex++) {
+			String row = getRowAtIndexes(3 * (rowIndex - 1), 3 * rowIndex);
+			int position = getIndexOfWinningMoveFor(row, symbol);
 			if (position != -1)
-				return position;
+				return 3 * (rowIndex -1) + position;
 		}
 
 		String leftColumn = getColumnStartingAtIndex(0);
 		int[] indexesOfLeftColumn = new int[] { 0, 3, 6 };
-		if (hasWinningMoveFor(leftColumn, symbol)) {
-			return calculateIndexOfNextMove(leftColumn, indexesOfLeftColumn);
-			
+		int position = getIndexOfWinningMoveFor(leftColumn, symbol);
+		if(position != -1){
+			return indexesOfLeftColumn[position];
 		}
 
-		String middleVerticalRow = getColumnStartingAtIndex(1);
-		int[] middleColumn =  new int[] { 1, 4, 7 };
-		if (hasWinningMoveFor(middleVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(middleVerticalRow, middleColumn);
+		String middleColumn = getColumnStartingAtIndex(1);
+		int[] indexesOfMiddleColumn = new int[] { 1, 4, 7 };
+		position = getIndexOfWinningMoveFor(middleColumn, symbol);
+		if(position != -1){
+			return indexesOfMiddleColumn[position];
 		}
 
-		String rightVerticalRow = getColumnStartingAtIndex(2);
-		int[] lastColumn = new int[] { 2, 5, 8 };
-		if (hasWinningMoveFor(rightVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(rightVerticalRow, lastColumn);
+		String lastColumn = getColumnStartingAtIndex(2);
+		int[] indexesOfLastColumn = new int[] { 2, 5, 8 };
+		position = getIndexOfWinningMoveFor(lastColumn, symbol);
+		if(position != -1){
+			return indexesOfLastColumn[position];
 		}
 
 		String backslashDiagonalRow = getBackslashDiagonalRow();
@@ -97,8 +101,15 @@ public class Grid {
 		return -1;
 	}
 
+	private int getIndexOfWinningMoveFor(String moves, String symbol) {
+		if (hasWinningMoveFor(moves, symbol)) {
+			return moves.indexOf('-');
+		}
+		return -1;
+	}
+
 	private int indexOfWinningPositionOnLine(String symbol, int index) {
-		String row = getHorizontalRowsAtIndexes(3 * (index - 1), 3 * index);
+		String row = getRowAtIndexes(3 * (index - 1), 3 * index);
 		if (hasWinningMoveFor(row, symbol)) {
 			return calculateIndexOfNextMove(row, 3 * (index - 1));
 		}
@@ -142,7 +153,7 @@ public class Grid {
 		return verticleRow.toString();
 	}
 
-	private String getHorizontalRowsAtIndexes(int startOfRow, int endOfRow) {
+	private String getRowAtIndexes(int startOfRow, int endOfRow) {
 		return board.substring(startOfRow, endOfRow);
 	}
 
