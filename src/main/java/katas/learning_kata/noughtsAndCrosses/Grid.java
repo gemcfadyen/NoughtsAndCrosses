@@ -65,30 +65,16 @@ public class Grid {
 				return 3 * (rowIndex -1) + position;
 		}
 		
-		int columnIndex = 0;
-
-		String leftColumn = getColumnStartingAtIndex(columnIndex);
-		int[] indexesOfLeftColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
-		int position = getIndexOfWinningMoveFor(leftColumn, symbol);
-		if(position != -1){
-			return indexesOfLeftColumn[position];
+		
+		for(int columnIndex = 0; columnIndex < 3; columnIndex++){
+			String leftColumn = getColumnStartingAtIndex(columnIndex);
+			int[] indexesOfLeftColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
+			int position = getIndexOfWinningMoveFor(leftColumn, symbol);
+			if(position != -1){
+				return indexesOfLeftColumn[position];
+			}
 		}
 
-		columnIndex=1;
-		String middleColumn = getColumnStartingAtIndex(columnIndex);
-		int[] indexesOfMiddleColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
-		position = getIndexOfWinningMoveFor(middleColumn, symbol);
-		if(position != -1){
-			return indexesOfMiddleColumn[position];
-		}
-
-		columnIndex = 2;
-		String lastColumn = getColumnStartingAtIndex(columnIndex);
-		int[] indexesOfLastColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
-		position = getIndexOfWinningMoveFor(lastColumn, symbol);
-		if(position != -1){
-			return indexesOfLastColumn[position];
-		}
 
 		String backslashDiagonalRow = getBackslashDiagonalRow();
 		if (hasWinningMoveFor(backslashDiagonalRow, symbol)) {
