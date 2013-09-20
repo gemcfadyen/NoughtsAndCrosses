@@ -57,15 +57,15 @@ public class Grid {
 			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
 			int position = findIndexOfWinningMoveFor(row, symbol);
 			if (thereIsAWinningMoveAt(position))
-				return startingIndex(rowIndex) + position;
+				return winningPosition(rowIndex, position);
 		}
 
 		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
-			String leftColumn = getColumnStartingAtIndex(columnIndex);
-			int[] indexesOfLeftColumn = new int[] { columnIndex, GRID_DIMENSION + columnIndex, GRID_DIMENSION * 2 + columnIndex };
-			int position = findIndexOfWinningMoveFor(leftColumn, symbol);
+			String column = getColumnStartingAtIndex(columnIndex);
+			int[] cells = calculateColumnCells(columnIndex);
+			int position = findIndexOfWinningMoveFor(column, symbol);
 			if (thereIsAWinningMoveAt(position))
-				return indexesOfLeftColumn[position];
+				return winningPosition(cells, position);
 		}
 
 		
@@ -74,10 +74,22 @@ public class Grid {
 			String backslashDiagonalRow = getDiagonalRow(diagonalIndex[0], diagonalIndex[1], diagonalIndex[2]);
 			int position = findIndexOfWinningMoveFor(backslashDiagonalRow, symbol);
 			if (thereIsAWinningMoveAt(position))
-				return diagonalIndex[position];
+				return winningPosition(diagonalIndex, position);
 		}
 	
 		return NO_MATCH_FOUND;
+	}
+
+	private int[] calculateColumnCells(int columnIndex) {
+		return new int[] { columnIndex, GRID_DIMENSION + columnIndex, GRID_DIMENSION * 2 + columnIndex };
+	}
+
+	private int winningPosition(int[] indexesOfLeftColumn, int position) {
+		return indexesOfLeftColumn[position];
+	}
+
+	private int winningPosition(int rowIndex, int position) {
+		return startingIndex(rowIndex) + position;
 	}
 
 	private boolean thereIsAWinningMoveAt(int position) {
