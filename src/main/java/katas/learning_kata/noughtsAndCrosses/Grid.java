@@ -63,22 +63,23 @@ public class Grid {
 				return position;
 		}
 
-		String leftVerticalRow = getVerticleRowsStartAtIndex(0);
-		if (hasWinningMoveFor(leftVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(leftVerticalRow, new int[] { 0, 3,
-					6 });
+		String leftColumn = getColumnStartingAtIndex(0);
+		int[] indexesOfLeftColumn = new int[] { 0, 3, 6 };
+		if (hasWinningMoveFor(leftColumn, symbol)) {
+			return calculateIndexOfNextMove(leftColumn, indexesOfLeftColumn);
+			
 		}
 
-		String middleVerticalRow = getVerticleRowsStartAtIndex(1);
+		String middleVerticalRow = getColumnStartingAtIndex(1);
+		int[] middleColumn =  new int[] { 1, 4, 7 };
 		if (hasWinningMoveFor(middleVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(middleVerticalRow, new int[] { 1,
-					4, 7 });
+			return calculateIndexOfNextMove(middleVerticalRow, middleColumn);
 		}
 
-		String rightVerticalRow = getVerticleRowsStartAtIndex(2);
+		String rightVerticalRow = getColumnStartingAtIndex(2);
+		int[] lastColumn = new int[] { 2, 5, 8 };
 		if (hasWinningMoveFor(rightVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(rightVerticalRow, new int[] { 2, 5,
-					8 });
+			return calculateIndexOfNextMove(rightVerticalRow, lastColumn);
 		}
 
 		String backslashDiagonalRow = getBackslashDiagonalRow();
@@ -133,7 +134,7 @@ public class Grid {
 		return diagonalRow.toString();
 	}
 
-	private String getVerticleRowsStartAtIndex(int startOfVerticleRow) {
+	private String getColumnStartingAtIndex(int startOfVerticleRow) {
 		StringBuffer verticleRow = new StringBuffer();
 		verticleRow.append(board.charAt(startOfVerticleRow))
 				.append(board.charAt(startOfVerticleRow + 3))
