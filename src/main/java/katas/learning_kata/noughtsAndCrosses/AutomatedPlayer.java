@@ -1,5 +1,8 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+
 public class AutomatedPlayer implements Player {
 	private String symbol;
 	private String name;
@@ -11,9 +14,14 @@ public class AutomatedPlayer implements Player {
 
 	@Override
 	public Grid takesGo(Grid grid) {
-		String opponentsSymbol = (symbol.equals("x")) ? "o" : "x";
+		int potentialWinningMove = grid.potentialWinningMove(symbol);
+		if(grid.isAWinningMoveAt(potentialWinningMove)){
+			return grid.takeNextMove(symbol, potentialWinningMove);
+		}
+		
+		String opponentsSymbol = (symbol.equals(X)) ? O : X;
 		int blockingIndex = grid.potentialWinningMove(opponentsSymbol);
-		if(blockingIndex != -1){
+		if(grid.isAWinningMoveAt(blockingIndex)){
 			return grid.takeNextMove(symbol, blockingIndex);
 		}
 		else{

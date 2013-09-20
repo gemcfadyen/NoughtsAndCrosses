@@ -3,7 +3,6 @@ package katas.learning_kata.noughtsAndCrosses;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +29,14 @@ public class PlayerTest {
 	public void shouldIdentifyThereIsABlockingMoveToBeMade(){
 		Grid startingGrid = new Grid("o-o------");
 		startingGrid = automatedPlayer.takesGo(startingGrid);
-		//verify(startingGrid).hasWinningMoveFor("x-x", "o");
 		assertTrue(startingGrid.toString().contains("oxo"));
+	}
+	
+	@Test
+	public void shouldIdentifyThereIsAWinningMoveToBeMade(){
+		Grid startingGrid = new Grid("x-x------");
+		startingGrid = automatedPlayer.takesGo(startingGrid);
+		assertTrue(startingGrid.toString().contains("xxx"));
 	}
 	
 }

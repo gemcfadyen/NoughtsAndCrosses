@@ -9,8 +9,8 @@ public class Grid {
 	private static final int GRID_DIMENSION = 3;
 	private static final int NO_MATCH_FOUND = -1;
 	private static final String SPACE = "-";
-	private static final String O = "o";
-	private static final String X = "x";
+	public static final String O = "o";
+	public static final String X = "x";
 	private String board;
 
 	public Grid(String board) {
@@ -38,7 +38,6 @@ public class Grid {
 	}
 
 	public Grid takeNextMove(String symbol, int index) {
-		System.out.println(board.toString());
 		if (board.charAt(index) == '-') {
 			board = board.substring(0, index) + symbol
 					+ board.substring(index + 1, board.length());
@@ -57,7 +56,7 @@ public class Grid {
 			String row = getRowBetween(startingIndex(rowIndex),
 					finishingIndex(rowIndex));
 			int position = findIndexOfWinningMoveFor(row, symbol);
-			if (thereIsAWinningMoveAt(position))
+			if (isAWinningMoveAt(position))
 				return winningPosition(rowIndex, position);
 		}
 		return NO_MATCH_FOUND;
@@ -68,7 +67,7 @@ public class Grid {
 			String column = getColumnStartingAtIndex(columnIndex);
 			int[] cells = calculateColumnCells(columnIndex);
 			int position = findIndexOfWinningMoveFor(column, symbol);
-			if (thereIsAWinningMoveAt(position))
+			if (isAWinningMoveAt(position))
 				return winningPosition(cells, position);
 		}
 		return NO_MATCH_FOUND;
@@ -81,7 +80,7 @@ public class Grid {
 					diagonalIndex[1], diagonalIndex[2]);
 			int position = findIndexOfWinningMoveFor(backslashDiagonalRow,
 					symbol);
-			if (thereIsAWinningMoveAt(position))
+			if (isAWinningMoveAt(position))
 				return winningPosition(diagonalIndex, position);
 		}
 		return NO_MATCH_FOUND;
@@ -115,7 +114,7 @@ public class Grid {
 		return startingIndex(rowIndex) + position;
 	}
 
-	private boolean thereIsAWinningMoveAt(int position) {
+	public boolean isAWinningMoveAt(int position) {
 		return position != NO_MATCH_FOUND;
 	}
 
