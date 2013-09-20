@@ -12,8 +12,8 @@ public class AutomatedPlayer implements Player {
 	@Override
 	public Grid takesGo(Grid grid) {
 		String opponentsSymbol = (symbol.equals("x")) ? "o" : "x";
-		int blockingIndex = grid.getIndexOfWinningMove(opponentsSymbol);
-		if(grid.getIndexOfWinningMove(opponentsSymbol) != -1){
+		int blockingIndex = grid.potentialWinningMove(opponentsSymbol);
+		if(blockingIndex != -1){
 			return grid.takeNextMove(symbol, blockingIndex);
 		}
 		else{

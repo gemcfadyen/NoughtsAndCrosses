@@ -63,7 +63,7 @@ public class IndexOfWinningMoveTest {
 	@Test
 	public void shouldReturnTheIndexForAWinningMoveInTheGridForTheGivenPlayer() {
 		Grid grid = new Grid(board);
-		int index = grid.getIndexOfWinningMove(playersSymbol);
+		int index = grid.potentialWinningMove(playersSymbol);
 
 		assertThat(index, is(indexOfWinningMove));
 	}

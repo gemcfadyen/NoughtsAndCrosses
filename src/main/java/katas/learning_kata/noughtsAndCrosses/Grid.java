@@ -49,10 +49,10 @@ public class Grid {
 
 	public int getIndexOfBlockingMove(String symbol) {
 		String opponentsSymbol = (symbol.equals(X)) ? O : X;
-		return getIndexOfWinningMove(opponentsSymbol);
+		return potentialWinningMove(opponentsSymbol);
 	}
 
-	protected int findWinningPositionInTheRows(String symbol) {
+	protected int potentialWinningPositionInRows(String symbol) {
 		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
 			String row = getRowBetween(startingIndex(rowIndex),
 					finishingIndex(rowIndex));
@@ -63,7 +63,7 @@ public class Grid {
 		return NO_MATCH_FOUND;
 	}
 
-	protected int findWinningPositionInTheColumns(String symbol) {
+	protected int potentialWinningPositionInColumns(String symbol) {
 		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
 			String column = getColumnStartingAtIndex(columnIndex);
 			int[] cells = calculateColumnCells(columnIndex);
@@ -74,7 +74,7 @@ public class Grid {
 		return NO_MATCH_FOUND;
 	}
 
-	protected int findWinningPositionInTheDiagonals(String symbol) {
+	protected int potentialWinningPositionInDiagonals(String symbol) {
 		List<int[]> diagonalIndexes = populateDiagonalIndices();
 		for (int[] diagonalIndex : diagonalIndexes) {
 			String backslashDiagonalRow = getDiagonalRow(diagonalIndex[0],
@@ -87,14 +87,14 @@ public class Grid {
 		return NO_MATCH_FOUND;
 	}
 
-	public int getIndexOfWinningMove(String symbol) {
-		return winningPosition(
-				findWinningPositionInTheRows(symbol), 
-				findWinningPositionInTheColumns(symbol),
-				findWinningPositionInTheDiagonals(symbol));
+	public int potentialWinningMove(String symbol) {
+		return potentialWinningPosition(
+				potentialWinningPositionInRows(symbol), 
+				potentialWinningPositionInColumns(symbol),
+				potentialWinningPositionInDiagonals(symbol));
 	}
 
-	private int winningPosition(int...potentialWinningPositions) {
+	private int potentialWinningPosition(int...potentialWinningPositions) {
 		for (int position : potentialWinningPositions)
 			if (position != NO_MATCH_FOUND) {
 				return position;
