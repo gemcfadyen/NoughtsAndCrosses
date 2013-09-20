@@ -64,23 +64,27 @@ public class Grid {
 			if (position != -1)
 				return 3 * (rowIndex -1) + position;
 		}
+		
+		int columnIndex = 0;
 
-		String leftColumn = getColumnStartingAtIndex(0);
-		int[] indexesOfLeftColumn = new int[] { 0, 3, 6 };
+		String leftColumn = getColumnStartingAtIndex(columnIndex);
+		int[] indexesOfLeftColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
 		int position = getIndexOfWinningMoveFor(leftColumn, symbol);
 		if(position != -1){
 			return indexesOfLeftColumn[position];
 		}
 
-		String middleColumn = getColumnStartingAtIndex(1);
-		int[] indexesOfMiddleColumn = new int[] { 1, 4, 7 };
+		columnIndex=1;
+		String middleColumn = getColumnStartingAtIndex(columnIndex);
+		int[] indexesOfMiddleColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
 		position = getIndexOfWinningMoveFor(middleColumn, symbol);
 		if(position != -1){
 			return indexesOfMiddleColumn[position];
 		}
 
-		String lastColumn = getColumnStartingAtIndex(2);
-		int[] indexesOfLastColumn = new int[] { 2, 5, 8 };
+		columnIndex = 2;
+		String lastColumn = getColumnStartingAtIndex(columnIndex);
+		int[] indexesOfLastColumn = new int[] { columnIndex, 3 + columnIndex, 3 * 2 + columnIndex };
 		position = getIndexOfWinningMoveFor(lastColumn, symbol);
 		if(position != -1){
 			return indexesOfLastColumn[position];
