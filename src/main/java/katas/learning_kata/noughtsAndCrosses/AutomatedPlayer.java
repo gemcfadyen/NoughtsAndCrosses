@@ -19,14 +19,17 @@ public class AutomatedPlayer implements Player {
 			return grid.takeNextMove(symbol, potentialWinningMove);
 		}
 		
-		String opponentsSymbol = (symbol.equals(X)) ? O : X;
-		int blockingIndex = grid.potentialWinningMove(opponentsSymbol);
+		int blockingIndex = grid.potentialWinningMove(opponent());
 		if(grid.isAWinningMoveAt(blockingIndex)){
 			return grid.takeNextMove(symbol, blockingIndex);
 		}
 		else{
 			return null;
 		}
+	}
+
+	protected String opponent() {
+		return (symbol.equals(X)) ? O : X;
 	}
 
 	@Override
