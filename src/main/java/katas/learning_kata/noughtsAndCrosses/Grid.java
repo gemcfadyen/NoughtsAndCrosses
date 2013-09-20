@@ -67,12 +67,8 @@ public class Grid {
 				return indexesOfLeftColumn[position];
 		}
 
-		int[] forwardSlashDiagonalIndexes = new int[] { 2, 4, 6 };
-		int[] backslashDiagonalIndexes = new int[] { 0, 4, 8 };
-		List<int[]> diagonalIndexes = new ArrayList<int[]>();
-		diagonalIndexes.add(backslashDiagonalIndexes);
-		diagonalIndexes.add(forwardSlashDiagonalIndexes);
 		
+		List<int[]> diagonalIndexes = populateDiagonalIndices();
 		for(int[] di : diagonalIndexes){
 			String backslashDiagonalRow = getDiagonalRow(di[0], di[1], di[2]);
 			int position = getIndexOfWinningMoveFor(backslashDiagonalRow, symbol);
@@ -83,9 +79,18 @@ public class Grid {
 		return -1;
 	}
 
+	private List<int[]> populateDiagonalIndices(){
+		int[] forwardSlashDiagonalIndexes = new int[] { 2, 4, 6 };
+		int[] backslashDiagonalIndexes = new int[] { 0, 4, 8 };
+		List<int[]> diagonalIndexes = new ArrayList<int[]>();
+		diagonalIndexes.add(backslashDiagonalIndexes);
+		diagonalIndexes.add(forwardSlashDiagonalIndexes);
+		return diagonalIndexes;
+	}
+	
 	private int getIndexOfWinningMoveFor(String moves, String symbol) {
 		if (hasWinningMoveFor(moves, symbol)) {
-			return moves.indexOf('-');
+			return moves.indexOf(SPACE);
 		}
 		return -1;
 	}
@@ -112,12 +117,6 @@ public class Grid {
 		return diagonalRow.toString();
 	}
 
-	private String getForwardslashDiagonalRow(int start, int middle, int end) {
-		StringBuffer diagonalRow = new StringBuffer();
-		diagonalRow.append(board.charAt(start)).append(board.charAt(middle))
-				.append(board.charAt(end));
-		return diagonalRow.toString();
-	}
 
 	private String getColumnStartingAtIndex(int startOfVerticleRow) {
 		StringBuffer verticleRow = new StringBuffer();
