@@ -52,31 +52,48 @@ public class Grid {
 		return getIndexOfWinningMove(opponentsSymbol);
 	}
 
-	public int getIndexOfWinningMove(String symbol) {
+	protected int findWinningPositionInTheRows(String symbol){
 		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
 			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
 			int position = findIndexOfWinningMoveFor(row, symbol);
 			if (thereIsAWinningMoveAt(position))
 				return winningPosition(rowIndex, position);
 		}
+		return NO_MATCH_FOUND;
+	}
 
+	protected int findWinningPositionInTheColumns(String symbol){
 		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
 			String column = getColumnStartingAtIndex(columnIndex);
 			int[] cells = calculateColumnCells(columnIndex);
 			int position = findIndexOfWinningMoveFor(column, symbol);
 			if (thereIsAWinningMoveAt(position))
 				return winningPosition(cells, position);
-		}
-
-		
+		}	
+		return NO_MATCH_FOUND;
+	}
+	
+	protected int findWinningPositionInTheDiagonals(String symbol){
 		List<int[]> diagonalIndexes = populateDiagonalIndices();
 		for(int[] diagonalIndex : diagonalIndexes){
 			String backslashDiagonalRow = getDiagonalRow(diagonalIndex[0], diagonalIndex[1], diagonalIndex[2]);
 			int position = findIndexOfWinningMoveFor(backslashDiagonalRow, symbol);
 			if (thereIsAWinningMoveAt(position))
 				return winningPosition(diagonalIndex, position);
-		}
+		}	
+		return NO_MATCH_FOUND;
+	}
 	
+	public int getIndexOfWinningMove(String symbol) {
+		int position = findWinningPositionInTheRows(symbol);
+		if (thereIsAWinningMoveAt(position))
+			return position;
+		position = findWinningPositionInTheColumns(symbol);
+		if (thereIsAWinningMoveAt(position))
+			return position;
+		position = findWinningPositionInTheDiagonals(symbol);
+		if (thereIsAWinningMoveAt(position))
+			return position;
 		return NO_MATCH_FOUND;
 	}
 
