@@ -46,65 +46,69 @@ public class Grid {
 	private int calculateIndexOfNextMove(String row, int offset) {
 		return row.indexOf(SPACE) + offset;
 	}
-	
+
 	private int calculateIndexOfNextMove(String row, int[] positions) {
 		return positions[row.indexOf(SPACE)];
 	}
-	
-	public int getIndexOfBlockingMove(String symbol){
+
+	public int getIndexOfBlockingMove(String symbol) {
 		String opponentsSymbol = (symbol.equals(X)) ? O : X;
 		return getIndexOfWinningMove(opponentsSymbol);
 	}
 
 	public int getIndexOfWinningMove(String symbol) {
-		String firstRow = getHorizontalRowsAtIndexes(0, 3);
-		if (hasWinningMoveFor(firstRow, symbol)) {
-			return calculateIndexOfNextMove(firstRow, 0);
-		}
-
-		String middleRow = getHorizontalRowsAtIndexes(3, 6);
-		if (hasWinningMoveFor(middleRow, symbol)) {
-			return calculateIndexOfNextMove(middleRow, 3); 
-		}
-
-		String bottomRow = getHorizontalRowsAtIndexes(6, 9);
-		if (hasWinningMoveFor(bottomRow, symbol)) {
-			return calculateIndexOfNextMove(bottomRow, 6);
+		for (int index = 1; index <= 3; index++) {
+			int position = indexOfWinningPositionOnLine(symbol, index);
+			if (position != -1)
+				return position;
 		}
 
 		String leftVerticalRow = getVerticleRowsStartAtIndex(0);
 		if (hasWinningMoveFor(leftVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(leftVerticalRow, new int[] { 0, 3, 6 });
+			return calculateIndexOfNextMove(leftVerticalRow, new int[] { 0, 3,
+					6 });
 		}
 
 		String middleVerticalRow = getVerticleRowsStartAtIndex(1);
 		if (hasWinningMoveFor(middleVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(middleVerticalRow, new int[] { 1, 4, 7 }); 
+			return calculateIndexOfNextMove(middleVerticalRow, new int[] { 1,
+					4, 7 });
 		}
 
 		String rightVerticalRow = getVerticleRowsStartAtIndex(2);
 		if (hasWinningMoveFor(rightVerticalRow, symbol)) {
-			return calculateIndexOfNextMove(rightVerticalRow, new int[] { 2, 5, 8 });
+			return calculateIndexOfNextMove(rightVerticalRow, new int[] { 2, 5,
+					8 });
 		}
 
 		String backslashDiagonalRow = getBackslashDiagonalRow();
 		if (hasWinningMoveFor(backslashDiagonalRow, symbol)) {
-			return calculateIndexOfNextMove(backslashDiagonalRow, new int[] { 0, 4, 8 });
+			return calculateIndexOfNextMove(backslashDiagonalRow, new int[] {
+					0, 4, 8 });
 		}
 
 		String forwardslashDiagonalRow = getForwardslashDiagonalRow();
 		if (hasWinningMoveFor(forwardslashDiagonalRow, symbol)) {
-			return calculateIndexOfNextMove(forwardslashDiagonalRow,new int[] { 2, 4, 6 } );
+			return calculateIndexOfNextMove(forwardslashDiagonalRow, new int[] {
+					2, 4, 6 });
 		}
 
+		return -1;
+	}
+
+	private int indexOfWinningPositionOnLine(String symbol, int index) {
+		String row = getHorizontalRowsAtIndexes(3 * (index - 1), 3 * index);
+		if (hasWinningMoveFor(row, symbol)) {
+			return calculateIndexOfNextMove(row, 3 * (index - 1));
+		}
 		return -1;
 	}
 
 	public boolean hasWinningMoveFor(String row, String symbol) {
 		// eg: there is a winning move to be make if any of these regex patterns
 		// are met: x-x|xx-|-xx
-		Pattern winningRowPattern = Pattern.compile(symbol + SPACE + symbol + "|"
-				+ symbol + symbol + "-|-" + symbol + symbol);
+		Pattern winningRowPattern = Pattern.compile(symbol + SPACE + symbol
+				+ "|" + symbol + symbol + "-|-" + symbol + symbol);
 
 		Matcher matcher = winningRowPattern.matcher(row);
 
@@ -114,7 +118,6 @@ public class Grid {
 
 		return false;
 	}
-
 
 	private String getBackslashDiagonalRow() {
 		StringBuffer diagonalRow = new StringBuffer();
