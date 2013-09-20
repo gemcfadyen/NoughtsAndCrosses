@@ -88,23 +88,16 @@ public class Grid {
 	}
 
 	public int getIndexOfWinningMove(String symbol) {
-		int winningRowPosition = findWinningPositionInTheRows(symbol);
-		int winningColumnPosition = findWinningPositionInTheColumns(symbol);
-		int winningDiagonalPosition = findWinningPositionInTheDiagonals(symbol);
-		return winningPosition(winningRowPosition, winningColumnPosition,
-				winningDiagonalPosition);
+		return winningPosition(
+				findWinningPositionInTheRows(symbol), 
+				findWinningPositionInTheColumns(symbol),
+				findWinningPositionInTheDiagonals(symbol));
 	}
 
-	private int winningPosition(int winningRowPosition,
-			int winningColumnPosition, int winningDiagonalPosition) {
-		if (winningRowPosition != NO_MATCH_FOUND) {
-			return winningRowPosition;
-		}
-		if(winningColumnPosition != NO_MATCH_FOUND){
-			return winningColumnPosition;
-		}
-		if(winningDiagonalPosition != NO_MATCH_FOUND){
-			return winningDiagonalPosition;
+	private int winningPosition(int...potentialWinningPositions) {
+		for (int position : potentialWinningPositions)
+			if (position != NO_MATCH_FOUND) {
+				return position;
 		}
 		return NO_MATCH_FOUND;
 	}
