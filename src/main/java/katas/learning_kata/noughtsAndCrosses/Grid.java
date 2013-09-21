@@ -180,4 +180,20 @@ public class Grid {
 		return null;
 	}
 
+	public boolean isCenterTaken() {
+		return !(board.charAt(4) == '-');
+	}
+
+	public boolean hasFreeCornerPosition() {
+		return true;
+	}
+
+	public int getAvailableCorner() {
+		if (board.charAt(0) == '-') return 0;
+		else if (board.charAt(2) == '-') return 2;
+		else if (board.charAt(6) == '-') return 6;
+		else if (board.charAt(8) == '-') return 8;
+		else return NO_MATCH_FOUND;
+	}
+
 }

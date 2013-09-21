@@ -24,8 +24,15 @@ public class AutomatedPlayer implements Player {
 			return grid.takeNextMove(symbol, blockingIndex);
 		}
 		else{
-			return null;
+			if(grid.isCenterTaken() && grid.hasFreeCornerPosition()) {
+				takeACornerPosition(grid);
+			}
+			return grid.takeNextMove(symbol, 4);
 		}
+	}
+
+	private void takeACornerPosition(Grid grid) {
+		grid.takeNextMove(symbol, grid.getAvailableCorner());
 	}
 
 	protected String opponent() {
