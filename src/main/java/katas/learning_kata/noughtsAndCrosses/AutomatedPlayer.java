@@ -15,6 +15,9 @@ public class AutomatedPlayer implements Player {
 
 	@Override
 	public Grid takesGo(Grid grid) {
+		System.out.println(grid.toString());
+		System.out.println("________________");
+		
 		int indexOfNextMove = getIndexOfNextMove(grid);
 		return grid.takeNextMove(symbol, indexOfNextMove);
 

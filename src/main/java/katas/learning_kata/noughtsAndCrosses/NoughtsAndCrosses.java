@@ -15,6 +15,8 @@ public class NoughtsAndCrosses {
 
 	NoughtsAndCrosses() {
 		grid = new Grid("---------");
+		playerX = new AutomatedPlayer("x", "pc-one");
+		playerO = new AutomatedPlayer("o", "pc-one");
 	}
 
 	private void determineTheOrderOfThePlayers() {
@@ -31,7 +33,7 @@ public class NoughtsAndCrosses {
 			players[playersIndex].takesGo(grid);
 			playersIndex = (playersIndex == 0) ? SECOND_PLAYER : FIRST_PLAYER;
 		}
-
+		System.out.println("Final Grid: \n" +  grid.toString());
 		return evaluateGame();
 	}
 
