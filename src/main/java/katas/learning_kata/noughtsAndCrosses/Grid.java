@@ -6,8 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Grid {
+	private static final int CENTER_CELL = 4;
 	private static final int GRID_DIMENSION = 3;
-	private static final int NO_MATCH_FOUND = -1;
+	public static final int NO_MATCH_FOUND = -1;
 	private static final String SPACE = "-";
 	public static final String O = "o";
 	public static final String X = "x";
@@ -53,8 +54,7 @@ public class Grid {
 
 	protected int potentialWinningPositionInRows(String symbol) {
 		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
-			String row = getRowBetween(startingIndex(rowIndex),
-					finishingIndex(rowIndex));
+			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
 			int position = findIndexOfWinningMoveFor(row, symbol);
 			if (isAWinningMoveAt(position))
 				return winningPosition(rowIndex, position);
@@ -194,6 +194,10 @@ public class Grid {
 		else if (board.charAt(6) == '-') return 6;
 		else if (board.charAt(8) == '-') return 8;
 		else return NO_MATCH_FOUND;
+	}
+
+	public int getCentreCell() {
+		return CENTER_CELL;
 	}
 
 }

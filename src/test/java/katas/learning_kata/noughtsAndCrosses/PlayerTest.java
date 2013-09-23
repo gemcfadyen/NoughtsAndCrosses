@@ -63,6 +63,7 @@ public class PlayerTest {
 		when(grid.potentialWinningMove("x")).thenReturn(-1);
 		when(grid.isAWinningMoveAt(1)).thenReturn(false);
 		when(grid.isCenterTaken()).thenReturn(false);
+		when(grid.getCentreCell()).thenReturn(4);
 		when(grid.takeNextMove("x", 4)).thenReturn(new Grid("o---x----"));
 		
 		Grid startingGrid = automatedPlayer.takesGo(grid);
