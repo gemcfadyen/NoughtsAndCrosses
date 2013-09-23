@@ -4,6 +4,7 @@ import static katas.learning_kata.noughtsAndCrosses.Grid.O;
 import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 
 public class AutomatedPlayer implements Player {
+	private static final int CENTER_CELL = 4;
 	private String symbol;
 	private String name;
 
@@ -25,14 +26,14 @@ public class AutomatedPlayer implements Player {
 		}
 		else{
 			if(grid.isCenterTaken() && grid.hasFreeCornerPosition()) {
-				takeACornerPosition(grid);
+				return takeACornerPosition(grid);
 			}
-			return grid.takeNextMove(symbol, 4);
+			return grid.takeNextMove(symbol, CENTER_CELL);
 		}
 	}
 
-	private void takeACornerPosition(Grid grid) {
-		grid.takeNextMove(symbol, grid.getAvailableCorner());
+	private Grid takeACornerPosition(Grid grid) {
+		return grid.takeNextMove(symbol, grid.getAvailableCorner());
 	}
 
 	protected String opponent() {
