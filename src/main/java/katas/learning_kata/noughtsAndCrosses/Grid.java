@@ -6,10 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Grid {
+	public static final char EMPTY_CELL = '-';
 	private static final int CENTER_CELL = 4;
 	private static final int GRID_DIMENSION = 3;
 	public static final int NO_MATCH_FOUND = -1;
-	private static final String SPACE = "-";
 	public static final String O = "o";
 	public static final String X = "x";
 	private String board;
@@ -31,7 +31,7 @@ public class Grid {
 	}
 
 	public boolean hasFreeSlot() {
-		return board.contains(SPACE);
+		return board.contains(String.valueOf(EMPTY_CELL));
 	}
 
 	public String getWinningSymbol() {
@@ -137,7 +137,7 @@ public class Grid {
 
 	private int findIndexOfWinningMoveFor(String moves, String symbol) {
 		if (hasWinningMoveFor(moves, symbol)) {
-			return moves.indexOf(SPACE);
+			return moves.indexOf(EMPTY_CELL);
 		}
 		return NO_MATCH_FOUND;
 	}
@@ -145,7 +145,7 @@ public class Grid {
 	public boolean hasWinningMoveFor(String row, String symbol) {
 		// eg: there is a winning move to be make if any of these regex patterns
 		// are met: x-x|xx-|-xx
-		Pattern winningRowPattern = Pattern.compile(symbol + SPACE + symbol
+		Pattern winningRowPattern = Pattern.compile(symbol + EMPTY_CELL + symbol
 				+ "|" + symbol + symbol + "-|-" + symbol + symbol);
 
 		Matcher matcher = winningRowPattern.matcher(row);
@@ -181,7 +181,7 @@ public class Grid {
 	}
 
 	public boolean isCenterTaken() {
-		return !(board.charAt(4) == '-');
+		return !(board.charAt(4) == EMPTY_CELL);
 	}
 
 	public boolean hasFreeCornerPosition() {
@@ -189,15 +189,19 @@ public class Grid {
 	}
 
 	public int getAvailableCorner() {
-		if (board.charAt(0) == '-') return 0;
-		else if (board.charAt(2) == '-') return 2;
-		else if (board.charAt(6) == '-') return 6;
-		else if (board.charAt(8) == '-') return 8;
+		if (board.charAt(0) == EMPTY_CELL) return 0;
+		else if (board.charAt(2) == EMPTY_CELL) return 2;
+		else if (board.charAt(6) == EMPTY_CELL) return 6;
+		else if (board.charAt(8) == EMPTY_CELL) return 8;
 		else return NO_MATCH_FOUND;
 	}
 
 	public int getCentreCell() {
 		return CENTER_CELL;
+	}
+
+	public int getFirstFreeCell() {
+		return board.indexOf('-');
 	}
 
 }

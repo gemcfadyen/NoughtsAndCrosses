@@ -5,11 +5,11 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 public class PlayerTest {
 	private Player automatedPlayer;
@@ -17,7 +17,7 @@ public class PlayerTest {
 	
 	@Before
 	public void setup(){
-		MockitoAnnotations.initMocks(this);
+		initMocks(this);
 		automatedPlayer = new AutomatedPlayer("x", "X-Man");
 	}
 	
@@ -61,7 +61,6 @@ public class PlayerTest {
 	@Test
 	public void shouldMakeMoveWithMostPossibleWinningPositions() {
 		when(grid.potentialWinningMove("x")).thenReturn(-1);
-		when(grid.isAWinningMoveAt(1)).thenReturn(false);
 		when(grid.isCenterTaken()).thenReturn(false);
 		when(grid.getCentreCell()).thenReturn(4);
 		when(grid.takeNextMove("x", 4)).thenReturn(new Grid("o---x----"));
@@ -76,7 +75,7 @@ public class PlayerTest {
 	@Test
 	public void shouldMakeMoveWithMostPossibleWinningPositionsIfCenterCellIsTaken(){
 		when(grid.potentialWinningMove("x")).thenReturn(-1);
-		when(grid.isAWinningMoveAt(1)).thenReturn(false);
+		when(grid.potentialWinningMove("o")).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(true);
 		when(grid.hasFreeCornerPosition()).thenReturn(true);
 		when(grid.getAvailableCorner()).thenReturn(2);
@@ -85,6 +84,20 @@ public class PlayerTest {
         Grid startingGrid = automatedPlayer.takesGo(grid);
 		assertThat(startingGrid.toString(), is("x-x\n-o-\n---\n"));
 		verify(grid).getAvailableCorner();
+	}
+	
+	@Test
+	public void shouldMakeMoveInAnyFreeSpaceIfTheCenterCellAndCornerCellsAreTaken(){
+		when(grid.potentialWinningMove("x")).thenReturn(-1);
+		when(grid.potentialWinningMove("o")).thenReturn(-1);
+		when(grid.isCenterTaken()).thenReturn(true);
+		when(grid.hasFreeCornerPosition()).thenReturn(false);
+		when(grid.getFirstFreeCell()).thenReturn(3);
+		when(grid.takeNextMove("x", 3)).thenReturn(new Grid("oxoxx-xox"));
+	
+        Grid startingGrid = automatedPlayer.takesGo(grid);
+		assertThat(startingGrid.toString(), is("oxo\nxx-\nxox\n"));
+		verify(grid).getFirstFreeCell();
 	}
 	
 	

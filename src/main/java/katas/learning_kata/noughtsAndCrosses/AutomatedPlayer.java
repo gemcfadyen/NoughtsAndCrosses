@@ -24,7 +24,12 @@ public class AutomatedPlayer implements Player {
 		return automatedPlayersNextMove(indexOfWinningMoveFor(symbol, grid), 
 										indexOfWinningMoveFor(opponent(), grid), 
 										centerCell(grid), 
-										cornerCell(grid));
+										cornerCell(grid),
+										anyFreePosition(grid));
+	}
+
+	private int anyFreePosition(Grid grid) {
+		return grid.getFirstFreeCell();
 	}
 
 	private int cornerCell(Grid grid) {
