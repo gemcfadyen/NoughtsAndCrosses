@@ -1,8 +1,10 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.players;
 
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.Grid.O;
 import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+import katas.learning_kata.noughtsAndCrosses.Grid;
+import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 public class AutomatedPlayer implements Player {
 	private String symbol;
@@ -67,7 +69,7 @@ public class AutomatedPlayer implements Player {
 		return NO_MATCH_FOUND;
 	}
 	
-	protected String opponent() {
+	public String opponent() {
 		return (symbol.equals(X)) ? O : X;
 	}
 

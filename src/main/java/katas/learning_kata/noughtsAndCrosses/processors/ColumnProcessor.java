@@ -1,4 +1,5 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.processors;
+
 
 public class ColumnProcessor extends Processor {
 

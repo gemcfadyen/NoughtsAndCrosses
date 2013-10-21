@@ -1,6 +1,9 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.players;
 
 import static org.mockito.Mockito.verify;
+import katas.learning_kata.noughtsAndCrosses.Grid;
+import katas.learning_kata.noughtsAndCrosses.players.HumanPlayer;
+import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

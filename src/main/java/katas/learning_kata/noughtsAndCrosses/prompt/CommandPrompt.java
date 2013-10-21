@@ -1,8 +1,10 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.prompt;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+
+import katas.learning_kata.noughtsAndCrosses.Grid;
 
 public class CommandPrompt implements Prompt {
 

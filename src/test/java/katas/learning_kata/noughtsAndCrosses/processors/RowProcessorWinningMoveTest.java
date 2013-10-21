@@ -1,10 +1,12 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.processors;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
+
+import katas.learning_kata.noughtsAndCrosses.processors.RowProcessor;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

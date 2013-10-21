@@ -1,5 +1,9 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import katas.learning_kata.noughtsAndCrosses.processors.ColumnProcessor;
+import katas.learning_kata.noughtsAndCrosses.processors.DiagonalProcessor;
+import katas.learning_kata.noughtsAndCrosses.processors.RowProcessor;
+
 public class Grid {
 	public static final char EMPTY_CELL = '-';
 	private static final int CENTER_CELL = 4;
@@ -48,7 +52,7 @@ public class Grid {
 
 
 
-	protected int potentialWinningMove(String symbol) {
+	public int potentialWinningMove(String symbol) {
 		RowProcessor horizontalRows = new RowProcessor(board);
 		ColumnProcessor columnProcessor = new ColumnProcessor(board);
 		DiagonalProcessor diagonals = new DiagonalProcessor(board);

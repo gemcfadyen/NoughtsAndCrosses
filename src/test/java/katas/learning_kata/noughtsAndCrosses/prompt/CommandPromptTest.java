@@ -1,4 +1,4 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.prompt;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+
+import katas.learning_kata.noughtsAndCrosses.Grid;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,7 +1,8 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.processors;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class DiagonalProcessor extends Processor {
 	private String board;

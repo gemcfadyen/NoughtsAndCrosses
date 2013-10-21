@@ -1,4 +1,7 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.players;
+
+import katas.learning_kata.noughtsAndCrosses.Grid;
+import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 public class HumanPlayer implements Player {
 	private String symbol;

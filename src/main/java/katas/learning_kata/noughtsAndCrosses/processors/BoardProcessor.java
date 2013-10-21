@@ -1,4 +1,4 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.processors;
 
 public interface BoardProcessor {
 	int GRID_DIMENSION = 3;

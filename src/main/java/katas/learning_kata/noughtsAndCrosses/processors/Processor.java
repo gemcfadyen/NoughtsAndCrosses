@@ -1,7 +1,8 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.processors;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public abstract class Processor implements BoardProcessor {
 

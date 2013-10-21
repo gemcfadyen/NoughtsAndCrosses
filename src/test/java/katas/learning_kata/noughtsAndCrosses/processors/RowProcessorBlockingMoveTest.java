@@ -1,4 +1,4 @@
-package katas.learning_kata.noughtsAndCrosses;
+package katas.learning_kata.noughtsAndCrosses.processors;
 
 import static java.util.Arrays.asList;
 import static katas.learning_kata.noughtsAndCrosses.Grid.O;
@@ -7,6 +7,10 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
+
+import katas.learning_kata.noughtsAndCrosses.players.AutomatedPlayer;
+import katas.learning_kata.noughtsAndCrosses.processors.RowProcessor;
+import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @RunWith(Parameterized.class)
-public class DiagonalProcessorBlockingMoveTest {
+public class RowProcessorBlockingMoveTest {
 	private String board;
 	@Mock private static Prompt commandPrompt;
 	private static AutomatedPlayer playerO = new AutomatedPlayer(O, "fred", commandPrompt);
@@ -30,7 +34,7 @@ public class DiagonalProcessorBlockingMoveTest {
 		MockitoAnnotations.initMocks(this);
 	}
 	
-	public DiagonalProcessorBlockingMoveTest(String board, AutomatedPlayer player, int blockingIndex) {
+	public RowProcessorBlockingMoveTest(String board, AutomatedPlayer player, int blockingIndex) {
 		this.board = board;
 		this.player = player;
 		this.blockingIndex = blockingIndex;
@@ -40,17 +44,22 @@ public class DiagonalProcessorBlockingMoveTest {
 	public static Collection<Object[]> setupParamterisedInputs() {
 		return asList(new Object[][] {  
 				//tests for x-x
-				{ "x-------x", playerO, 4 },
-				{ "--x---x--", playerO, 4 },
+				{ "x-x------", playerO, 1 },
+				{ "---x-x---", playerO, 4 }, 
+				{ "------x-x", playerO, 7 }, 
 				//tests for xx-
-				{ "--x-x----", playerO, 6 },
-				{ "----x-x--", playerO, 2 },
+				{ "xx-------", playerO, 2 },
+				{ "---xx----", playerO, 5 }, 
+				{ "------xx-", playerO, 8 },
 				//tests for -xx
-				{ "----x-x--", playerO, 2 },
-				{ "----x---x", playerO, 0 },
+				{ "-xx------", playerO, 0 },
+				{ "----xx---", playerO, 3 },
+				{ "-------xx", playerO, 6 },
 				//negative tests
-				{ "x---o----", playerO, -1 },
-				{ "--x-o----", playerO, -1 },
+				{ "xxo------", playerO, -1 },
+				{ "xo-------", playerO, -1 },
+				{ "---xo----", playerO, -1 },
+				{ "------ox-", playerO, -1 },
 				{ "---------", playerO, -1 },
 				{ "xx-------", playerX, -1 }
 		});
@@ -58,10 +67,9 @@ public class DiagonalProcessorBlockingMoveTest {
 
 	@Test
 	public void shouldUnderstandIfThereIsAWinningMoveInTheGridForTheGivenPlayer() {
-		Grid grid = new Grid(board);
-		int index = grid.potentialWinningMove(player.opponent());
+		RowProcessor rowProcessor = new RowProcessor(board);
+		int index = rowProcessor.potentialWinningMove(player.opponent());
 
 		assertThat(index, is(blockingIndex));
 	}
-
 }

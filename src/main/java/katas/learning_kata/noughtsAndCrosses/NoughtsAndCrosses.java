@@ -4,6 +4,9 @@ import static java.lang.String.format;
 import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.NO_WINNER;
 import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.WINNER;
 import static katas.learning_kata.noughtsAndCrosses.GameStatusBuilder.aGameStatusBuilder;
+import katas.learning_kata.noughtsAndCrosses.players.AutomatedPlayer;
+import katas.learning_kata.noughtsAndCrosses.players.Player;
+import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 public class NoughtsAndCrosses {
 	private static final int FIRST_PLAYER = 0;
