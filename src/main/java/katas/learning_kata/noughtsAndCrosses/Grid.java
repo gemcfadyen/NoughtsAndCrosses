@@ -6,7 +6,7 @@ import katas.learning_kata.noughtsAndCrosses.processors.RowProcessor;
 
 public class Grid {
 	public static final char EMPTY_CELL = '-';
-	private static final int CENTER_CELL = 4;
+	public static final int CENTER_CELL = 4;
 	public static final int NO_MATCH_FOUND = -1;
 	public static final String O = "o";
 	public static final String X = "x";

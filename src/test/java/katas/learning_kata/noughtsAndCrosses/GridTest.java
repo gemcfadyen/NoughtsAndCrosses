@@ -1,5 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static katas.learning_kata.noughtsAndCrosses.Grid.CENTER_CELL;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
@@ -19,6 +20,12 @@ public class GridTest {
 	public void shouldReturnFalseIfTheCenterIsNotTaken() {
 		Grid grid = new Grid("---------");
 		assertThat(grid.isCenterTaken(), is(false));
+	}
+	
+	@Test
+	public void shouldReturnTheCentreCell(){
+		Grid grid = new Grid("---------");
+		assertThat(grid.getCentreCell(), is(CENTER_CELL));
 	}
 	
 	@Test
@@ -120,6 +127,13 @@ public class GridTest {
 		Grid grid = new Grid("---------");
 		boolean isFree = grid.isACellInTheGrid(NO_MATCH_FOUND);
 		assertFalse(isFree);
+	}
+	
+	@Test
+	public void shouldReturnTheFirstFreeIndexOnTheBoard(){
+		Grid grid = new Grid("---------");
+		int index = grid.getFirstFreeCell();
+		assertThat(index, is(0));
 	}
 
 }
