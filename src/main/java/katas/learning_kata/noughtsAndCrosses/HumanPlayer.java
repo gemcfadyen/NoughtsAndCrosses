@@ -1,17 +1,24 @@
 package katas.learning_kata.noughtsAndCrosses;
 
 public class HumanPlayer implements Player {
+	private String symbol;
+	private Prompt prompt;
 
+	public HumanPlayer(String symbol, Prompt prompt){
+		this.prompt = prompt;
+		this.symbol = symbol;
+	}
+	
 	@Override
 	public Grid takesGo(Grid grid) {
-		//would go to the console - show the user the grid
-		//and ask them for the index of their move, read in the data, update the grid and return it 
-		return null;
+		prompt.displayBoard(grid);
+		int moveIndex = prompt.readNextMove();
+		return grid.takeNextMove(symbol, moveIndex);
 	}
 
 	@Override
 	public String getSymbol() {
-		return null;
+		return symbol;
 	}
 
 	@Override

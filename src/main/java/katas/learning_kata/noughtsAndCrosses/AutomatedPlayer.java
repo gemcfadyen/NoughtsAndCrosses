@@ -63,7 +63,7 @@ public class AutomatedPlayer implements Player {
 		if(grid.isAWinningMoveAt(potentialWinningMove)){
 			return potentialWinningMove;
 		}
-		return -1;
+		return NO_MATCH_FOUND;
 	}
 	
 	protected String opponent() {

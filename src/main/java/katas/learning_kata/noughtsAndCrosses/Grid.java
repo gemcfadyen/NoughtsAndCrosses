@@ -52,7 +52,7 @@ public class Grid {
 		return potentialWinningMove(opponentsSymbol);
 	}
 
-	protected int potentialWinningPositionInRows(String symbol) {
+	private int potentialWinningPositionInRows(String symbol) {
 		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
 			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
 			int position = findIndexOfWinningMoveFor(row, symbol);
@@ -86,9 +86,11 @@ public class Grid {
 		return NO_MATCH_FOUND;
 	}
 
-	public int potentialWinningMove(String symbol) {
+	protected int potentialWinningMove(String symbol) {
+		RowProcessor horizontalRows = new RowProcessor(board);
 		return potentialWinningPosition(
-				potentialWinningPositionInRows(symbol), 
+				/*potentialWinningPositionInRows(symbol)*/
+				horizontalRows.potentialWinningMove(symbol), 
 				potentialWinningPositionInColumns(symbol),
 				potentialWinningPositionInDiagonals(symbol));
 	}
@@ -142,7 +144,7 @@ public class Grid {
 		return NO_MATCH_FOUND;
 	}
 
-	public boolean hasWinningMoveFor(String row, String symbol) {
+	private boolean hasWinningMoveFor(String row, String symbol) {
 		// eg: there is a winning move to be make if any of these regex patterns
 		// are met: x-x|xx-|-xx
 		Pattern winningRowPattern = Pattern.compile(symbol + EMPTY_CELL + symbol

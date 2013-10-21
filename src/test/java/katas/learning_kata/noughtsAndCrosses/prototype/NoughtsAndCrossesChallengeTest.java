@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class NoughtsAndCrossesChallengeTest {
 	private static final int RANDOM_SEED = 10;
 	private NoughtsAndCrossesChallenge noughtsAndCrossesGame;
