@@ -41,5 +41,22 @@ public class GridTest {
 		Grid grid = new Grid("xoxoxoxoo");
 		assertThat(grid.hasFreeSlot(), is(false));
 	}
+	
+	@Test
+	public void shouldPlaceThePlayersSymbolAtTheSpecifiedIndexInTheGrid(){
+		Grid grid = new Grid("---xox---");
+		grid.takeNextMove("o", 0);
+		
+		assertThat(grid.toString(), is("o--\nxox\n---\n"));
+	}
+	
+	@Test
+	public void shouldNotPlaceThePlayersSymbolInAnOccupiedCell(){
+		Grid grid = new Grid("---xox---");
+		grid.takeNextMove("o", 3);
+		
+		assertThat(grid.toString(), is("---\nxox\n---\n"));
+	}
+	
 
 }
