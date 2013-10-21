@@ -21,6 +21,37 @@ public class GridTest {
 		assertThat(grid.isCenterTaken(), is(false));
 	}
 	
+	@Test
+	public void shouldReturnTrueIfTopLeftCornerIsFree(){
+		Grid grid = new Grid("-xxxxxxxx");
+		assertThat(grid.hasFreeCornerPosition(), is(true));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfTopRightCornerIsFree(){
+		Grid grid = new Grid("xx-xxxxxx");
+		assertThat(grid.hasFreeCornerPosition(), is(true));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfBottomRightCornerIsFree(){
+		Grid grid = new Grid("xxxxxxxx-");
+		assertThat(grid.hasFreeCornerPosition(), is(true));
+	}
+	
+	
+	@Test
+	public void shouldReturnTrueIfBottomLeftCornerIsFree(){
+		Grid grid = new Grid("xxxxxx-xx");
+		assertThat(grid.hasFreeCornerPosition(), is(true));
+	}
+	
+	@Test
+	public void shouldReturnFalseIfNoCornerIsFree(){
+		Grid grid = new Grid("x-x---x-x");
+		assertThat(grid.hasFreeCornerPosition(), is(false));
+	}
+	
 //	@Test
 //	public void shouldReturnTrueIfThereIsAWinningRow(){
 //		Grid grid = new Grid("xxx------");

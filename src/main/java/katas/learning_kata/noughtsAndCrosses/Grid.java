@@ -81,7 +81,7 @@ public class Grid {
 	}
 
 	public boolean hasFreeCornerPosition() {
-		return true;
+		return getAvailableCorner() != NO_MATCH_FOUND;
 	}
 
 	public int getAvailableCorner() {
