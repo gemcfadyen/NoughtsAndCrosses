@@ -39,13 +39,13 @@ public class AutomatedPlayerTest {
 	@Test
 	public void shouldIdentifyThereIsABlockingMoveToBeMade(){
 		when(grid.potentialWinningMove("o")).thenReturn(1);
-		when(grid.isAWinningMoveAt(1)).thenReturn(true);
+		when(grid.isACellInTheGrid(1)).thenReturn(true);
 		when(grid.takeNextMove("x", 1)).thenReturn(new Grid("oxo------"));
 		
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		
 		assertTrue(startingGrid.toString().contains("oxo"));
-		verify(grid).isAWinningMoveAt(1);
+		verify(grid).isACellInTheGrid(1);
 		verify(grid).takeNextMove("x", 1);
 		
 	}
@@ -53,13 +53,13 @@ public class AutomatedPlayerTest {
 	@Test
 	public void shouldIdentifyThereIsAWinningMoveToBeMade(){
 		when(grid.potentialWinningMove("x")).thenReturn(1);
-		when(grid.isAWinningMoveAt(1)).thenReturn(true);
+		when(grid.isACellInTheGrid(1)).thenReturn(true);
 		when(grid.takeNextMove("x", 1)).thenReturn(new Grid("xxx------"));
-		
+		 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		assertTrue(startingGrid.toString().contains("xxx"));
 		
-		verify(grid).isAWinningMoveAt(1);
+		verify(grid).isACellInTheGrid(1);
 		verify(grid).takeNextMove("x", 1);
 	}
 	

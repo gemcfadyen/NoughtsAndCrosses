@@ -72,7 +72,7 @@ public class Grid {
 		return NO_MATCH_FOUND;
 	}
 
-	public boolean isAWinningMoveAt(int position) {
+	public boolean isACellInTheGrid(int position) {
 		return position != NO_MATCH_FOUND;
 	}
 

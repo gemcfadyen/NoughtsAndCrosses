@@ -1,7 +1,10 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -58,5 +61,34 @@ public class GridTest {
 		assertThat(grid.toString(), is("---\nxox\n---\n"));
 	}
 	
+	@Test
+	public void shouldReturnTheIndexOfTheCellUsedToBlockOpponentFromWinning(){
+		Grid grid = new Grid("xx-------");
+		int index = grid.getIndexOfBlockingMove("o");
+		
+		assertThat(index, is(2));
+	}
+	
+	@Test
+	public void shouldReturnNoMatchIfThereAreNoPotentialWinsForOpponent(){
+		Grid grid = new Grid("o--------");
+		int index = grid.getIndexOfBlockingMove("x");
+		
+		assertThat(index, is(-1));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfTheIndexIsACellInTheGrid(){
+		Grid grid = new Grid("---------");
+		boolean isFree = grid.isACellInTheGrid(0);
+		assertTrue(isFree);
+	}
+	
+	@Test
+	public void shouldReturnFalseIfTheIndexIsNoMatchFound(){
+		Grid grid = new Grid("---------");
+		boolean isFree = grid.isACellInTheGrid(NO_MATCH_FOUND);
+		assertFalse(isFree);
+	}
 
 }

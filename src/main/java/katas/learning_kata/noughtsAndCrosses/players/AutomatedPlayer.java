@@ -63,7 +63,7 @@ public class AutomatedPlayer implements Player {
 	
 	private int indexOfWinningMoveFor(String symbol, Grid grid){
 		int potentialWinningMove = grid.potentialWinningMove(symbol);
-		if(grid.isAWinningMoveAt(potentialWinningMove)){
+		if(grid.isACellInTheGrid(potentialWinningMove)){
 			return potentialWinningMove;
 		}
 		return NO_MATCH_FOUND;
