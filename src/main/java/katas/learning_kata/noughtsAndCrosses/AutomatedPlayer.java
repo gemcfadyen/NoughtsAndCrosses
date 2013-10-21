@@ -7,16 +7,17 @@ import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 public class AutomatedPlayer implements Player {
 	private String symbol;
 	private String name;
+	private Prompt commandPrompt;
 
-	public AutomatedPlayer(String symbol, String name) {
+	public AutomatedPlayer(String symbol, String name, Prompt prompt) {
 		this.symbol = symbol;
 		this.name = name;
+		this.commandPrompt = prompt;
 	}
 
 	@Override
 	public Grid takesGo(Grid grid) {
-		System.out.println(grid.toString());
-		System.out.println("________________");
+		commandPrompt.displayBoard(grid);
 		
 		int indexOfNextMove = getIndexOfNextMove(grid);
 		return grid.takeNextMove(symbol, indexOfNextMove);

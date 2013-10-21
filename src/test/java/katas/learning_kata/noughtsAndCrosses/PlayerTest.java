@@ -14,11 +14,12 @@ import org.mockito.Mock;
 public class PlayerTest {
 	private Player automatedPlayer;
 	@Mock private Grid grid;
+	@Mock private Prompt commandPrompt;
 	
 	@Before
 	public void setup(){
 		initMocks(this);
-		automatedPlayer = new AutomatedPlayer("x", "X-Man");
+		automatedPlayer = new AutomatedPlayer("x", "X-Man", commandPrompt);
 	}
 	
 	@Test

@@ -15,8 +15,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommandPromptTest {
-	@Mock
-	private Grid grid;
+	@Mock private Grid grid;
 
 	@Test
 	public void shouldReadTheMoveFromTheCommandPrompt() {

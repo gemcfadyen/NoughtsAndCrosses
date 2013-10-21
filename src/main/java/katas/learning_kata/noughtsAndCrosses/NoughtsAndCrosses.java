@@ -12,11 +12,12 @@ public class NoughtsAndCrosses {
 	private Player playerO;
 	private Player[] players = new Player[2];
 	private Grid grid;
+	private Prompt commandPrompt;
 
 	NoughtsAndCrosses() {
 		grid = new Grid("---------");
-		playerX = new AutomatedPlayer("x", "pc-one");
-		playerO = new AutomatedPlayer("o", "pc-one");
+		playerX = new AutomatedPlayer("x", "pc-one", commandPrompt);
+		playerO = new AutomatedPlayer("o", "pc-one", commandPrompt);
 	}
 
 	private void determineTheOrderOfThePlayers() {
