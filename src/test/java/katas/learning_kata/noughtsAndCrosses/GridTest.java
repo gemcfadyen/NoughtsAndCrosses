@@ -30,5 +30,16 @@ public class GridTest {
 		assertThat(grid.toString(), is("---\nxxx\n---\n"));
 	}
 	
+	@Test
+	public void shouldReturnTrueIfThereIsAFreeSlotInTheGrid(){
+		Grid grid = new Grid("---------");
+		assertThat(grid.hasFreeSlot(), is(true));
+	}
+	
+	@Test
+	public void shouldReturnFalseIfThereAreNoFreeSlotsInTheGrid(){
+		Grid grid = new Grid("xoxoxoxoo");
+		assertThat(grid.hasFreeSlot(), is(false));
+	}
 
 }
