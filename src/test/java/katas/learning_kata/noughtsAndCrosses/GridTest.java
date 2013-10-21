@@ -17,5 +17,18 @@ public class GridTest {
 		Grid grid = new Grid("---------");
 		assertThat(grid.isCenterTaken(), is(false));
 	}
+	
+//	@Test
+//	public void shouldReturnTrueIfThereIsAWinningRow(){
+//		Grid grid = new Grid("xxx------");
+//		assertThat(grid.hasWinningRow(), is(true));
+//	}
+	
+	@Test 
+	public void shouldWriteTheGridOut(){
+		Grid grid = new Grid("---xxx---");
+		assertThat(grid.toString(), is("---\nxxx\n---\n"));
+	}
+	
 
 }

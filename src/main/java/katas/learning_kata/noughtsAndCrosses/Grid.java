@@ -77,7 +77,7 @@ public class Grid {
 	}
 
 	public boolean isCenterTaken() {
-		return !(board.charAt(4) == EMPTY_CELL);
+		return !(board.charAt(CENTER_CELL) == EMPTY_CELL);
 	}
 
 	public boolean hasFreeCornerPosition() {
