@@ -30,14 +30,26 @@ public class CommandPromptTest {
 
 	@Test
 	public void shouldDisplayTheBoard() {
-		when(grid.toString()).thenReturn("xxx\nxxx\noxo");
+		when(grid.toString()).thenReturn("xxx\nxxx\noxo\n");
 		Reader inputReader = new StringReader("1");
 		StringWriter outputWriter = new StringWriter();
 		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
 		
 		prompt.displayBoard(grid);
 		
-		assertThat(outputWriter.toString(), equalTo("xxx\nxxx\noxo"));
+		assertThat(outputWriter.toString(), equalTo("xxx\nxxx\noxo\n"));
 
+	}
+	
+	@Test
+	public void shouldPromptTheUserToTakeAGo(){
+		when(grid.toString()).thenReturn("xxx\nxxx\noxo\n");
+		Reader inputReader = new StringReader("1");
+		StringWriter outputWriter = new StringWriter();
+		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
+		
+		prompt.promptUser();
+		
+		assertThat(outputWriter.toString(), equalTo("Enter the index of your next move:\n"));
 	}
 }

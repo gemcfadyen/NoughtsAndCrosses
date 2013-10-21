@@ -15,6 +15,7 @@ public class HumanPlayer implements Player {
 	@Override
 	public Grid takesGo(Grid grid) {
 		prompt.displayBoard(grid);
+		prompt.promptUser();
 		int moveIndex = prompt.readNextMove();
 		return grid.takeNextMove(symbol, moveIndex);
 	}

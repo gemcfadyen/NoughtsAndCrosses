@@ -24,6 +24,7 @@ public class Grid {
 		StringBuffer boardToPrint = new StringBuffer(board.substring(0, 3)
 				+ "\n" + board.substring(3, 6) + "\n" + board.substring(6, 9)
 				+ "\n");
+		boardToPrint.append("__________________________________\n");
 
 		return boardToPrint.toString();
 	}
@@ -38,8 +39,7 @@ public class Grid {
 
 	public Grid takeNextMove(String symbol, int index) {
 		if (board.charAt(index) == '-') {
-			board = board.substring(0, index) + symbol
-					+ board.substring(index + 1, board.length());
+			board = board.substring(0, index) + symbol + board.substring(index + 1, board.length());
 		}
 
 		return this;

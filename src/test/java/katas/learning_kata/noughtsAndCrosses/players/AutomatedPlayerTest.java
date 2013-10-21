@@ -7,9 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import katas.learning_kata.noughtsAndCrosses.Grid;
-import katas.learning_kata.noughtsAndCrosses.players.AutomatedPlayer;
-import katas.learning_kata.noughtsAndCrosses.players.Player;
-import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,12 +15,11 @@ import org.mockito.Mock;
 public class AutomatedPlayerTest {
 	private Player automatedPlayer;
 	@Mock private Grid grid;
-	@Mock private Prompt commandPrompt;
 	
-	@Before
+	@Before 
 	public void setup(){
 		initMocks(this);
-		automatedPlayer = new AutomatedPlayer("x", "X-Man", commandPrompt);
+		automatedPlayer = new AutomatedPlayer("x", "X-Man");
 	}
 	
 	@Test
@@ -72,7 +68,7 @@ public class AutomatedPlayerTest {
 		
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		
-		assertThat(startingGrid.toString(), is("o--\n-x-\n---\n"));
+		assertThat(startingGrid.toString(), is("o--\n-x-\n---\n__________________________________\n"));
 		verify(grid).isCenterTaken();
 		verify(grid).takeNextMove("x", 4);
 	}
@@ -87,7 +83,7 @@ public class AutomatedPlayerTest {
 		when(grid.takeNextMove("x", 2)).thenReturn(new Grid("x-x-o----"));
 		
         Grid startingGrid = automatedPlayer.takesGo(grid);
-		assertThat(startingGrid.toString(), is("x-x\n-o-\n---\n"));
+		assertThat(startingGrid.toString(), is("x-x\n-o-\n---\n__________________________________\n"));
 		verify(grid).getAvailableCorner();
 	}
 	
@@ -101,7 +97,7 @@ public class AutomatedPlayerTest {
 		when(grid.takeNextMove("x", 3)).thenReturn(new Grid("oxoxx-xox"));
 	
         Grid startingGrid = automatedPlayer.takesGo(grid);
-		assertThat(startingGrid.toString(), is("oxo\nxx-\nxox\n"));
+		assertThat(startingGrid.toString(), is("oxo\nxx-\nxox\n__________________________________\n"));
 		verify(grid).getFirstFreeCell();
 	}
 	

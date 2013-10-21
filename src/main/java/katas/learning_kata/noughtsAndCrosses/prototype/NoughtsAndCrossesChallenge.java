@@ -81,7 +81,6 @@ public class NoughtsAndCrossesChallenge {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	protected String promptHumanUserForInput() {

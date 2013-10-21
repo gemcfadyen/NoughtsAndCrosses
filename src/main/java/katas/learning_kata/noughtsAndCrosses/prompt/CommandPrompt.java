@@ -31,6 +31,17 @@ public class CommandPrompt implements Prompt {
 	public void displayBoard(Grid grid) {
 		try {
 			outputWriter.write(grid.toString());
+			outputWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void promptUser() {
+		try {
+			outputWriter.write("Enter the index of your next move:\n");
+			outputWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

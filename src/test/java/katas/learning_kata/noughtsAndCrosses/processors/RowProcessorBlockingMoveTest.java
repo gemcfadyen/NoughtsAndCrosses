@@ -9,23 +9,19 @@ import static org.junit.Assert.assertThat;
 import java.util.Collection;
 
 import katas.learning_kata.noughtsAndCrosses.players.AutomatedPlayer;
-import katas.learning_kata.noughtsAndCrosses.processors.RowProcessor;
-import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @RunWith(Parameterized.class)
 public class RowProcessorBlockingMoveTest {
 	private String board;
-	@Mock private static Prompt commandPrompt;
-	private static AutomatedPlayer playerO = new AutomatedPlayer(O, "fred", commandPrompt);
-	private static AutomatedPlayer playerX = new AutomatedPlayer(X, "bob", commandPrompt);
+	private static AutomatedPlayer playerO = new AutomatedPlayer(O, "fred");
+	private static AutomatedPlayer playerX = new AutomatedPlayer(X, "bob");
 	private static AutomatedPlayer player;
 	private int blockingIndex;
 

@@ -4,23 +4,18 @@ import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.Grid.O;
 import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 import katas.learning_kata.noughtsAndCrosses.Grid;
-import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 public class AutomatedPlayer implements Player {
 	private String symbol;
 	private String name;
-	private Prompt commandPrompt;
 
-	public AutomatedPlayer(String symbol, String name, Prompt prompt) {
+	public AutomatedPlayer(String symbol, String name) {
 		this.symbol = symbol;
 		this.name = name;
-		this.commandPrompt = prompt;
 	}
 
 	@Override
 	public Grid takesGo(Grid grid) {
-		commandPrompt.displayBoard(grid);
-		
 		int indexOfNextMove = getIndexOfNextMove(grid);
 		return grid.takeNextMove(symbol, indexOfNextMove);
 

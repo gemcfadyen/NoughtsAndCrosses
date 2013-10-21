@@ -4,8 +4,16 @@ import static java.lang.String.format;
 import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.NO_WINNER;
 import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.WINNER;
 import static katas.learning_kata.noughtsAndCrosses.GameStatusBuilder.aGameStatusBuilder;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
 import katas.learning_kata.noughtsAndCrosses.players.AutomatedPlayer;
+import katas.learning_kata.noughtsAndCrosses.players.HumanPlayer;
 import katas.learning_kata.noughtsAndCrosses.players.Player;
+import katas.learning_kata.noughtsAndCrosses.prompt.CommandPrompt;
 import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 public class NoughtsAndCrosses {
@@ -15,12 +23,18 @@ public class NoughtsAndCrosses {
 	private Player playerO;
 	private Player[] players = new Player[2];
 	private Grid grid;
-	private Prompt commandPrompt;
 
 	NoughtsAndCrosses() {
 		grid = new Grid("---------");
-		playerX = new AutomatedPlayer("x", "pc-one", commandPrompt);
-		playerO = new AutomatedPlayer("o", "pc-one", commandPrompt);
+		setupCommandPrompt();
+		playerX = new AutomatedPlayer("x", "pc-one");
+		playerO = new HumanPlayer("o", setupCommandPrompt());
+	}
+
+	private Prompt setupCommandPrompt() {
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+		return new CommandPrompt(bufferedReader, bufferedWriter);
 	}
 
 	private void determineTheOrderOfThePlayers() {
