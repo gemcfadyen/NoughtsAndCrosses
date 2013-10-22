@@ -1,5 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses.prompt;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -8,21 +9,24 @@ import katas.learning_kata.noughtsAndCrosses.Grid;
 
 public class CommandPrompt implements Prompt {
 
-	private Reader inputReader;
+	private BufferedReader inputReader;
 	private Writer outputWriter;
 
 	public CommandPrompt(Reader inputReader, Writer outputWriter) {
-		this.inputReader = inputReader;
+		this.inputReader = new BufferedReader(inputReader);
 		this.outputWriter = outputWriter;
 	}
 
 	@Override
 	public int readNextMove() {
+		return Integer.parseInt(readLine());
+	}
+
+	private String readLine() {
 		try {
-			return Character.getNumericValue(inputReader.read());
+			return inputReader.readLine();
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 		
 	}

@@ -59,11 +59,23 @@ public class GridTest {
 		assertThat(grid.hasFreeCornerPosition(), is(false));
 	}
 	
-//	@Test
-//	public void shouldReturnTrueIfThereIsAWinningRow(){
-//		Grid grid = new Grid("xxx------");
-//		assertThat(grid.hasWinningRow(), is(true));
-//	}
+	@Test
+	public void shouldReturnTrueIfThereIsAWinningRow(){
+		Grid grid = new Grid("xxx------");
+		assertThat(grid.hasWinningRow(), is(true));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfThereIsAWinningRowOfZeros(){
+		Grid grid = new Grid("------ooo");
+		assertThat(grid.hasWinningRow(), is(true));
+	}
+	
+	@Test
+	public void shouldReturnFalseIfThereIsNoWinningRow(){
+		Grid grid = new Grid("-------oo");
+		assertThat(grid.hasWinningRow(), is(false));
+	}
 	
 	@Test 
 	public void shouldWriteTheGridOut(){

@@ -1,6 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses.prompt;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -51,5 +52,20 @@ public class CommandPromptTest {
 		prompt.promptUser();
 		
 		assertThat(outputWriter.toString(), equalTo("Enter the index of your next move:\n"));
+	}
+	
+	@Test
+	public void shouldIgnoreNewLineCharacters(){
+		Reader inputReader = new StringReader("1\n2");
+		StringWriter outputWriter = new StringWriter();
+		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
+		
+		int firstValue = prompt.readNextMove();
+		int secondValue = prompt.readNextMove();
+		
+		assertThat(firstValue, is(1));
+		assertThat(secondValue, is(2));
+		
+		
 	}
 }

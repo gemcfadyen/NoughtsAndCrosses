@@ -19,6 +19,15 @@ public abstract class Processor implements BoardProcessor {
 		Pattern winningRowPattern = Pattern.compile(symbol + EMPTY_CELL + symbol
 				+ "|" + symbol + symbol + "-|-" + symbol + symbol);
 
+		return matchPattern(row, winningRowPattern);
+	}
+	
+	protected boolean hasWinnerFor(String row){
+		Pattern winningPattern = Pattern.compile("xxx|ooo");
+		return matchPattern(row, winningPattern);
+	}
+
+	private boolean matchPattern(String row, Pattern winningRowPattern) {
 		Matcher matcher = winningRowPattern.matcher(row);
 
 		while (matcher.find()) {

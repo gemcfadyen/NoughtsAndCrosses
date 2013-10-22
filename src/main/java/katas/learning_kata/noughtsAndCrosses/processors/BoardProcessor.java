@@ -6,4 +6,5 @@ public interface BoardProcessor {
 	char EMPTY_CELL = '-';
 
 	int potentialWinningMove(String playersSymbol);
+	boolean hasWinner();
 }
