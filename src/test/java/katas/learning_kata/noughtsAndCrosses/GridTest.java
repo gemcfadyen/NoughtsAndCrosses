@@ -95,6 +95,12 @@ public class GridTest {
 		assertThat(grid.hasWinningRow(), is(true));
 	}
 	
+	@Test
+	public void shouldReturnTrueIfThereIsAWinningDiagonalStreak(){
+		Grid grid = new Grid("x---x---x");
+		assertThat(grid.hasWinningRow(), is(true));
+	}
+	
 	@Test 
 	public void shouldWriteTheGridOut(){
 		Grid grid = new Grid("---xxx---");
