@@ -15,9 +15,9 @@ public class DiagonalProcessor extends Processor {
 	public int potentialWinningMove(String playersSymbol) {
 		List<int[]> diagonalIndexes = populateDiagonalIndices();
 		for (int[] diagonalIndex : diagonalIndexes) {
-			String backslashDiagonalRow = getDiagonalRow(diagonalIndex[0],
+			String diagonalRow = getDiagonalRow(diagonalIndex[0],
 					diagonalIndex[1], diagonalIndex[2]);
-			int position = findIndexOfWinningMoveFor(backslashDiagonalRow, playersSymbol);
+			int position = findIndexOfWinningMoveFor(diagonalRow, playersSymbol);
 			if (isAWinningMoveAt(position))
 				return winningPosition(diagonalIndex, position);
 		}
@@ -41,7 +41,14 @@ public class DiagonalProcessor extends Processor {
 
 	@Override
 	public boolean hasWinner() {
-		// TODO Auto-generated method stub
+		List<int[]> diagonalIndexes = populateDiagonalIndices();
+		for (int[] diagonalIndex : diagonalIndexes) {
+			String diagonalRow = getDiagonalRow(diagonalIndex[0],
+					diagonalIndex[1], diagonalIndex[2]);
+		//	int position = findIndexOfWinningMoveFor(backslashDiagonalRow, playersSymbol);
+			if (hasWinnerFor(diagonalRow))
+				return true;
+		}
 		return false;
 	}
 
