@@ -101,6 +101,12 @@ public class GridTest {
 		assertThat(grid.hasWinningRow(), is(true));
 	}
 	
+	@Test
+	public void shouldReturnTrueIfThereIsAWinningDiagonalStreakOfZeros(){
+		Grid grid = new Grid("--o-o-o--");
+		assertThat(grid.hasWinningRow(), is(true));
+	}
+	
 	@Test 
 	public void shouldWriteTheGridOut(){
 		Grid grid = new Grid("---xxx---");
