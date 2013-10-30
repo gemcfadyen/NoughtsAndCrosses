@@ -1,6 +1,8 @@
 NoughtsAndCrosses
 =================
 
+This project is running on the continuous build server drone.io.
+The current [![Build Status](https://drone.io/github.com/gemcfadyen/NoughtsAndCrosses/status.png)](https://drone.io/github.com/gemcfadyen/NoughtsAndCrosses/latest)
 
 Initial Idea
 ============
