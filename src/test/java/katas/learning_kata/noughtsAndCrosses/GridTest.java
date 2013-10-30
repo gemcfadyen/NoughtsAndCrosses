@@ -179,10 +179,17 @@ public class GridTest {
 	}
 	
 	@Test
-	public void shouldReturnTheSymbolOfWinner(){
+	public void shouldReturnTheSymbolOfARowWinner(){
 		Grid grid = new Grid("xxx------");
 		String winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is("x"));
+	}
+	
+	@Test
+	public void shouldReturnTheSymbolOfAColumnWinner(){
+		Grid grid = new Grid("o--o--o--");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("o"));
 	}
 
 }

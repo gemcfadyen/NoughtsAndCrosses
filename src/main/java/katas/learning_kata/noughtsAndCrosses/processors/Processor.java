@@ -41,7 +41,7 @@ public abstract class Processor implements BoardProcessor {
 
 		return false;
 	}
-	
+		
 	
 	protected int winningPosition(int rowIndex, int position) {
 		return startingIndex(rowIndex) + position;

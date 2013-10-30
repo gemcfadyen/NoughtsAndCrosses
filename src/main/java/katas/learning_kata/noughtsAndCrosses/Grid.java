@@ -38,7 +38,18 @@ public class Grid {
 
 	public String getWinningSymbol() {
 		RowProcessor rowProcessor = new RowProcessor(board);
-		return rowProcessor.getWinningSymbol();
+		String winningSymbolFromRows = rowProcessor.getWinningSymbol();
+		ColumnProcessor columnProcessor = new ColumnProcessor(board);
+		String winningSymbolFromColumns = columnProcessor.getWinningSymbol();
+		
+		if(winningSymbolFromRows != "-1"){
+			return winningSymbolFromRows;
+		}
+		
+		if(winningSymbolFromColumns != "-1"){
+			return winningSymbolFromColumns;
+		}
+		return "-1";
 	}
 
 	public Grid takeNextMove(String symbol, int index) {

@@ -38,12 +38,25 @@ public class ColumnProcessor extends Processor {
 	public boolean hasWinner() {
 		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
 			String column = getColumnStartingAtIndex(columnIndex);
-			
 			if(hasWinningEntryForCrosses(column) || hasWinningEntryOfNoughts(column)){
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	public String getWinningSymbol() {
+		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
+			String column = getColumnStartingAtIndex(columnIndex);
+			if (hasWinningEntryOfNoughts(column) ) {
+				return "o";
+			}
+			
+			if(hasWinningEntryForCrosses(column)){
+				return "x";
+			}
+		}
+		return "-1";
 	}
 	
 
