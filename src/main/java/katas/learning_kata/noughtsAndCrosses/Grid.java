@@ -37,7 +37,8 @@ public class Grid {
 	}
 
 	public String getWinningSymbol() {
-		return null;
+		RowProcessor rowProcessor = new RowProcessor(board);
+		return rowProcessor.getWinningSymbol();
 	}
 
 	public Grid takeNextMove(String symbol, int index) {

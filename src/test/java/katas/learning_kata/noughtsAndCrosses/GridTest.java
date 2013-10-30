@@ -177,5 +177,12 @@ public class GridTest {
 		int index = grid.getFirstFreeCell();
 		assertThat(index, is(0));
 	}
+	
+	@Test
+	public void shouldReturnTheSymbolOfWinner(){
+		Grid grid = new Grid("xxx------");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("x"));
+	}
 
 }

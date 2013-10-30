@@ -22,9 +22,14 @@ public abstract class Processor implements BoardProcessor {
 		return matchPattern(row, winningRowPattern);
 	}
 	
-	protected boolean hasWinnerFor(String row){
-		Pattern winningPattern = Pattern.compile("xxx|ooo");
-		return matchPattern(row, winningPattern);
+	protected boolean hasWinningEntryForCrosses(String line){
+		Pattern winningPattern = Pattern.compile("xxx");
+		return matchPattern(line, winningPattern);
+	}
+	
+	protected boolean hasWinningEntryOfNoughts(String line){
+		Pattern winningPattern = Pattern.compile("ooo");
+		return matchPattern(line, winningPattern);
 	}
 
 	private boolean matchPattern(String row, Pattern winningRowPattern) {

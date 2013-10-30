@@ -39,7 +39,7 @@ public class ColumnProcessor extends Processor {
 		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
 			String column = getColumnStartingAtIndex(columnIndex);
 			
-			if(hasWinnerFor(column)){
+			if(hasWinningEntryForCrosses(column) || hasWinningEntryOfNoughts(column)){
 				return true;
 			}
 		}

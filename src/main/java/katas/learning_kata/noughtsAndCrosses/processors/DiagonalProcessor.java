@@ -43,10 +43,8 @@ public class DiagonalProcessor extends Processor {
 	public boolean hasWinner() {
 		List<int[]> diagonalIndexes = populateDiagonalIndices();
 		for (int[] diagonalIndex : diagonalIndexes) {
-			String diagonalRow = getDiagonalRow(diagonalIndex[0],
-					diagonalIndex[1], diagonalIndex[2]);
-		//	int position = findIndexOfWinningMoveFor(backslashDiagonalRow, playersSymbol);
-			if (hasWinnerFor(diagonalRow))
+			String diagonalRow = getDiagonalRow(diagonalIndex[0], diagonalIndex[1], diagonalIndex[2]);
+			if (hasWinningEntryForCrosses(diagonalRow) || hasWinningEntryOfNoughts(diagonalRow))
 				return true;
 		}
 		return false;
