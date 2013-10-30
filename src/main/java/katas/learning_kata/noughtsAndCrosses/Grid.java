@@ -41,6 +41,8 @@ public class Grid {
 		String winningSymbolFromRows = rowProcessor.getWinningSymbol();
 		ColumnProcessor columnProcessor = new ColumnProcessor(board);
 		String winningSymbolFromColumns = columnProcessor.getWinningSymbol();
+		DiagonalProcessor diagonalProcessor = new DiagonalProcessor(board);
+		String winningSymbolFromDiagonal = diagonalProcessor.getWinningSymbol();
 		
 		if(winningSymbolFromRows != "-1"){
 			return winningSymbolFromRows;
@@ -48,6 +50,10 @@ public class Grid {
 		
 		if(winningSymbolFromColumns != "-1"){
 			return winningSymbolFromColumns;
+		}
+		
+		if(winningSymbolFromDiagonal != "-1"){
+			return winningSymbolFromDiagonal;
 		}
 		return "-1";
 	}

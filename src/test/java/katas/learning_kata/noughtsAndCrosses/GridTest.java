@@ -15,181 +15,189 @@ public class GridTest {
 		Grid grid = new Grid("----x----");
 		assertThat(grid.isCenterTaken(), is(true));
 	}
-	
+
 	@Test
 	public void shouldReturnFalseIfTheCenterIsNotTaken() {
 		Grid grid = new Grid("---------");
 		assertThat(grid.isCenterTaken(), is(false));
 	}
-	
+
 	@Test
-	public void shouldReturnTheCentreCell(){
+	public void shouldReturnTheCentreCell() {
 		Grid grid = new Grid("---------");
 		assertThat(grid.getCentreCell(), is(CENTER_CELL));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfTopLeftCornerIsFree(){
+	public void shouldReturnTrueIfTopLeftCornerIsFree() {
 		Grid grid = new Grid("-xxxxxxxx");
 		assertThat(grid.hasFreeCornerPosition(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfTopRightCornerIsFree(){
+	public void shouldReturnTrueIfTopRightCornerIsFree() {
 		Grid grid = new Grid("xx-xxxxxx");
 		assertThat(grid.hasFreeCornerPosition(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfBottomRightCornerIsFree(){
+	public void shouldReturnTrueIfBottomRightCornerIsFree() {
 		Grid grid = new Grid("xxxxxxxx-");
 		assertThat(grid.hasFreeCornerPosition(), is(true));
 	}
-	
-	
+
 	@Test
-	public void shouldReturnTrueIfBottomLeftCornerIsFree(){
+	public void shouldReturnTrueIfBottomLeftCornerIsFree() {
 		Grid grid = new Grid("xxxxxx-xx");
 		assertThat(grid.hasFreeCornerPosition(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnFalseIfNoCornerIsFree(){
+	public void shouldReturnFalseIfNoCornerIsFree() {
 		Grid grid = new Grid("x-x---x-x");
 		assertThat(grid.hasFreeCornerPosition(), is(false));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfThereIsAWinningRow(){
+	public void shouldReturnTrueIfThereIsAWinningRow() {
 		Grid grid = new Grid("xxx------");
 		assertThat(grid.hasWinningRow(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfThereIsAWinningRowOfZeros(){
+	public void shouldReturnTrueIfThereIsAWinningRowOfZeros() {
 		Grid grid = new Grid("------ooo");
 		assertThat(grid.hasWinningRow(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnFalseIfThereIsNoWinningRow(){
+	public void shouldReturnFalseIfThereIsNoWinningRow() {
 		Grid grid = new Grid("-------oo");
 		assertThat(grid.hasWinningRow(), is(false));
 	}
-	
+
 	@Test
-	public void shouldReturnFalseIfThereIsNoWinningRowInTheGridInAnyDirection(){
+	public void shouldReturnFalseIfThereIsNoWinningRowInTheGridInAnyDirection() {
 		Grid grid = new Grid("---------");
 		assertThat(grid.hasWinningRow(), is(false));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfThereIsAWinningColumnOfZeros(){
+	public void shouldReturnTrueIfThereIsAWinningColumnOfZeros() {
 		Grid grid = new Grid("o--o--o--");
 		assertThat(grid.hasWinningRow(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfThereIsAWinningColumn(){
+	public void shouldReturnTrueIfThereIsAWinningColumn() {
 		Grid grid = new Grid("x--x--x--");
 		assertThat(grid.hasWinningRow(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfThereIsAWinningDiagonalStreak(){
+	public void shouldReturnTrueIfThereIsAWinningDiagonalStreak() {
 		Grid grid = new Grid("x---x---x");
 		assertThat(grid.hasWinningRow(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfThereIsAWinningDiagonalStreakOfZeros(){
+	public void shouldReturnTrueIfThereIsAWinningDiagonalStreakOfZeros() {
 		Grid grid = new Grid("--o-o-o--");
 		assertThat(grid.hasWinningRow(), is(true));
 	}
-	
-	@Test 
-	public void shouldWriteTheGridOut(){
-		Grid grid = new Grid("---xxx---");
-		assertThat(grid.toString(), is("---\nxxx\n---\n__________________________________\n"));
-	}
-	
+
 	@Test
-	public void shouldReturnTrueIfThereIsAFreeSlotInTheGrid(){
+	public void shouldWriteTheGridOut() {
+		Grid grid = new Grid("---xxx---");
+		assertThat(grid.toString(),
+				is("---\nxxx\n---\n__________________________________\n"));
+	}
+
+	@Test
+	public void shouldReturnTrueIfThereIsAFreeSlotInTheGrid() {
 		Grid grid = new Grid("---------");
 		assertThat(grid.hasFreeSlot(), is(true));
 	}
-	
+
 	@Test
-	public void shouldReturnFalseIfThereAreNoFreeSlotsInTheGrid(){
+	public void shouldReturnFalseIfThereAreNoFreeSlotsInTheGrid() {
 		Grid grid = new Grid("xoxoxoxoo");
 		assertThat(grid.hasFreeSlot(), is(false));
 	}
-	
+
 	@Test
-	public void shouldPlaceThePlayersSymbolAtTheSpecifiedIndexInTheGrid(){
+	public void shouldPlaceThePlayersSymbolAtTheSpecifiedIndexInTheGrid() {
 		Grid grid = new Grid("---xox---");
 		grid.takeNextMove("o", 0);
-		
-		assertThat(grid.toString(), is("o--\nxox\n---\n__________________________________\n"));
+
+		assertThat(grid.toString(),
+				is("o--\nxox\n---\n__________________________________\n"));
 	}
-	
+
 	@Test
-	public void shouldNotPlaceThePlayersSymbolInAnOccupiedCell(){
+	public void shouldNotPlaceThePlayersSymbolInAnOccupiedCell() {
 		Grid grid = new Grid("---xox---");
 		grid.takeNextMove("o", 3);
-		
-		assertThat(grid.toString(), is("---\nxox\n---\n__________________________________\n"));
+
+		assertThat(grid.toString(),
+				is("---\nxox\n---\n__________________________________\n"));
 	}
-	
+
 	@Test
-	public void shouldReturnTheIndexOfTheCellUsedToBlockOpponentFromWinning(){
+	public void shouldReturnTheIndexOfTheCellUsedToBlockOpponentFromWinning() {
 		Grid grid = new Grid("xx-------");
 		int index = grid.getIndexOfBlockingMove("o");
-		
+
 		assertThat(index, is(2));
 	}
-	
+
 	@Test
-	public void shouldReturnNoMatchIfThereAreNoPotentialWinsForOpponent(){
+	public void shouldReturnNoMatchIfThereAreNoPotentialWinsForOpponent() {
 		Grid grid = new Grid("o--------");
 		int index = grid.getIndexOfBlockingMove("x");
-		
+
 		assertThat(index, is(-1));
 	}
-	
+
 	@Test
-	public void shouldReturnTrueIfTheIndexIsACellInTheGrid(){
+	public void shouldReturnTrueIfTheIndexIsACellInTheGrid() {
 		Grid grid = new Grid("---------");
 		boolean isFree = grid.isACellInTheGrid(0);
 		assertTrue(isFree);
 	}
-	
+
 	@Test
-	public void shouldReturnFalseIfTheIndexIsNoMatchFound(){
+	public void shouldReturnFalseIfTheIndexIsNoMatchFound() {
 		Grid grid = new Grid("---------");
 		boolean isFree = grid.isACellInTheGrid(NO_MATCH_FOUND);
 		assertFalse(isFree);
 	}
-	
+
 	@Test
-	public void shouldReturnTheFirstFreeIndexOnTheBoard(){
+	public void shouldReturnTheFirstFreeIndexOnTheBoard() {
 		Grid grid = new Grid("---------");
 		int index = grid.getFirstFreeCell();
 		assertThat(index, is(0));
 	}
-	
+
 	@Test
-	public void shouldReturnTheSymbolOfARowWinner(){
+	public void shouldReturnTheSymbolOfARowWinner() {
 		Grid grid = new Grid("xxx------");
 		String winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is("x"));
 	}
-	
+
 	@Test
-	public void shouldReturnTheSymbolOfAColumnWinner(){
+	public void shouldReturnTheSymbolOfAColumnWinner() {
 		Grid grid = new Grid("o--o--o--");
 		String winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is("o"));
 	}
 
+	@Test
+	public void shouldReturnTheSymbolOfADiagonalWinner() {
+		Grid grid = new Grid("x---x---x");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("x"));
+	}
 }
