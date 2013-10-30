@@ -39,4 +39,10 @@ public class DiagonalProcessor extends Processor {
 		return diagonalRow.toString();
 	}
 
+	@Override
+	public boolean hasWinner() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

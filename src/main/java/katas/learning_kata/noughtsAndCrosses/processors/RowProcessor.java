@@ -33,7 +33,9 @@ public class RowProcessor extends Processor {
 	public boolean hasWinner() {
 		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
 			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
-			if (hasWinnerFor(row)) return true;
+			if (hasWinnerFor(row)) {
+				return true;
+			}
 		}
 		return false;
 	}

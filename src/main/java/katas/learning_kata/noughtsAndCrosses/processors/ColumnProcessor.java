@@ -33,6 +33,18 @@ public class ColumnProcessor extends Processor {
 		return new int[] { columnIndex, GRID_DIMENSION + columnIndex,
 				GRID_DIMENSION * 2 + columnIndex };
 	}
+
+	@Override
+	public boolean hasWinner() {
+		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
+			String column = getColumnStartingAtIndex(columnIndex);
+			
+			if(hasWinnerFor(column)){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 
 }

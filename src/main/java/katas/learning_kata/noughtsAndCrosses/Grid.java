@@ -18,7 +18,8 @@ public class Grid {
 
 	public boolean hasWinningRow() {
 		RowProcessor rowProcessor = new RowProcessor(board);
-		return rowProcessor.hasWinner();
+		ColumnProcessor columnProcessor = new ColumnProcessor(board);
+		return rowProcessor.hasWinner() || columnProcessor.hasWinner();
 	}
 
 	public String toString() {

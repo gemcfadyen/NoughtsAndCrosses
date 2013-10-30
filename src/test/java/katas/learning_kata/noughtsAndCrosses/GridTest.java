@@ -77,6 +77,24 @@ public class GridTest {
 		assertThat(grid.hasWinningRow(), is(false));
 	}
 	
+	@Test
+	public void shouldReturnFalseIfThereIsNoWinningRowInTheGridInAnyDirection(){
+		Grid grid = new Grid("---------");
+		assertThat(grid.hasWinningRow(), is(false));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfThereIsAWinningColumnOfZeros(){
+		Grid grid = new Grid("o--o--o--");
+		assertThat(grid.hasWinningRow(), is(true));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfThereIsAWinningColumn(){
+		Grid grid = new Grid("x--x--x--");
+		assertThat(grid.hasWinningRow(), is(true));
+	}
+	
 	@Test 
 	public void shouldWriteTheGridOut(){
 		Grid grid = new Grid("---xxx---");
