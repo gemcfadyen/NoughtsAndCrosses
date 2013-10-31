@@ -25,9 +25,4 @@ public class HumanPlayer implements Player {
 		return symbol;
 	}
 
-	@Override
-	public String getName() {
-		return null;
-	}
-
 }

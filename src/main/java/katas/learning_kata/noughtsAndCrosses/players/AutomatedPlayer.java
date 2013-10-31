@@ -7,11 +7,9 @@ import katas.learning_kata.noughtsAndCrosses.Grid;
 
 public class AutomatedPlayer implements Player {
 	private String symbol;
-	private String name;
 
-	public AutomatedPlayer(String symbol, String name) {
+	public AutomatedPlayer(String symbol) {
 		this.symbol = symbol;
-		this.name = name;
 	}
 
 	@Override
@@ -71,10 +69,5 @@ public class AutomatedPlayer implements Player {
 	@Override
 	public String getSymbol() {
 		return symbol;
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 }

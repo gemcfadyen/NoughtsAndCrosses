@@ -27,7 +27,7 @@ public class NoughtsAndCrosses {
 	NoughtsAndCrosses() {
 		grid = new Grid("---------");
 		setupCommandPrompt();
-		playerX = new AutomatedPlayer("x", "pc-one");
+		playerX = new AutomatedPlayer("x");
 		playerO = new HumanPlayer("o", setupCommandPrompt());
 	}
 
@@ -75,7 +75,7 @@ public class NoughtsAndCrosses {
 	private String getTheNameOfThePlayerUsingThe(String winningSymbol) {
 		for (Player player : players) {
 			if (player.getSymbol().equals(winningSymbol)) {
-				return player.getName();
+				return player.getSymbol();
 			}
 		}
 		return "";

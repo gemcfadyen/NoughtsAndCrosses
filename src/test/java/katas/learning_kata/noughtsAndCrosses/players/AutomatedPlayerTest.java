@@ -19,7 +19,7 @@ public class AutomatedPlayerTest {
 	@Before 
 	public void setup(){
 		initMocks(this);
-		automatedPlayer = new AutomatedPlayer("x", "X-Man");
+		automatedPlayer = new AutomatedPlayer("x");
 	}
 	
 	@Test
@@ -27,11 +27,7 @@ public class AutomatedPlayerTest {
 		assertThat(automatedPlayer.getSymbol(), is("x"));
 	}
 	
-	@Test
-	public void shouldReturnTheNameOfThePlayer(){
-		assertThat(automatedPlayer.getName(), is("X-Man"));
-	}
-	
+
 	@Test
 	public void shouldIdentifyThereIsABlockingMoveToBeMade(){
 		when(grid.potentialWinningMove("o")).thenReturn(1);

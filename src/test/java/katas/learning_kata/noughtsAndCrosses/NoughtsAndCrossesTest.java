@@ -34,12 +34,11 @@ public class NoughtsAndCrossesTest {
 		when(grid.toString()).thenReturn("ooo\n---\n---");
 		when(playerO.getSymbol()).thenReturn("o");
 		when(playerX.getSymbol()).thenReturn("x");
-		when(playerO.getName()).thenReturn("O-Man"); 
 		
 		GameStatus gameOverMessage =  noughtsAndCrosses.playGame();
 
 		assertThat(gameOverMessage.getStatus(), is(GameStates.WINNER));		
-		assertThat(gameOverMessage.getMessage(), is("Congratulations [O-Man] you have won! \n [ooo\n---\n---]"));	
+		assertThat(gameOverMessage.getMessage(), is("Congratulations [o] you have won! \n [ooo\n---\n---]"));	
 	}
 
 	@Test
@@ -78,11 +77,10 @@ public class NoughtsAndCrossesTest {
 		when(grid.getWinningSymbol()).thenReturn("x");
 		when(grid.toString()).thenReturn("xxx\n---\n---");
 		when(playerX.getSymbol()).thenReturn("x");
-		when(playerX.getName()).thenReturn("X-Man");
 		when(playerX.takesGo(grid)).thenReturn(new Grid("xxx------"));
 		
 		GameStatus winningMessage = noughtsAndCrosses.playGame();
 		assertThat(winningMessage.getStatus(), is(GameStates.WINNER));		
-		assertThat(winningMessage.getMessage(), is("Congratulations [X-Man] you have won! \n [xxx\n---\n---]"));
+		assertThat(winningMessage.getMessage(), is("Congratulations [x] you have won! \n [xxx\n---\n---]"));
 	}
 }

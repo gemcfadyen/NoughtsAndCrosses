@@ -20,8 +20,8 @@ import org.mockito.MockitoAnnotations;
 @RunWith(Parameterized.class)
 public class DiagonalProcessorBlockingMoveTest {
 	private String board;
-	private static AutomatedPlayer playerO = new AutomatedPlayer(O, "fred");
-	private static AutomatedPlayer playerX = new AutomatedPlayer(X, "bob");
+	private static AutomatedPlayer playerO = new AutomatedPlayer(O);
+	private static AutomatedPlayer playerX = new AutomatedPlayer(X);
 	private static AutomatedPlayer player;
 	private int blockingIndex;
 
