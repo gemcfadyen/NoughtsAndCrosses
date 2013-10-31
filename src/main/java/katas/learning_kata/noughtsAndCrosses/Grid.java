@@ -1,5 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static java.lang.String.valueOf;
 import katas.learning_kata.noughtsAndCrosses.processors.ColumnProcessor;
 import katas.learning_kata.noughtsAndCrosses.processors.DiagonalProcessor;
 import katas.learning_kata.noughtsAndCrosses.processors.RowProcessor;
@@ -38,24 +39,21 @@ public class Grid {
 
 	public String getWinningSymbol() {
 		RowProcessor rowProcessor = new RowProcessor(board);
-		String winningSymbolFromRows = rowProcessor.getWinningSymbol();
 		ColumnProcessor columnProcessor = new ColumnProcessor(board);
-		String winningSymbolFromColumns = columnProcessor.getWinningSymbol();
 		DiagonalProcessor diagonalProcessor = new DiagonalProcessor(board);
-		String winningSymbolFromDiagonal = diagonalProcessor.getWinningSymbol();
 		
-		if(winningSymbolFromRows != "-1"){
-			return winningSymbolFromRows;
+		return determineWhichSymbolHadAWinningLine(rowProcessor.getWinningSymbol(), 
+											columnProcessor.getWinningSymbol(),
+											diagonalProcessor.getWinningSymbol());
+	}
+	
+	private String determineWhichSymbolHadAWinningLine(String... lines){
+		for(String line: lines){
+			if(!line.equals(valueOf(NO_MATCH_FOUND))){
+				return line;
+			}
 		}
-		
-		if(winningSymbolFromColumns != "-1"){
-			return winningSymbolFromColumns;
-		}
-		
-		if(winningSymbolFromDiagonal != "-1"){
-			return winningSymbolFromDiagonal;
-		}
-		return "-1";
+		return valueOf(NO_MATCH_FOUND);
 	}
 
 	public Grid takeNextMove(String symbol, int index) {

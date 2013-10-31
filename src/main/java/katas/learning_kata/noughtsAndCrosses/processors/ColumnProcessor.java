@@ -1,5 +1,9 @@
 package katas.learning_kata.noughtsAndCrosses.processors;
 
+import static java.lang.String.valueOf;
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+
 
 public class ColumnProcessor extends Processor {
 
@@ -49,14 +53,14 @@ public class ColumnProcessor extends Processor {
 		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
 			String column = getColumnStartingAtIndex(columnIndex);
 			if (hasWinningEntryOfNoughts(column) ) {
-				return "o";
+				return O;
 			}
 			
 			if(hasWinningEntryForCrosses(column)){
-				return "x";
+				return X;
 			}
 		}
-		return "-1";
+		return valueOf(NO_MATCH_FOUND);
 	}
 	
 

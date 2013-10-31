@@ -1,5 +1,9 @@
 package katas.learning_kata.noughtsAndCrosses.processors;
 
+import static java.lang.String.valueOf;
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,13 +59,13 @@ public class DiagonalProcessor extends Processor {
 		for (int[] diagonalIndex : diagonalIndexes) {
 			String diagonalRow = getDiagonalRow(diagonalIndex[0], diagonalIndex[1], diagonalIndex[2]);
 			if (hasWinningEntryOfNoughts(diagonalRow) ) {
-				return "o";
+				return O;
 			}
 			
 			if(hasWinningEntryForCrosses(diagonalRow)){
-				return "x";
+				return X;
 			}
 		}
-		return "-1";
+		return valueOf(NO_MATCH_FOUND);
 	}
 }
