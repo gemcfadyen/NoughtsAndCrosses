@@ -1,8 +1,8 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 import static org.mockito.Mockito.verify;
 import katas.learning_kata.noughtsAndCrosses.Grid;
-import katas.learning_kata.noughtsAndCrosses.players.HumanPlayer;
 import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class HumanPlayerTest {
 	
 	@Test
 	public void shouldTakeTheChosenMoveFromThePrompt(){
-		HumanPlayer human = new HumanPlayer("x", prompt);
+		HumanPlayer human = new HumanPlayer(X, prompt);
 		BDDMockito.given(prompt.readNextMove()).willReturn(1);
 		
 		human.takesGo(grid);
@@ -28,7 +28,7 @@ public class HumanPlayerTest {
 	
 	@Test
 	public void shouldDisplayTheCurrentBoardWhenPromptingTheUserForNextMove(){
-		HumanPlayer human = new HumanPlayer("x", prompt);
+		HumanPlayer human = new HumanPlayer(X, prompt);
 		
 		human.takesGo(grid);
 		

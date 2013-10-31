@@ -20,8 +20,7 @@ public class RowProcessor extends Processor {
 
 	private int potentialWinningPositionInRows(String symbol) {
 		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
-			String row = getRowBetween(startingIndex(rowIndex),
-					finishingIndex(rowIndex));
+			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
 			int position = findIndexOfWinningMoveFor(row, symbol);
 			if (isAWinningMoveAt(position))
 				return winningPosition(rowIndex, position);

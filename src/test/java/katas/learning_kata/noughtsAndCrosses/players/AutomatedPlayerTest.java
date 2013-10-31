@@ -1,5 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -19,12 +21,12 @@ public class AutomatedPlayerTest {
 	@Before 
 	public void setup(){
 		initMocks(this);
-		automatedPlayer = new AutomatedPlayer("x");
+		automatedPlayer = new AutomatedPlayer(X);
 	}
 	
 	@Test
 	public void shouldReturnTheSymbolOfThePlayer(){
-		assertThat(automatedPlayer.getSymbol(), is("x"));
+		assertThat(automatedPlayer.getSymbol(), is(X));
 	}
 	
 
@@ -38,21 +40,21 @@ public class AutomatedPlayerTest {
 		
 		assertTrue(startingGrid.toString().contains("oxo"));
 		verify(grid).isACellInTheGrid(1);
-		verify(grid).takeNextMove("x", 1);
+		verify(grid).takeNextMove(X, 1);
 		
 	}
 	
 	@Test
 	public void shouldIdentifyThereIsAWinningMoveToBeMade(){
-		when(grid.potentialWinningMove("x")).thenReturn(1);
+		when(grid.potentialWinningMove(X)).thenReturn(1);
 		when(grid.isACellInTheGrid(1)).thenReturn(true);
-		when(grid.takeNextMove("x", 1)).thenReturn(new Grid("xxx------"));
+		when(grid.takeNextMove(X, 1)).thenReturn(new Grid("xxx------"));
 		 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		assertTrue(startingGrid.toString().contains("xxx"));
 		
 		verify(grid).isACellInTheGrid(1);
-		verify(grid).takeNextMove("x", 1);
+		verify(grid).takeNextMove(X, 1);
 	}
 	
 	@Test
@@ -60,23 +62,23 @@ public class AutomatedPlayerTest {
 		when(grid.potentialWinningMove("x")).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(false);
 		when(grid.getCentreCell()).thenReturn(4);
-		when(grid.takeNextMove("x", 4)).thenReturn(new Grid("o---x----"));
+		when(grid.takeNextMove(X, 4)).thenReturn(new Grid("o---x----"));
 		
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		
 		assertThat(startingGrid.toString(), is("o--\n-x-\n---\n__________________________________\n"));
 		verify(grid).isCenterTaken();
-		verify(grid).takeNextMove("x", 4);
+		verify(grid).takeNextMove(X, 4);
 	}
 	
 	@Test
 	public void shouldMakeMoveWithMostPossibleWinningPositionsIfCenterCellIsTaken(){
-		when(grid.potentialWinningMove("x")).thenReturn(-1);
-		when(grid.potentialWinningMove("o")).thenReturn(-1);
+		when(grid.potentialWinningMove(X)).thenReturn(-1);
+		when(grid.potentialWinningMove(O)).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(true);
 		when(grid.hasFreeCornerPosition()).thenReturn(true);
 		when(grid.getAvailableCorner()).thenReturn(2);
-		when(grid.takeNextMove("x", 2)).thenReturn(new Grid("x-x-o----"));
+		when(grid.takeNextMove(X, 2)).thenReturn(new Grid("x-x-o----"));
 		
         Grid startingGrid = automatedPlayer.takesGo(grid);
 		assertThat(startingGrid.toString(), is("x-x\n-o-\n---\n__________________________________\n"));
@@ -85,12 +87,12 @@ public class AutomatedPlayerTest {
 	
 	@Test
 	public void shouldMakeMoveInAnyFreeSpaceIfTheCenterCellAndCornerCellsAreTaken(){
-		when(grid.potentialWinningMove("x")).thenReturn(-1);
-		when(grid.potentialWinningMove("o")).thenReturn(-1);
+		when(grid.potentialWinningMove(X)).thenReturn(-1);
+		when(grid.potentialWinningMove(O)).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(true);
 		when(grid.hasFreeCornerPosition()).thenReturn(false);
 		when(grid.getFirstFreeCell()).thenReturn(3);
-		when(grid.takeNextMove("x", 3)).thenReturn(new Grid("oxoxx-xox"));
+		when(grid.takeNextMove(X, 3)).thenReturn(new Grid("oxoxx-xox"));
 	
         Grid startingGrid = automatedPlayer.takesGo(grid);
 		assertThat(startingGrid.toString(), is("oxo\nxx-\nxox\n__________________________________\n"));

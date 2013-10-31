@@ -28,8 +28,8 @@ public class ColumnProcessor extends Processor {
 	private String getColumnStartingAtIndex(int startOfVerticleRow) {
 		StringBuffer verticleRow = new StringBuffer();
 		verticleRow.append(board.charAt(startOfVerticleRow))
-				.append(board.charAt(startOfVerticleRow + 3))
-				.append(board.charAt(startOfVerticleRow + 6));
+				.append(board.charAt(startOfVerticleRow + GRID_DIMENSION))
+				.append(board.charAt(startOfVerticleRow + (2 * GRID_DIMENSION)));
 		return verticleRow.toString();
 	}
 	

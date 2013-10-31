@@ -6,6 +6,7 @@ import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.NO_WIN
 import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.WINNER;
 import static katas.learning_kata.noughtsAndCrosses.GameStatusBuilder.aGameStatusBuilder;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,8 +30,8 @@ public class NoughtsAndCrosses {
 	NoughtsAndCrosses() {
 		grid = new Grid("---------");
 		setupCommandPrompt();
-		playerX = new AutomatedPlayer("x");
-		playerO = new HumanPlayer("o", setupCommandPrompt());
+		playerX = new AutomatedPlayer("x"); //new HumanPlayer(X, setupCommandPrompt());
+		playerO = new HumanPlayer(O, setupCommandPrompt());
 	}
 
 	private Prompt setupCommandPrompt() {

@@ -11,6 +11,10 @@ public class Grid {
 	public static final int NO_MATCH_FOUND = -1;
 	public static final String O = "o";
 	public static final String X = "x";
+	public static final int TOP_LEFT_CORNER = 0;
+	public static final int TOP_RIGHT_CORNER = 2;
+	public static final int BOTTOM_LEFT_CORNER = 6;
+	public static final int BOTTOM_RIGHT_CORNER = 8;
 	private String board;
 
 	public Grid(String board) {
@@ -98,10 +102,10 @@ public class Grid {
 	}
 
 	public int getAvailableCorner() {
-		if (board.charAt(0) == EMPTY_CELL) return 0;
-		else if (board.charAt(2) == EMPTY_CELL) return 2;
-		else if (board.charAt(6) == EMPTY_CELL) return 6;
-		else if (board.charAt(8) == EMPTY_CELL) return 8;
+		if (board.charAt(0) == EMPTY_CELL) return TOP_LEFT_CORNER;
+		else if (board.charAt(2) == EMPTY_CELL) return TOP_RIGHT_CORNER;
+		else if (board.charAt(6) == EMPTY_CELL) return BOTTOM_LEFT_CORNER;
+		else if (board.charAt(8) == EMPTY_CELL) return BOTTOM_RIGHT_CORNER;
 		else return NO_MATCH_FOUND;
 	}
 

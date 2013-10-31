@@ -1,7 +1,12 @@
 package katas.learning_kata.noughtsAndCrosses.processors;
 
 import static java.lang.String.valueOf;
+import static katas.learning_kata.noughtsAndCrosses.Grid.BOTTOM_LEFT_CORNER;
+import static katas.learning_kata.noughtsAndCrosses.Grid.BOTTOM_RIGHT_CORNER;
+import static katas.learning_kata.noughtsAndCrosses.Grid.CENTER_CELL;
 import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.TOP_LEFT_CORNER;
+import static katas.learning_kata.noughtsAndCrosses.Grid.TOP_RIGHT_CORNER;
 import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 
 import java.util.ArrayList;
@@ -29,8 +34,8 @@ public class DiagonalProcessor extends Processor {
 	}
 	
 	private List<int[]> populateDiagonalIndices() {
-		int[] forwardSlashDiagonalIndexes = new int[] { 2, 4, 6 };
-		int[] backslashDiagonalIndexes = new int[] { 0, 4, 8 };
+		int[] forwardSlashDiagonalIndexes = new int[] { TOP_RIGHT_CORNER, CENTER_CELL, BOTTOM_LEFT_CORNER };
+		int[] backslashDiagonalIndexes = new int[] { TOP_LEFT_CORNER, CENTER_CELL, BOTTOM_RIGHT_CORNER };
 		List<int[]> diagonalIndexes = new ArrayList<int[]>();
 		diagonalIndexes.add(backslashDiagonalIndexes);
 		diagonalIndexes.add(forwardSlashDiagonalIndexes);
