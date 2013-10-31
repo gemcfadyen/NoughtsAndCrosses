@@ -33,16 +33,7 @@ public class RowProcessor extends Processor {
 		return GRID_DIMENSION * rowIndex;
 	}
 
-	public boolean hasWinner() {
-		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
-			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));
-			if (hasWinningEntryOfNoughts(row) || hasWinningEntryForCrosses(row)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
 	public String getWinningSymbol() {
 		for (int rowIndex = 1; rowIndex <= GRID_DIMENSION; rowIndex++) {
 			String row = getRowBetween(startingIndex(rowIndex), finishingIndex(rowIndex));

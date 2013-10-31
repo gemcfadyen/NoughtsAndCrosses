@@ -38,17 +38,6 @@ public class ColumnProcessor extends Processor {
 				GRID_DIMENSION * 2 + columnIndex };
 	}
 
-	@Override
-	public boolean hasWinner() {
-		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
-			String column = getColumnStartingAtIndex(columnIndex);
-			if(hasWinningEntryForCrosses(column) || hasWinningEntryOfNoughts(column)){
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public String getWinningSymbol() {
 		for (int columnIndex = 0; columnIndex < GRID_DIMENSION; columnIndex++) {
 			String column = getColumnStartingAtIndex(columnIndex);

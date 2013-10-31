@@ -59,54 +59,6 @@ public class GridTest {
 	}
 
 	@Test
-	public void shouldReturnTrueIfThereIsAWinningRow() {
-		Grid grid = new Grid("xxx------");
-		assertThat(grid.hasWinningRow(), is(true));
-	}
-
-	@Test
-	public void shouldReturnTrueIfThereIsAWinningRowOfZeros() {
-		Grid grid = new Grid("------ooo");
-		assertThat(grid.hasWinningRow(), is(true));
-	}
-
-	@Test
-	public void shouldReturnFalseIfThereIsNoWinningRow() {
-		Grid grid = new Grid("-------oo");
-		assertThat(grid.hasWinningRow(), is(false));
-	}
-
-	@Test
-	public void shouldReturnFalseIfThereIsNoWinningRowInTheGridInAnyDirection() {
-		Grid grid = new Grid("---------");
-		assertThat(grid.hasWinningRow(), is(false));
-	}
-
-	@Test
-	public void shouldReturnTrueIfThereIsAWinningColumnOfZeros() {
-		Grid grid = new Grid("o--o--o--");
-		assertThat(grid.hasWinningRow(), is(true));
-	}
-
-	@Test
-	public void shouldReturnTrueIfThereIsAWinningColumn() {
-		Grid grid = new Grid("x--x--x--");
-		assertThat(grid.hasWinningRow(), is(true));
-	}
-
-	@Test
-	public void shouldReturnTrueIfThereIsAWinningDiagonalStreak() {
-		Grid grid = new Grid("x---x---x");
-		assertThat(grid.hasWinningRow(), is(true));
-	}
-
-	@Test
-	public void shouldReturnTrueIfThereIsAWinningDiagonalStreakOfZeros() {
-		Grid grid = new Grid("--o-o-o--");
-		assertThat(grid.hasWinningRow(), is(true));
-	}
-
-	@Test
 	public void shouldWriteTheGridOut() {
 		Grid grid = new Grid("---xxx---");
 		assertThat(grid.toString(),

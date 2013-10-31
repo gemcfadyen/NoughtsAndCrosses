@@ -1,5 +1,9 @@
 package katas.learning_kata.noughtsAndCrosses.processors;
 
+import static java.lang.String.valueOf;
+import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -13,42 +17,42 @@ public class HasWinningMovesTest {
 	@Test
 	public void shouldReturnTrueIfThereIsAWinningRowInTheGrid(){
 		rowProcessor = new RowProcessor("xxx------");
-		assertThat(rowProcessor.hasWinner(), is(true));
+		assertThat(rowProcessor.getWinningSymbol(), is(X));
 	}
 	
 	@Test
 	public void shouldReturnFalseIfThereIsNotAWinningRowInTheGrid(){
 		rowProcessor = new RowProcessor("xx-------");
-		assertThat(rowProcessor.hasWinner(), is(false));
+		assertThat(rowProcessor.getWinningSymbol(), is(valueOf(NO_MATCH_FOUND)));
 	}
 	
 	@Test
 	public void shouldReturnTrueIfThereIsAWinningColumnInTheGrid(){
 		columnProcessor = new ColumnProcessor("x--x--x--");
-		assertThat(columnProcessor.hasWinner(), is(true));
+		assertThat(columnProcessor.getWinningSymbol(), is(X));
 	}
 	
 	@Test
 	public void shouldReturnFalseIfThereIsNotAWinningColumnInTheGrid(){
 		columnProcessor = new ColumnProcessor("xxx------");
-		assertThat(columnProcessor.hasWinner(), is(false));
+		assertThat(columnProcessor.getWinningSymbol(), is(valueOf(NO_MATCH_FOUND)));
 	}
 	
 	@Test
 	public void shouldReturnTrueIfThereIsABackSlashDiagonalWinningRow(){
 		diagonalProcessor = new DiagonalProcessor("x---x---x");
-		assertThat(diagonalProcessor.hasWinner(), is(true));
+		assertThat(diagonalProcessor.getWinningSymbol(), is(X));
 	}
 	
 	@Test
 	public void shouldReturnTrueIfThereIsAForwardSlashDiagonalWinningRow(){
 		diagonalProcessor = new DiagonalProcessor("--o-o-o--");
-		assertThat(diagonalProcessor.hasWinner(), is(true));
+		assertThat(diagonalProcessor.getWinningSymbol(), is(O));
 	}
 	
 	@Test
 	public void shouldReturnFalseIfThereIsNoDiagonalWinningRow(){
 		diagonalProcessor = new DiagonalProcessor("---xx----");
-		assertThat(diagonalProcessor.hasWinner(), is(false));
+		assertThat(diagonalProcessor.getWinningSymbol(), is(valueOf(NO_MATCH_FOUND)));
 	}
 }

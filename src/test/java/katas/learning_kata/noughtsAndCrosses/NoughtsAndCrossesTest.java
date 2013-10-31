@@ -1,5 +1,9 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static java.lang.String.valueOf;
+import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
@@ -29,21 +33,21 @@ public class NoughtsAndCrossesTest {
 
 	@Test
 	public void gameShouldEndIfThereIsAWinningRowInTheGrid() {
-		when(grid.hasWinningRow()).thenReturn(true);
+		when(grid.getWinningSymbol()).thenReturn(O);
 		when(grid.getWinningSymbol()).thenReturn("o");
 		when(grid.toString()).thenReturn("ooo\n---\n---");
-		when(playerO.getSymbol()).thenReturn("o");
-		when(playerX.getSymbol()).thenReturn("x");
+		when(playerO.getSymbol()).thenReturn(O);
+		when(playerX.getSymbol()).thenReturn(X);
 		
 		GameStatus gameOverMessage =  noughtsAndCrosses.playGame();
 
 		assertThat(gameOverMessage.getStatus(), is(GameStates.WINNER));		
-		assertThat(gameOverMessage.getMessage(), is("Congratulations [o] you have won! \n [ooo\n---\n---]"));	
+		assertThat(gameOverMessage.getMessage(), is("Congratulations [o] you have won! \n Game Over"));	
 	}
 
 	@Test
 	public void gameShouldEndIfThereAreNoFreeSlotsLeftInGrid() {
-		when(grid.hasWinningRow()).thenReturn(false);
+		when(grid.getWinningSymbol()).thenReturn(valueOf(NO_MATCH_FOUND));
 		when(grid.hasFreeSlot()).thenReturn(false);
 
 		GameStatus gameStatus =  noughtsAndCrosses.playGame();
@@ -56,7 +60,7 @@ public class NoughtsAndCrossesTest {
 
 	@Test
 	public void gameShouldEndIfNineGoesHaveTakenPlaceAndThereIsNoWinningRow(){
-		when(grid.hasWinningRow()).thenReturn(false);
+		when(grid.getWinningSymbol()).thenReturn(valueOf(NO_MATCH_FOUND));
 		when(grid.hasFreeSlot()).thenReturn(true).thenReturn(true)
 		.thenReturn(true).thenReturn(true).thenReturn(true)
 		.thenReturn(true).thenReturn(true).thenReturn(true)
@@ -72,7 +76,7 @@ public class NoughtsAndCrossesTest {
 	
 	@Test
 	public void gameShouldAnnounceTheWinner(){
-		when(grid.hasWinningRow()).thenReturn(false).thenReturn(true);
+		when(grid.getWinningSymbol()).thenReturn(valueOf(NO_MATCH_FOUND)).thenReturn(valueOf(NO_MATCH_FOUND));
 		when(grid.hasFreeSlot()).thenReturn(true);
 		when(grid.getWinningSymbol()).thenReturn("x");
 		when(grid.toString()).thenReturn("xxx\n---\n---");
@@ -81,6 +85,6 @@ public class NoughtsAndCrossesTest {
 		
 		GameStatus winningMessage = noughtsAndCrosses.playGame();
 		assertThat(winningMessage.getStatus(), is(GameStates.WINNER));		
-		assertThat(winningMessage.getMessage(), is("Congratulations [x] you have won! \n [xxx\n---\n---]"));
+		assertThat(winningMessage.getMessage(), is("Congratulations [x] you have won! \n Game Over"));
 	}
 }

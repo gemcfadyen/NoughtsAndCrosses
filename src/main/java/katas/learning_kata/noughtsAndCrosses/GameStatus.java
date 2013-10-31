@@ -2,7 +2,7 @@ package katas.learning_kata.noughtsAndCrosses;
 
 public class GameStatus {
 	public enum GameStates {
-		WINNER("Congratulations [%s] you have won! \n [%s]"), NO_WINNER("Game Over, there was no winner!");
+		WINNER("Congratulations [%s] you have won! \n Game Over"), NO_WINNER("Game Over, there was no winner!");
 		
 		private String statusMessage;
 		

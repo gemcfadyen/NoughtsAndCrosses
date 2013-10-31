@@ -43,16 +43,6 @@ public class DiagonalProcessor extends Processor {
 		return diagonalRow.toString();
 	}
 
-	@Override
-	public boolean hasWinner() {
-		List<int[]> diagonalIndexes = populateDiagonalIndices();
-		for (int[] diagonalIndex : diagonalIndexes) {
-			String diagonalRow = getDiagonalRow(diagonalIndex[0], diagonalIndex[1], diagonalIndex[2]);
-			if (hasWinningEntryForCrosses(diagonalRow) || hasWinningEntryOfNoughts(diagonalRow))
-				return true;
-		}
-		return false;
-	}
 
 	public String getWinningSymbol() {
 		List<int[]> diagonalIndexes = populateDiagonalIndices();

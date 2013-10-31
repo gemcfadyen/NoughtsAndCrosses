@@ -17,12 +17,6 @@ public class Grid {
 		this.board = board;
 	}
 
-	public boolean hasWinningRow() {
-		RowProcessor rowProcessor = new RowProcessor(board);
-		ColumnProcessor columnProcessor = new ColumnProcessor(board);
-		DiagonalProcessor diagonalProcessor = new DiagonalProcessor(board);
-		return rowProcessor.hasWinner() || columnProcessor.hasWinner() || diagonalProcessor.hasWinner();
-	}
 
 	public String toString() {
 		StringBuffer boardToPrint = new StringBuffer(board.substring(0, 3)
