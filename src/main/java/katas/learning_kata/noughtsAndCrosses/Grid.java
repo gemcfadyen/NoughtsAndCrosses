@@ -5,15 +5,11 @@ import static java.lang.String.valueOf;
 import java.util.ArrayList;
 import java.util.List;
 
-import katas.learning_kata.noughtsAndCrosses.processors.ColumnProcessor;
-import katas.learning_kata.noughtsAndCrosses.processors.DiagonalProcessor;
-import katas.learning_kata.noughtsAndCrosses.processors.Processor;
-import katas.learning_kata.noughtsAndCrosses.processors.RowProcessor;
-
 public class Grid {
 	public static final char EMPTY_CELL = '-';
 	public static final int CENTER_CELL = 4;
 	public static final int NO_MATCH_FOUND = -1;
+	public static final int GRID_DIMENSION=3;
 	public static final String O = "o";
 	public static final String X = "x";
 	public static final int TOP_LEFT_CORNER = 0;
@@ -61,17 +57,17 @@ public class Grid {
 	
 	private List<Row> getDiagonalRows(){
 		List<Row> rows = new ArrayList<Row>();
-		rows.add(new Row(getDiagonalRow(0, 4, 8)));
-		rows.add(new Row(getDiagonalRow(2, 4, 6)));
+		rows.add(new Row(getDiagonalRow(TOP_LEFT_CORNER, CENTER_CELL, BOTTOM_RIGHT_CORNER)));
+		rows.add(new Row(getDiagonalRow(TOP_RIGHT_CORNER, CENTER_CELL, BOTTOM_LEFT_CORNER)));
 		
 		return rows;
 	}
 	
 	private Cell[] getDiagonalRow(int... indexes){
-		Cell[] diagonalCells = new Cell[Processor.GRID_DIMENSION];
+		Cell[] diagonalCells = new Cell[GRID_DIMENSION];
 		
 		for(int i = 0; i < diagonalCells.length; i++){
-			diagonalCells[i] = new Cell(valueOf(board.charAt(indexes[i])));
+			diagonalCells[i] = new Cell(valueOf(board.charAt(indexes[i])), indexes[i]);
 		}
 	
 		return diagonalCells;
@@ -79,13 +75,14 @@ public class Grid {
 	
 	private List<Row> getVerticleRows(){
 		List<Row> rows = new ArrayList<Row>();
-		for (int verticleIndex = 0; verticleIndex < Processor.GRID_DIMENSION; verticleIndex++) {
-			Cell[] cells = new Cell[Processor.GRID_DIMENSION];
+		for (int verticleIndex = 0; verticleIndex < GRID_DIMENSION; verticleIndex++) {
+			Cell[] cells = new Cell[GRID_DIMENSION];
 			
 			int offset = 0;
-			for (int fieldIndex = 0; fieldIndex < Processor.GRID_DIMENSION; fieldIndex++) {
-				cells[fieldIndex] = new Cell(valueOf(board.charAt(fieldIndex + (verticleIndex+offset) )));
-				offset+=(Processor.GRID_DIMENSION - 1);
+			for (int fieldIndex = 0; fieldIndex < GRID_DIMENSION; fieldIndex++) {
+				int cellIndex = fieldIndex + (verticleIndex + offset);
+				cells[fieldIndex] = new Cell(valueOf(board.charAt(cellIndex)), cellIndex);
+				offset+=(GRID_DIMENSION - 1);
 			}
 
 			rows.add(new Row(cells));
@@ -95,11 +92,12 @@ public class Grid {
 	
 	private List<Row> getHorizontalRows(){
 		List<Row> rows = new ArrayList<Row>();
-		for (int horizontalIndex = 0; horizontalIndex < Processor.GRID_DIMENSION; horizontalIndex++) {
-			Cell[] cells = new Cell[Processor.GRID_DIMENSION];
+		for (int horizontalIndex = 0; horizontalIndex < GRID_DIMENSION; horizontalIndex++) {
+			Cell[] cells = new Cell[GRID_DIMENSION];
 
-			for (int fieldIndex = 0; fieldIndex < Processor.GRID_DIMENSION; fieldIndex++) {
-				cells[fieldIndex] = new Cell(valueOf(board.charAt(fieldIndex + horizontalIndex)));
+			for (int fieldIndex = 0; fieldIndex < GRID_DIMENSION; fieldIndex++) {
+				int cellIndex = fieldIndex + horizontalIndex;
+				cells[fieldIndex] = new Cell(valueOf(board.charAt(cellIndex)), cellIndex);
 			}
 
 			rows.add(new Row(cells));
@@ -110,7 +108,7 @@ public class Grid {
 
 
 	public Grid takeNextMove(String symbol, int index) {
-		if (board.charAt(index) == '-') {
+		if (board.charAt(index) == EMPTY_CELL) {
 			board = board.substring(0, index) + symbol
 					+ board.substring(index + 1, board.length());
 		}
@@ -124,23 +122,15 @@ public class Grid {
 	}
 
 	public int potentialWinningMove(String symbol) {
-		RowProcessor horizontalRows = new RowProcessor(board);
-		ColumnProcessor columnProcessor = new ColumnProcessor(board);
-		DiagonalProcessor diagonals = new DiagonalProcessor(board);
-
-		return potentialWinningPosition(
-				horizontalRows.potentialWinningMove(symbol),
-				columnProcessor.potentialWinningMove(symbol),
-				diagonals.potentialWinningMove(symbol));
-	}
-
-	private int potentialWinningPosition(int... potentialWinningPositions) {
-		for (int position : potentialWinningPositions)
-			if (position != NO_MATCH_FOUND) {
-				return position;
-			}
+		List<Row> gridRows = generateRowsFromCurrentGrid();
+		for (Row row : gridRows) {
+			if (row.hasPotentialWinner())
+				return row.winningPosition();
+		}
 		return NO_MATCH_FOUND;
 	}
+
+
 
 	public boolean isACellInTheGrid(int position) {
 		return position != NO_MATCH_FOUND;

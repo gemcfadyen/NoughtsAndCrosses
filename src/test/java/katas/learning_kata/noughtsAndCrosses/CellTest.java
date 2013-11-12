@@ -9,9 +9,10 @@ import org.junit.Test;
 public class CellTest {
 
 	@Test
-	public void shouldReturnTheSymbolContainedInTheCell() {
-		Cell cell = new Cell(X);
+	public void shouldReturnTheSymbolAndIndexContainedInTheCell() {
+		Cell cell = new Cell(X, 1);
 		assertThat(cell.getSymbol(), is(X));
-
+		assertThat(cell.getIndex(), is(1));
 	}
+
 }
