@@ -51,4 +51,26 @@ public class CommandPrompt implements Prompt {
 		}
 	}
 
+	@Override
+	public void printLoosingStatement() {
+		try {
+			outputWriter.write("NO_WINNER Game Over, there was no winner! \n Game Over");
+			outputWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void printWinningStatement(String winningSymbol) {
+		try {
+			outputWriter.write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
+			outputWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
 }

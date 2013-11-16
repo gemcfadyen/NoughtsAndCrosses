@@ -4,14 +4,12 @@ import static java.lang.String.valueOf;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.Grid.O;
 import static katas.learning_kata.noughtsAndCrosses.Grid.X;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates;
 import katas.learning_kata.noughtsAndCrosses.players.Player;
+import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +25,8 @@ public class NoughtsAndCrossesTest {
 	private Player playerO;
 	@Mock
 	private Grid grid;
+	@Mock 
+	private Prompt commandPrompt;
 
 	@InjectMocks
 	private NoughtsAndCrosses noughtsAndCrosses = new NoughtsAndCrosses();
@@ -39,10 +39,9 @@ public class NoughtsAndCrossesTest {
 		when(playerO.getSymbol()).thenReturn(O);
 		when(playerX.getSymbol()).thenReturn(X);
 		
-		GameStatus gameOverMessage =  noughtsAndCrosses.playGame();
+		noughtsAndCrosses.playGame();
 
-		assertThat(gameOverMessage.getStatus(), is(GameStates.WINNER));		
-		assertThat(gameOverMessage.getMessage(), is("Congratulations [o] you have won! \n Game Over"));	
+		verify(commandPrompt).printWinningStatement(O);
 	}
 
 	@Test
@@ -50,10 +49,9 @@ public class NoughtsAndCrossesTest {
 		when(grid.getWinningSymbol()).thenReturn(valueOf(NO_MATCH_FOUND));
 		when(grid.hasFreeSlot()).thenReturn(false);
 
-		GameStatus gameStatus =  noughtsAndCrosses.playGame();
+		noughtsAndCrosses.playGame();
 
-		assertThat(gameStatus.getStatus(), is(GameStates.NO_WINNER));		
-		assertThat(gameStatus.getMessage(), is("Game Over, there was no winner!"));	
+		verify(commandPrompt).printLoosingStatement();
 		verifyNoMoreInteractions(playerX);
 		verifyNoMoreInteractions(playerO);
 	}
@@ -66,10 +64,9 @@ public class NoughtsAndCrossesTest {
 		.thenReturn(true).thenReturn(true).thenReturn(true)
 		.thenReturn(true).thenReturn(false);
 		
-		GameStatus gameStatus = noughtsAndCrosses.playGame();
+		noughtsAndCrosses.playGame();
 		
-		assertThat(gameStatus.getStatus(), is(GameStates.NO_WINNER));		
-		assertThat(gameStatus.getMessage(), is("Game Over, there was no winner!"));		
+		verify(commandPrompt).printLoosingStatement();		
 		verify(playerX, times(5)).takesGo(grid);
 		verify(playerO, times(4)).takesGo(grid);
 	}
@@ -83,8 +80,8 @@ public class NoughtsAndCrossesTest {
 		when(playerX.getSymbol()).thenReturn("x");
 		when(playerX.takesGo(grid)).thenReturn(new Grid("xxx------"));
 		
-		GameStatus winningMessage = noughtsAndCrosses.playGame();
-		assertThat(winningMessage.getStatus(), is(GameStates.WINNER));		
-		assertThat(winningMessage.getMessage(), is("Congratulations [x] you have won! \n Game Over"));
+		noughtsAndCrosses.playGame();
+	
+		verify(commandPrompt).printWinningStatement(X);
 	}
 }

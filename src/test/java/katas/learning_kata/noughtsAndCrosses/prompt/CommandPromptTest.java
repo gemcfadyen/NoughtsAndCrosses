@@ -65,7 +65,30 @@ public class CommandPromptTest {
 		
 		assertThat(firstValue, is(1));
 		assertThat(secondValue, is(2));
+	}
+	
+	@Test
+	public void shouldPrintALoosingStatementIfNoPlayerHasWonTheGame(){
+		Reader inputReader = new StringReader("");
+		StringWriter outputWriter = new StringWriter();
+		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
 		
+		prompt.printLoosingStatement();
+		
+		assertThat(outputWriter.toString(), is("NO_WINNER Game Over, there was no winner! \n Game Over"));
 		
 	}
+	
+	@Test
+	public void shouldPrintAWinningStatementIfAPlayerHasWonTheGame(){
+		Reader inputReader = new StringReader("");
+		StringWriter outputWriter = new StringWriter();
+		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
+		
+		prompt.printWinningStatement("x");
+		
+		assertThat(outputWriter.toString(), is("Congratulations [x] you have won! \n Game Over"));
+		
+	}
+	
 }

@@ -62,7 +62,7 @@ public class GridTest {
 	public void shouldWriteTheGridOut() {
 		Grid grid = new Grid("---xxx---");
 		assertThat(grid.toString(),
-				is("---\nxxx\n---\n__________________________________\n"));
+				is("---       0 1 2\nxxx       3 4 5\n---       6 7 8\n\n__________________________________\n"));
 	}
 
 	@Test
@@ -83,7 +83,7 @@ public class GridTest {
 		grid.takeNextMove("o", 0);
 
 		assertThat(grid.toString(),
-				is("o--\nxox\n---\n__________________________________\n"));
+				is("o--       0 1 2\nxox       3 4 5\n---       6 7 8\n\n__________________________________\n"));
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class GridTest {
 		grid.takeNextMove("o", 3);
 
 		assertThat(grid.toString(),
-				is("---\nxox\n---\n__________________________________\n"));
+				is("---       0 1 2\nxox       3 4 5\n---       6 7 8\n\n__________________________________\n"));
 	}
 
 	@Test

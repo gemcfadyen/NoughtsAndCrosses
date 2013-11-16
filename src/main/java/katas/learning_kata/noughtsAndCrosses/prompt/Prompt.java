@@ -6,5 +6,7 @@ public interface Prompt {
 	int readNextMove();
 	void promptUser();
 	void displayBoard(Grid grid);
+	void printLoosingStatement();
+	void printWinningStatement(String winningSymbol);
 
 }

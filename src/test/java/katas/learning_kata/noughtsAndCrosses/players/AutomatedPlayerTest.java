@@ -66,7 +66,7 @@ public class AutomatedPlayerTest {
 		
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		
-		assertThat(startingGrid.toString(), is("o--\n-x-\n---\n__________________________________\n"));
+		assertThat(startingGrid.toString(), is("o--       0 1 2\n-x-       3 4 5\n---       6 7 8\n\n__________________________________\n"));
 		verify(grid).isCenterTaken();
 		verify(grid).takeNextMove(X, 4);
 	}
@@ -81,7 +81,7 @@ public class AutomatedPlayerTest {
 		when(grid.takeNextMove(X, 2)).thenReturn(new Grid("x-x-o----"));
 		
         Grid startingGrid = automatedPlayer.takesGo(grid);
-		assertThat(startingGrid.toString(), is("x-x\n-o-\n---\n__________________________________\n"));
+		assertThat(startingGrid.toString(), is("x-x       0 1 2\n-o-       3 4 5\n---       6 7 8\n\n__________________________________\n"));
 		verify(grid).getAvailableCorner();
 	}
 	
@@ -95,7 +95,7 @@ public class AutomatedPlayerTest {
 		when(grid.takeNextMove(X, 3)).thenReturn(new Grid("oxoxx-xox"));
 	
         Grid startingGrid = automatedPlayer.takesGo(grid);
-		assertThat(startingGrid.toString(), is("oxo\nxx-\nxox\n__________________________________\n"));
+		assertThat(startingGrid.toString(), is("oxo       0 1 2\nxx-       3 4 5\nxox       6 7 8\n\n__________________________________\n"));
 		verify(grid).getFirstFreeCell();
 	}
 	

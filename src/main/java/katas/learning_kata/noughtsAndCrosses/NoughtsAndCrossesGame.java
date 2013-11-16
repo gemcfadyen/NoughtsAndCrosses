@@ -6,7 +6,6 @@ public class NoughtsAndCrossesGame {
 	
 	public static void main(String[] args){
 		game = new NoughtsAndCrosses();
-		GameStatus status = game.playGame();
-		System.out.println(status.getStatus() + " " + status.getMessage());
+		game.playGame();
 	}
 }

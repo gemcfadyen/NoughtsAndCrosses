@@ -1,10 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses;
 
-import static java.lang.String.format;
 import static java.lang.String.valueOf;
-import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.NO_WINNER;
-import static katas.learning_kata.noughtsAndCrosses.GameStatus.GameStates.WINNER;
-import static katas.learning_kata.noughtsAndCrosses.GameStatusBuilder.aGameStatusBuilder;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.Grid.O;
 
@@ -26,11 +22,13 @@ public class NoughtsAndCrosses {
 	private Player playerO;
 	private Player[] players = new Player[2];
 	private Grid grid;
+	private Prompt commandPrompt;
 
 	NoughtsAndCrosses() {
+		commandPrompt = setupCommandPrompt();
 		grid = new Grid("---------");
 		playerX = new AutomatedPlayer("x"); //new HumanPlayer(X, setupCommandPrompt());
-		playerO = new HumanPlayer(O, setupCommandPrompt());
+		playerO = new HumanPlayer(O, commandPrompt);
 	}
 
 	private Prompt setupCommandPrompt() {
@@ -45,7 +43,7 @@ public class NoughtsAndCrosses {
 		players[1] = playerO;
 	}
 
-	public GameStatus playGame() {
+	public void playGame() {
 		determineTheOrderOfThePlayers();
 
 		int playersIndex = 0;
@@ -53,42 +51,22 @@ public class NoughtsAndCrosses {
 			players[playersIndex].takesGo(grid);
 			playersIndex = (playersIndex == 0) ? SECOND_PLAYER : FIRST_PLAYER;
 		}
-		System.out.println("Final Grid: \n" +  grid.toString());
-		return evaluateGame();
+		commandPrompt.displayBoard(grid);
+		evaluateGame();
 	}
 
-	private GameStatus evaluateGame() {
-		return getWinnerFrom(grid).equals(String.valueOf(Grid.NO_MATCH_FOUND)) ?  createNoWinnerGameStatus():  createWinningStatus();
-	}
-
-	private GameStatus createNoWinnerGameStatus() {
-		return aGameStatusBuilder().withAStatusOf(NO_WINNER).withAMessageOf(NO_WINNER.getStatusMessage()).build();
-	}
-
-	private GameStatus createWinningStatus() {
-		return aGameStatusBuilder()
-				.withAStatusOf(WINNER)
-				.withAMessageOf(format(WINNER.getStatusMessage(),
-									   getTheNameOfThePlayerUsingThe(grid.getWinningSymbol())))
-									   .build();
-	}
-
-	private String getTheNameOfThePlayerUsingThe(String winningSymbol) {
-		for (Player player : players) {
-			if (player.getSymbol().equals(winningSymbol)) {
-				return player.getSymbol();
-			}
+	private void evaluateGame() {
+		if(grid.getWinningSymbol().equals(valueOf(Grid.NO_MATCH_FOUND))){
+			commandPrompt.printLoosingStatement();
 		}
-		return "";
+		else{
+			commandPrompt.printWinningStatement(grid.getWinningSymbol());
+		}
 	}
 
 	private boolean gameIsInProgress() {
 		String winningStatus = grid.getWinningSymbol();
 		return winningStatus.equals(valueOf(NO_MATCH_FOUND)) && grid.hasFreeSlot();
-	}
-
-	private String getWinnerFrom(Grid grid) {
-		return grid.getWinningSymbol();
 	}
 
 	public void setPlayerX(Player playerX) {
@@ -109,5 +87,13 @@ public class NoughtsAndCrosses {
 
 	public Grid getGrid() {
 		return grid;
+	}
+
+	public Prompt getCommandPrompt() {
+		return commandPrompt;
+	}
+
+	public void setCommandPrompt(Prompt commandPrompt) {
+		this.commandPrompt = commandPrompt;
 	}
 }
