@@ -131,17 +131,94 @@ public class GridTest {
 		int index = grid.getFirstFreeCell();
 		assertThat(index, is(0));
 	}
+	
+	@Test
+	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow(){
+		Grid grid = new Grid("o-xxx-o--"); 
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("-1"));
+	}
+	
+	@Test
+	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow2(){
+		Grid grid = new Grid("o-o-o----"); 
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("-1"));
+	}
+	
+	@Test
+	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow3(){
+		Grid grid = new Grid("---o-o-o-"); 
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("-1"));
+	}
+	
+	@Test
+	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow4(){
+		Grid grid = new Grid("--o-xxx-o");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("-1"));
+	}
+	
+	@Test
+	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow5(){
+		Grid grid = new Grid("--ooxxx-o"); //0, 2, 8
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("-1"));
+	}
+	
+	@Test
+	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow6(){
+		Grid grid = new Grid("o-xxx-oxo"); //6, 8, 0
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("-1"));
+	}
+	
+	@Test
+	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow7(){
+		Grid grid = new Grid("----x-x-x"); //6, 8, 0
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("-1"));
+	}
 
 	@Test
-	public void shouldReturnTheSymbolOfARowWinner() {
+	public void shouldReturnTheSymbolOfARowWinnerWhenTopHorizonalRowHasMatchingSymbols() {
 		Grid grid = new Grid("xxx------");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("x"));
+	}
+	
+	@Test
+	public void shouldReturnTheSymbolOfARowWinnerWhenMiddleHorizonalRowHasMatchingSymbols() {
+		Grid grid = new Grid("---xxx---");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("x"));
+	}
+	
+	@Test
+	public void shouldReturnTheSymbolOfARowWinnerWhenBottomHorizonalRowHasMatchingSymbols() {
+		Grid grid = new Grid("------xxx");
 		String winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is("x"));
 	}
 
 	@Test
-	public void shouldReturnTheSymbolOfAColumnWinner() {
+	public void shouldReturnTheSymbolOfARowWinnerWhenLeftVerticleRowHasMatchingSymbols() {
 		Grid grid = new Grid("o--o--o--");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("o"));
+	}
+	
+	@Test
+	public void shouldReturnTheSymbolOfARowWinnerWhenMiddleVerticleRowHasMatchingSymbols() {
+		Grid grid = new Grid("-o--o--o-");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("o"));
+	}
+	
+	@Test
+	public void shouldReturnTheSymbolOfARowWinnerWhenRightVerticleRowHasMatchingSymbols() {
+		Grid grid = new Grid("--o--o--o");
 		String winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is("o"));
 	}
@@ -149,6 +226,13 @@ public class GridTest {
 	@Test
 	public void shouldReturnTheSymbolOfADiagonalWinner() {
 		Grid grid = new Grid("x---x---x");
+		String winningSymbol = grid.getWinningSymbol();
+		assertThat(winningSymbol, is("x"));
+	}
+	
+	@Test
+	public void shouldReturnTheSymbolOfTheOppositeDiagonalWinner() {
+		Grid grid = new Grid("--x-x-x--");
 		String winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is("x"));
 	}

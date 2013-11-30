@@ -3,6 +3,7 @@ package katas.learning_kata.noughtsAndCrosses;
 import static java.lang.String.valueOf;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,7 +28,7 @@ public class NoughtsAndCrosses {
 	NoughtsAndCrosses() {
 		commandPrompt = setupCommandPrompt();
 		grid = new Grid("---------");
-		playerX = new AutomatedPlayer("x"); //new HumanPlayer(X, setupCommandPrompt());
+		playerX = new AutomatedPlayer(X); //new HumanPlayer(X, setupCommandPrompt());
 		playerO = new HumanPlayer(O, commandPrompt);
 	}
 
