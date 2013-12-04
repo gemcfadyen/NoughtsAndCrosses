@@ -78,4 +78,8 @@ public class Row {
 
 		return NO_MATCH_FOUND;
 	}
+
+	public Cell[] getCells() {
+		return cells;
+	}
 }

@@ -52,7 +52,7 @@ public class NoughtsAndCrosses {
 			players[playersIndex].takesGo(grid);
 			playersIndex = (playersIndex == 0) ? SECOND_PLAYER : FIRST_PLAYER;
 		}
-		commandPrompt.displayBoard(grid);
+		commandPrompt.displayBoard(grid.getHorizontalRows());
 		evaluateGame();
 	}
 

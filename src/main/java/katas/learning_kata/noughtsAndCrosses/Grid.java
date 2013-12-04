@@ -22,17 +22,17 @@ public class Grid {
 		this.board = board;
 	}
 
-	public String toString() {
-		StringBuffer boardToPrint = new StringBuffer();
-		
-		for(int i=0, iteration=1; i< GRID_DIMENSION * GRID_DIMENSION; i+=GRID_DIMENSION, iteration++){
-			boardToPrint.append(board.substring(i, GRID_DIMENSION * iteration));
-			boardToPrint.append("       ").append(i).append(" ").append(i+1).append(" ").append(i+2).append('\n');
-		}
-		boardToPrint.append("\n__________________________________\n");
-
-		return boardToPrint.toString();
-	}
+//	public String toString() {
+//		StringBuffer boardToPrint = new StringBuffer();
+//		
+//		for(int i=0, iteration=1; i< GRID_DIMENSION * GRID_DIMENSION; i+=GRID_DIMENSION, iteration++){
+//			boardToPrint.append(board.substring(i, GRID_DIMENSION * iteration));
+//			boardToPrint.append("       ").append(i).append(" ").append(i+1).append(" ").append(i+2).append('\n');
+//		}
+//		boardToPrint.append("\n__________________________________\n");
+//
+//		return boardToPrint.toString();
+//	}
 
 	public boolean hasFreeSlot() {
 		return board.contains(String.valueOf(EMPTY_CELL));
@@ -48,16 +48,33 @@ public class Grid {
 		return valueOf(NO_MATCH_FOUND);
 	}
 
+	public List<Row> getHorizontalRows() {
+		return generateRows(GRID_DIMENSION, 1);
+	}
+
 	private List<Row> generateRowsFromCurrentGrid() {
 		List<Row> rows = new ArrayList<Row>();
-		rows.addAll(generateRows(GRID_DIMENSION, 1));
-		rows.addAll(generateRows(1, GRID_DIMENSION));
-		rows.addAll(getDiagonalRows(0, CENTER_CELL));
-		rows.addAll(getDiagonalRows(TOP_RIGHT_CORNER, TOP_RIGHT_CORNER));
+		rows.addAll(getHorizontalRows());
+		rows.addAll(getVerticalRows());
+		rows.addAll(getDiagonalRowFromLeft());
+		rows.addAll(getDiagonalFromRight());
 
 		return rows;
 
 	}
+
+	private List<Row> getDiagonalFromRight() {
+		return getDiagonalRows(TOP_RIGHT_CORNER, TOP_RIGHT_CORNER);
+	}
+
+	private List<Row> getDiagonalRowFromLeft() {
+		return getDiagonalRows(0, CENTER_CELL);
+	}
+
+	private List<Row> getVerticalRows() {
+		return generateRows(1, GRID_DIMENSION);
+	}
+
 	
 	private List<Row> getDiagonalRows(int startingIndex, int cellIncrementor){
 		List<Row> rows = new ArrayList<Row>();

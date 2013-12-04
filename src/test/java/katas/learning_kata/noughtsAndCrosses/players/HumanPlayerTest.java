@@ -32,6 +32,6 @@ public class HumanPlayerTest {
 		
 		human.takesGo(grid);
 		
-		verify(prompt).displayBoard(grid);
+		verify(prompt).displayBoard(grid.getHorizontalRows());
 	}
 }

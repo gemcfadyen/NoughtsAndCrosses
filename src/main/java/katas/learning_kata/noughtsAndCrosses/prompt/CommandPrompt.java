@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.List;
 
-import katas.learning_kata.noughtsAndCrosses.Grid;
+import katas.learning_kata.noughtsAndCrosses.Cell;
+import katas.learning_kata.noughtsAndCrosses.Row;
 
 public class CommandPrompt implements Prompt {
 
@@ -28,17 +30,36 @@ public class CommandPrompt implements Prompt {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 	}
 
 	@Override
-	public void displayBoard(Grid grid) {
+	public void displayBoard(List<Row> rows) {
 		try {
-			outputWriter.write(grid.toString());
+			StringBuffer board = drawBoard(rows);
+			outputWriter.write(board.toString());
 			outputWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private StringBuffer drawBoard(List<Row> rows) {
+		StringBuffer board = new StringBuffer();
+		int position = -1;
+		for (Row horizontalRow : rows) {
+			Cell[] cells = horizontalRow.getCells();
+			board.append(addSymbolIn(cells) + "    " + (++position) + " " + (++position) + " " + (++position) + "\n");
+		}
+		return board;
+	}
+
+	private StringBuffer addSymbolIn(Cell[] cells) {
+		StringBuffer board = new StringBuffer();
+		for (Cell cell : cells) {
+			board.append(cell.getSymbol());
+		}
+		return board;
 	}
 
 	@Override
@@ -54,23 +75,24 @@ public class CommandPrompt implements Prompt {
 	@Override
 	public void printLoosingStatement() {
 		try {
-			outputWriter.write("NO_WINNER Game Over, there was no winner! \n Game Over");
+			outputWriter
+					.write("NO_WINNER Game Over, there was no winner! \n Game Over");
 			outputWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
 	public void printWinningStatement(String winningSymbol) {
 		try {
-			outputWriter.write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
+			outputWriter.write("Congratulations [" + winningSymbol
+					+ "] you have won! \n Game Over");
 			outputWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 }

@@ -1,5 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses.prompt;
 
+import static katas.learning_kata.noughtsAndCrosses.Grid.O;
+import static katas.learning_kata.noughtsAndCrosses.Grid.X;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -8,8 +10,12 @@ import static org.mockito.Mockito.when;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
+import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Grid;
+import katas.learning_kata.noughtsAndCrosses.Row;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,16 +36,27 @@ public class CommandPromptTest {
 	}
 
 	@Test
-	public void shouldDisplayTheBoard() {
-		when(grid.toString()).thenReturn("xxx\nxxx\noxo\n");
-		Reader inputReader = new StringReader("1");
+	public void shouldDisplayTheBoardUsingTheProvidedDisplay() {
+		when(grid.getHorizontalRows()).thenReturn( horizontalRowsRepresentingAGrid());
+		Reader inputReader = new StringReader("");
 		StringWriter outputWriter = new StringWriter();
 		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
 		
-		prompt.displayBoard(grid);
+		prompt.displayBoard(grid.getHorizontalRows());
 		
-		assertThat(outputWriter.toString(), equalTo("xxx\nxxx\noxo\n"));
+		assertThat(outputWriter.toString(), equalTo("xxx    0 1 2\nxxx    3 4 5\noxo    6 7 8\n"));
 
+	}
+
+	private List<Row> horizontalRowsRepresentingAGrid() {
+		List<Row> horizontalRows = new ArrayList<Row>();
+		Row topRow = new Row(new Cell[]{new Cell(X, 0), new Cell(X, 0), new Cell(X, 0)});
+		Row middleRow = new Row(new Cell[]{new Cell(X, 0), new Cell(X, 0), new Cell(X, 0)});
+		Row bottomRow = new Row(new Cell[]{new Cell(O, 0), new Cell(X, 0), new Cell(O, 0)});
+		horizontalRows.add(topRow);
+		horizontalRows.add(middleRow);
+		horizontalRows.add(bottomRow);
+		return horizontalRows;
 	}
 	
 	@Test
