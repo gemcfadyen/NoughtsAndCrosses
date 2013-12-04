@@ -22,18 +22,6 @@ public class Grid {
 		this.board = board;
 	}
 
-//	public String toString() {
-//		StringBuffer boardToPrint = new StringBuffer();
-//		
-//		for(int i=0, iteration=1; i< GRID_DIMENSION * GRID_DIMENSION; i+=GRID_DIMENSION, iteration++){
-//			boardToPrint.append(board.substring(i, GRID_DIMENSION * iteration));
-//			boardToPrint.append("       ").append(i).append(" ").append(i+1).append(" ").append(i+2).append('\n');
-//		}
-//		boardToPrint.append("\n__________________________________\n");
-//
-//		return boardToPrint.toString();
-//	}
-
 	public boolean hasFreeSlot() {
 		return board.contains(String.valueOf(EMPTY_CELL));
 	}
