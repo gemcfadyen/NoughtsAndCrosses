@@ -45,9 +45,8 @@ public class AutomatedPlayerTest {
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[] { new Cell(O, 0), new Cell(X, 1), new Cell(O, 2) }));
-
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(O, 0), new Cell(X, 1), new Cell(O, 2)} );
+		
 		verify(grid).isACellInTheGrid(1);
 		verify(grid).takeNextMove(X, 1);
 
@@ -62,12 +61,12 @@ public class AutomatedPlayerTest {
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = afterMove.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[] { new Cell(Grid.X, 0), new Cell(X, 1), new Cell(X, 2) }));
-
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(X, 0), new Cell(X, 1), new Cell(X, 2)} );
+		
 		verify(grid).isACellInTheGrid(1);
 		verify(grid).takeNextMove(X, 1);
 	}
+	
 
 	@Test
 	public void shouldMakeMoveWithMostPossibleWinningPositions() {
@@ -79,21 +78,9 @@ public class AutomatedPlayerTest {
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = afterMove.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[] { new Cell(Grid.O, 0),
-				new Cell(valueOf(EMPTY_CELL), 1),
-				new Cell(valueOf(EMPTY_CELL), 2) }));
-
-		Row middleRow = horizontalRows.get(1);
-		assertThat(middleRow.getCells(), is(new Cell[] {
-				new Cell(valueOf(EMPTY_CELL), 3), new Cell(X, 4),
-				new Cell(valueOf(EMPTY_CELL), 5) }));
-
-		Row bottomRow = horizontalRows.get(2);
-		assertThat(bottomRow.getCells(), is(new Cell[] {
-				new Cell(valueOf(EMPTY_CELL), 6),
-				new Cell(valueOf(EMPTY_CELL), 7),
-				new Cell(valueOf(EMPTY_CELL), 8) }));
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(Grid.O, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)} );
+		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 3), new Cell(X, 4), new Cell(valueOf(EMPTY_CELL), 5) } );
+		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8) } );
 
 		verify(grid).isCenterTaken();
 		verify(grid).takeNextMove(X, 4);
@@ -111,14 +98,9 @@ public class AutomatedPlayerTest {
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[] { new Cell(Grid.X, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(X, 2) }));
-
-		Row middleRow = horizontalRows.get(1);
-		assertThat(middleRow.getCells(), is(new Cell[] { new Cell(valueOf(EMPTY_CELL), 3), new Cell(O, 4), new Cell(valueOf(EMPTY_CELL), 5) }));
-
-		Row bottomRow = horizontalRows.get(2);
-		assertThat(bottomRow.getCells(), is(new Cell[] { new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8) }));
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[] { new Cell(Grid.X, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(X, 2) }) ;
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 3), new Cell(O, 4), new Cell(valueOf(EMPTY_CELL), 5) });
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8) });
 
 		verify(grid).getAvailableCorner();
 	}
@@ -133,18 +115,28 @@ public class AutomatedPlayerTest {
 		when(grid.takeNextMove(X, 3)).thenReturn(new Grid("oxoxx-xox"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
-
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[] { new Cell(O, 0), new Cell(X, 1), new Cell(O, 2) }));
-
-		Row middleRow = horizontalRows.get(1);
-		assertThat(middleRow.getCells(), is(new Cell[] { new Cell(X, 3), new Cell(X, 4), new Cell(valueOf(EMPTY_CELL), 5) }));
-
-		Row bottomRow = horizontalRows.get(2);
-		assertThat(bottomRow.getCells(), is(new Cell[] { new Cell(X, 6), new Cell(O, 7), new Cell(X, 8) }));
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(Grid.O, 0), new Cell(X, 1), new Cell(O, 2)} );
+		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), new Cell[] { new Cell(X, 3), new Cell(X, 4), new Cell(valueOf(EMPTY_CELL), 5) } );
+		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), new Cell[] { new Cell(X, 6), new Cell(O, 7), new Cell(X, 8) } );
 
 		verify(grid).getFirstFreeCell();
+	}
+	
+	private void assertThatExpectedSymbolsAreIn(Row row, Cell[] cells){
+		assertThat(row.getCells(), is(cells));
+	}
+	
+	private Row bottomRow(List<Row> horizontalRows) {
+		return horizontalRows.get(2);
+	}
+
+	private Row middleRow(List<Row> horizontalRows) {
+		return horizontalRows.get(1);
+	}
+
+	private Row topRow(List<Row> horizontalRows) {
+		return horizontalRows.get(0);
 	}
 
 }

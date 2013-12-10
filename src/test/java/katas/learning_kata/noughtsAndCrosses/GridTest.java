@@ -69,14 +69,10 @@ public class GridTest {
 		Grid grid = new Grid("---xxx---");
 		
 		List<Row> horizontalRows = grid.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[]{new Cell(valueOf(EMPTY_CELL), 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)}));
-		
-		Row middleRow = horizontalRows.get(1);
-		assertThat(middleRow.getCells(), is(new Cell[]{new Cell(X, 3), new Cell(X, 4), new Cell(X, 5)}));
-		
-		Row bottomRow = horizontalRows.get(2);
-		assertThat(bottomRow.getCells(), is(new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)}));
+
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)});
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[]{new Cell(X, 3), new Cell(X, 4), new Cell(X, 5)});
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)});
 	}
 
 	@Test
@@ -98,14 +94,10 @@ public class GridTest {
 		grid = grid.takeNextMove("o", 0);
 
 		List<Row> horizontalRows = grid.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[]{new Cell(Grid.O, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)}));
-		
-		Row middleRow = horizontalRows.get(1);
-		assertThat(middleRow.getCells(), is(new Cell[]{new Cell(X, 3), new Cell(O, 4), new Cell(X, 5)}));
-		
-		Row bottomRow = horizontalRows.get(2);
-		assertThat(bottomRow.getCells(), is(new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)}));
+	
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[]{new Cell(Grid.O, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)});
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[]{new Cell(X, 3), new Cell(O, 4), new Cell(X, 5)});
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)});
 	}
 
 	@Test
@@ -113,17 +105,27 @@ public class GridTest {
 		Grid grid = new Grid("---xox---");
 		grid.takeNextMove("o", 3);
 
-		
 		List<Row> horizontalRows = grid.getHorizontalRows();
-		Row topRow = horizontalRows.get(0);
-		assertThat(topRow.getCells(), is(new Cell[]{new Cell(valueOf(EMPTY_CELL), 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)}));
-		
-		Row middleRow = horizontalRows.get(1);
-		assertThat(middleRow.getCells(), is(new Cell[]{new Cell(X, 3), new Cell(O, 4), new Cell(X, 5)}));
-		
-		Row bottomRow = horizontalRows.get(2);
-		assertThat(bottomRow.getCells(), is(new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)}));
-		
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)});
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[]{new Cell(X, 3), new Cell(O, 4), new Cell(X, 5)});
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)});
+	}
+	
+
+	private void assertThatExpectedSymbolsAreIn(Row row, Cell[] cells){
+		assertThat(row.getCells(), is(cells));
+	}
+	
+	private Row bottomRow(List<Row> horizontalRows) {
+		return horizontalRows.get(2);
+	}
+
+	private Row middleRow(List<Row> horizontalRows) {
+		return horizontalRows.get(1);
+	}
+
+	private Row topRow(List<Row> horizontalRows) {
+		return horizontalRows.get(0);
 	}
 
 	@Test
