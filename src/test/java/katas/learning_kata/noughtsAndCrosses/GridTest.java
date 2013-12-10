@@ -64,15 +64,16 @@ public class GridTest {
 		assertThat(grid.hasFreeCornerPosition(), is(false));
 	}
 
+
 	@Test
 	public void shouldWriteTheGridOut() {
 		Grid grid = new Grid("---xxx---");
 		
 		List<Row> horizontalRows = grid.getHorizontalRows();
 
-		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)});
-		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[]{new Cell(X, 3), new Cell(X, 4), new Cell(X, 5)});
-		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)});
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), constructCellsFromPosition(0, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL))); 
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows),constructCellsFromPosition(3, X, X, X));
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows),constructCellsFromPosition(6,  valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)));
 	}
 
 	@Test
@@ -95,9 +96,9 @@ public class GridTest {
 
 		List<Row> horizontalRows = grid.getHorizontalRows();
 	
-		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[]{new Cell(Grid.O, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)});
-		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[]{new Cell(X, 3), new Cell(O, 4), new Cell(X, 5)});
-		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)});
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), constructCellsFromPosition(0, O, valueOf(EMPTY_CELL),valueOf(EMPTY_CELL)));
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), constructCellsFromPosition(3, X, O, X));
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), constructCellsFromPosition(6, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)));
 	}
 
 	@Test
@@ -106,26 +107,9 @@ public class GridTest {
 		grid.takeNextMove("o", 3);
 
 		List<Row> horizontalRows = grid.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)});
-		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[]{new Cell(X, 3), new Cell(O, 4), new Cell(X, 5)});
-		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[]{new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8)});
-	}
-	
-
-	private void assertThatExpectedSymbolsAreIn(Row row, Cell[] cells){
-		assertThat(row.getCells(), is(cells));
-	}
-	
-	private Row bottomRow(List<Row> horizontalRows) {
-		return horizontalRows.get(2);
-	}
-
-	private Row middleRow(List<Row> horizontalRows) {
-		return horizontalRows.get(1);
-	}
-
-	private Row topRow(List<Row> horizontalRows) {
-		return horizontalRows.get(0);
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), constructCellsFromPosition(0, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)));
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), constructCellsFromPosition(3, X, O, X));
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), constructCellsFromPosition(6, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)));
 	}
 
 	@Test
@@ -268,5 +252,25 @@ public class GridTest {
 		Grid grid = new Grid("--x-x-x--");
 		String winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is("x"));
+	}
+	
+	private Cell[] constructCellsFromPosition(int position, String... symbols) {
+		return new Cell[]{new Cell(symbols[0], position), new Cell(symbols[1], ++position), new Cell(symbols[2], ++position)};
+	}
+	
+	private void assertThatExpectedSymbolsAreIn(Row row, Cell[] cells){
+		assertThat(row.getCells(), is(cells));
+	}
+	
+	private Row bottomRow(List<Row> horizontalRows) {
+		return horizontalRows.get(2);
+	}
+
+	private Row middleRow(List<Row> horizontalRows) {
+		return horizontalRows.get(1);
+	}
+
+	private Row topRow(List<Row> horizontalRows) {
+		return horizontalRows.get(0);
 	}
 }

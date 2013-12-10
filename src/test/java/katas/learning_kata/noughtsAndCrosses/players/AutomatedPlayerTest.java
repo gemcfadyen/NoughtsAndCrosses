@@ -45,7 +45,7 @@ public class AutomatedPlayerTest {
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(O, 0), new Cell(X, 1), new Cell(O, 2)} );
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, O, X, O));
 		
 		verify(grid).isACellInTheGrid(1);
 		verify(grid).takeNextMove(X, 1);
@@ -61,7 +61,7 @@ public class AutomatedPlayerTest {
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = afterMove.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(X, 0), new Cell(X, 1), new Cell(X, 2)} );
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, X, X, X));
 		
 		verify(grid).isACellInTheGrid(1);
 		verify(grid).takeNextMove(X, 1);
@@ -78,9 +78,9 @@ public class AutomatedPlayerTest {
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = afterMove.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(Grid.O, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(valueOf(EMPTY_CELL), 2)} );
-		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 3), new Cell(X, 4), new Cell(valueOf(EMPTY_CELL), 5) } );
-		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8) } );
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, O, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)) );
+		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), constructCellsFromPosition(3, valueOf(EMPTY_CELL), X, valueOf(EMPTY_CELL)));
+		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), constructCellsFromPosition(6, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)) );
 
 		verify(grid).isCenterTaken();
 		verify(grid).takeNextMove(X, 4);
@@ -98,9 +98,9 @@ public class AutomatedPlayerTest {
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), new Cell[] { new Cell(Grid.X, 0), new Cell(valueOf(EMPTY_CELL), 1), new Cell(X, 2) }) ;
-		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 3), new Cell(O, 4), new Cell(valueOf(EMPTY_CELL), 5) });
-		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), new Cell[] { new Cell(valueOf(EMPTY_CELL), 6), new Cell(valueOf(EMPTY_CELL), 7), new Cell(valueOf(EMPTY_CELL), 8) });
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), constructCellsFromPosition(0, X, valueOf(EMPTY_CELL), X)) ;
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), constructCellsFromPosition(3, valueOf(EMPTY_CELL), O, valueOf(EMPTY_CELL)));
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), constructCellsFromPosition(6, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)));
 
 		verify(grid).getAvailableCorner();
 	}
@@ -116,9 +116,9 @@ public class AutomatedPlayerTest {
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), new Cell[] { new Cell(Grid.O, 0), new Cell(X, 1), new Cell(O, 2)} );
-		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), new Cell[] { new Cell(X, 3), new Cell(X, 4), new Cell(valueOf(EMPTY_CELL), 5) } );
-		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), new Cell[] { new Cell(X, 6), new Cell(O, 7), new Cell(X, 8) } );
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, O, X, O) );
+		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), constructCellsFromPosition(3, X, X, valueOf(EMPTY_CELL)));
+		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), constructCellsFromPosition(6, X, O, X));
 
 		verify(grid).getFirstFreeCell();
 	}
@@ -137,6 +137,10 @@ public class AutomatedPlayerTest {
 
 	private Row topRow(List<Row> horizontalRows) {
 		return horizontalRows.get(0);
+	}
+	
+	private Cell[] constructCellsFromPosition(int position, String... symbols) {
+		return new Cell[]{new Cell(symbols[0], position), new Cell(symbols[1], ++position), new Cell(symbols[2], ++position)};
 	}
 
 }
