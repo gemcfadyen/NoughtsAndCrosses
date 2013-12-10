@@ -27,7 +27,11 @@ public class NoughtsAndCrosses {
 
 	NoughtsAndCrosses() {
 		commandPrompt = setupCommandPrompt();
-		grid = new Grid("---------");
+		grid = new Grid(5,  "-----" +
+							"-----" +
+							"-----" +
+							"-----" +
+							"-----");
 		playerX = new AutomatedPlayer(X); //new HumanPlayer(X, setupCommandPrompt());
 		playerO = new HumanPlayer(O, commandPrompt);
 	}

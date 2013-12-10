@@ -49,9 +49,19 @@ public class CommandPrompt implements Prompt {
 		int position = -1;
 		for (Row horizontalRow : rows) {
 			Cell[] cells = horizontalRow.getCells();
-			board.append(addSymbolIn(cells) + "    " + (++position) + " " + (++position) + " " + (++position) + "\n");
+			board.append(addSymbolIn(cells) + "    " + addPositionsFrom(position, cells.length));
+			position+=cells.length;
 		}
 		return board;
+	}
+	
+	private StringBuffer addPositionsFrom(int position, int dimension){
+		StringBuffer displayThePositions = new StringBuffer();
+		for(int i=0; i<dimension; i++){
+			displayThePositions.append(++position + " ");
+		}
+		displayThePositions.append("\n");
+		return displayThePositions;
 	}
 
 	private StringBuffer addSymbolIn(Cell[] cells) {

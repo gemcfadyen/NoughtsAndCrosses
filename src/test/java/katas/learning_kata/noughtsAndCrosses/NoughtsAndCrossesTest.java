@@ -78,7 +78,7 @@ public class NoughtsAndCrossesTest {
 		when(grid.getWinningSymbol()).thenReturn("x");
 		when(grid.toString()).thenReturn("xxx\n---\n---");
 		when(playerX.getSymbol()).thenReturn("x");
-		when(playerX.takesGo(grid)).thenReturn(new Grid("xxx------"));
+		when(playerX.takesGo(grid)).thenReturn(new Grid(3, "xxx------"));
 		
 		noughtsAndCrosses.playGame();
 	

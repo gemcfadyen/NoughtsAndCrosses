@@ -40,7 +40,7 @@ public class AutomatedPlayerTest {
 	public void shouldIdentifyThereIsABlockingMoveToBeMade() {
 		when(grid.potentialWinningMove("o")).thenReturn(1);
 		when(grid.isACellInTheGrid(1)).thenReturn(true);
-		when(grid.takeNextMove("x", 1)).thenReturn(new Grid("oxo------"));
+		when(grid.takeNextMove("x", 1)).thenReturn(new Grid(3, "oxo------"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
@@ -56,7 +56,7 @@ public class AutomatedPlayerTest {
 	public void shouldIdentifyThereIsAWinningMoveToBeMade() {
 		when(grid.potentialWinningMove(X)).thenReturn(1);
 		when(grid.isACellInTheGrid(1)).thenReturn(true);
-		when(grid.takeNextMove(X, 1)).thenReturn(new Grid("xxx------"));
+		when(grid.takeNextMove(X, 1)).thenReturn(new Grid(3, "xxx------"));
 
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
@@ -73,7 +73,7 @@ public class AutomatedPlayerTest {
 		when(grid.potentialWinningMove("x")).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(false);
 		when(grid.getCentreCell()).thenReturn(4);
-		when(grid.takeNextMove(X, 4)).thenReturn(new Grid("o---x----"));
+		when(grid.takeNextMove(X, 4)).thenReturn(new Grid(3, "o---x----"));
 
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
@@ -93,7 +93,7 @@ public class AutomatedPlayerTest {
 		when(grid.isCenterTaken()).thenReturn(true);
 		when(grid.hasFreeCornerPosition()).thenReturn(true);
 		when(grid.getAvailableCorner()).thenReturn(2);
-		when(grid.takeNextMove(X, 2)).thenReturn(new Grid("x-x-o----"));
+		when(grid.takeNextMove(X, 2)).thenReturn(new Grid(3, "x-x-o----"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
@@ -112,7 +112,7 @@ public class AutomatedPlayerTest {
 		when(grid.isCenterTaken()).thenReturn(true);
 		when(grid.hasFreeCornerPosition()).thenReturn(false);
 		when(grid.getFirstFreeCell()).thenReturn(3);
-		when(grid.takeNextMove(X, 3)).thenReturn(new Grid("oxoxx-xox"));
+		when(grid.takeNextMove(X, 3)).thenReturn(new Grid(3, "oxoxx-xox"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();

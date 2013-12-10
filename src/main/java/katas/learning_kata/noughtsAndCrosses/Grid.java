@@ -8,17 +8,19 @@ import java.util.List;
 public class Grid {
 	public static final char EMPTY_CELL = '-';
 	public static final int NO_MATCH_FOUND = -1;
-	public static final int GRID_DIMENSION = 3;
-	public static final int CENTER_CELL = (GRID_DIMENSION * GRID_DIMENSION )/2;
+//	public static final int GRID_DIMENSION = dimension;
+//	public static final int CENTER_CELL = (GRID_DIMENSION * GRID_DIMENSION )/2;
 	public static final String O = "o";
 	public static final String X = "x";
-	public static final int TOP_LEFT_CORNER = 0;
-	public static final int TOP_RIGHT_CORNER = GRID_DIMENSION - 1;
-	public static final int BOTTOM_LEFT_CORNER = TOP_RIGHT_CORNER * GRID_DIMENSION;
-	public static final int BOTTOM_RIGHT_CORNER = (GRID_DIMENSION * GRID_DIMENSION) - 1;
+//	public static final int TOP_LEFT_CORNER = 0;
+//	public static final int TOP_RIGHT_CORNER = GRID_DIMENSION - 1;
+//	public static final int BOTTOM_LEFT_CORNER = TOP_RIGHT_CORNER * GRID_DIMENSION;
+//	public static final int BOTTOM_RIGHT_CORNER = (GRID_DIMENSION * GRID_DIMENSION) - 1;
+	private int dimension;
 	private String board;
 
-	public Grid(String board) {
+	public Grid(int dimension, String board) {
+		this.dimension = dimension;
 		this.board = board;
 	}
 
@@ -37,7 +39,7 @@ public class Grid {
 	}
 
 	public List<Row> getHorizontalRows() {
-		return generateRows(GRID_DIMENSION, 1);
+		return generateRows(dimension, 1);
 	}
 
 	private List<Row> generateRowsFromCurrentGrid() {
@@ -52,15 +54,15 @@ public class Grid {
 	}
 
 	private List<Row> getDiagonalFromRight() {
-		return getDiagonalRows(TOP_RIGHT_CORNER, TOP_RIGHT_CORNER);
+		return getDiagonalRows(topRightCorner(), topRightCorner());
 	}
 
 	private List<Row> getDiagonalRowFromLeft() {
-		return getDiagonalRows(0, CENTER_CELL);
+		return getDiagonalRows(0, dimension + 1);
 	}
 
 	private List<Row> getVerticalRows() {
-		return generateRows(1, GRID_DIMENSION);
+		return generateRows(1, dimension);
 	}
 
 	
@@ -72,9 +74,9 @@ public class Grid {
 	}
 
 	private Cell[] constructCells(int startingCell, int cellIncrementor){
-		Cell[] cells = new Cell[GRID_DIMENSION];
+		Cell[] cells = new Cell[dimension];
 		for (int cellPosition = startingCell, index = 0; 
-				cellPosition < GRID_DIMENSION * GRID_DIMENSION  && index < GRID_DIMENSION; 
+				cellPosition < dimension * dimension  && index < dimension; 
 					cellPosition += cellIncrementor, index++) {
 			cells[index] = new Cell(valueOf(board.charAt(cellPosition)), cellPosition);
 		}
@@ -85,7 +87,7 @@ public class Grid {
 	
 	private List<Row> generateRows(int offsetIncrementor, int cellIncrementor) {
 		List<Row> rows = new ArrayList<Row>();
-		for (int offset = 0; offset < GRID_DIMENSION * offsetIncrementor; offset += offsetIncrementor) {
+		for (int offset = 0; offset < dimension * offsetIncrementor; offset += offsetIncrementor) {
 			Cell[] cells = constructCells(offset, cellIncrementor); 
 			rows.add(new Row(cells));
 		}
@@ -120,7 +122,7 @@ public class Grid {
 	}
 
 	public boolean isCenterTaken() {
-		return !(board.charAt(CENTER_CELL) == EMPTY_CELL);
+		return !(board.charAt(getCentreCell()) == EMPTY_CELL);
 	}
 
 	public boolean hasFreeCornerPosition() {
@@ -128,24 +130,41 @@ public class Grid {
 	}
 
 	public int getAvailableCorner() {
-		if (board.charAt(TOP_LEFT_CORNER) == EMPTY_CELL)
-			return TOP_LEFT_CORNER;
-		else if (board.charAt(TOP_RIGHT_CORNER) == EMPTY_CELL)
-			return TOP_RIGHT_CORNER;
-		else if (board.charAt(BOTTOM_LEFT_CORNER) == EMPTY_CELL)
-			return BOTTOM_LEFT_CORNER;
-		else if (board.charAt(BOTTOM_RIGHT_CORNER) == EMPTY_CELL)
-			return BOTTOM_RIGHT_CORNER;
+		if (board.charAt(topLeftCorner()) == EMPTY_CELL)
+			return topLeftCorner();
+		else if (board.charAt(topRightCorner()) == EMPTY_CELL)
+			return topRightCorner();
+		else if (board.charAt(bottomLeftCorner()) == EMPTY_CELL)
+			return bottomLeftCorner();
+		else if (board.charAt(bottomRightCorner()) == EMPTY_CELL)
+			return bottomRightCorner();
 		else
 			return NO_MATCH_FOUND;
 	}
+	
+	private int bottomRightCorner(){
+		return (dimension * dimension) - 1;
+	}
+	
+	private int bottomLeftCorner(){
+		return topRightCorner() * dimension;
+	}
+	
+	private int topRightCorner(){
+		 return dimension - 1;
+	}
+	
+	private int topLeftCorner(){
+		return 0;
+	}
 
 	public int getCentreCell() {
-		return CENTER_CELL;
+		return (dimension * dimension)/2;
 	}
 
 	public int getFirstFreeCell() {
 		return board.indexOf(EMPTY_CELL);
 	}
+	
 
 }
