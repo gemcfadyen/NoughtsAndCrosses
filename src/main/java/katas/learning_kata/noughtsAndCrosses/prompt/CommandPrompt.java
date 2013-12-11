@@ -68,7 +68,7 @@ public class CommandPrompt implements Prompt {
 	private StringBuffer addSymbolIn(Cell[] cells) {
 		StringBuffer board = new StringBuffer();
 		for (Cell cell : cells) {
-			board.append(cell.getSymbol());
+			board.append(cell.getSymbol().getCharValue());
 		}
 		return board;
 	}
