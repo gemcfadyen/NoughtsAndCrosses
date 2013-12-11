@@ -1,6 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
-import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 import static org.mockito.Mockito.verify;
 import katas.learning_kata.noughtsAndCrosses.Grid;
 import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;

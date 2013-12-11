@@ -1,7 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses.prompt;
 
-import static katas.learning_kata.noughtsAndCrosses.Grid.O;
-import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -53,7 +53,7 @@ public class CommandPromptTest {
 		
 		prompt.displayBoard(grid.getHorizontalRows());
 		
-		assertThat(outputWriter.toString(), equalTo("xxx    0 1 2 \nxxx    3 4 5 \noxo    6 7 8 \n"));
+		assertThat(outputWriter.toString(), equalTo("XXX    0 1 2 \nXXX    3 4 5 \nOXO    6 7 8 \n"));
 
 	}
 	
@@ -66,7 +66,7 @@ public class CommandPromptTest {
 		
 		prompt.displayBoard(grid.getHorizontalRows());
 		
-		assertThat(outputWriter.toString(), equalTo("xxxxx    0 1 2 3 4 \nxxxxx    5 6 7 8 9 \noxooo    10 11 12 13 14 \noxooo    15 16 17 18 19 \noxooo    20 21 22 23 24 \n"));
+		assertThat(outputWriter.toString(), equalTo("XXXXX    0 1 2 3 4 \nXXXXX    5 6 7 8 9 \nOXOOO    10 11 12 13 14 \nOXOOO    15 16 17 18 19 \nOXOOO    20 21 22 23 24 \n"));
 	}
 
 	private List<Row> horizontalRowsRepresentingAGridOfDimension5() {
@@ -138,9 +138,9 @@ public class CommandPromptTest {
 		StringWriter outputWriter = new StringWriter();
 		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
 		
-		prompt.printWinningStatement("x");
+		prompt.printWinningStatement(X);
 		
-		assertThat(outputWriter.toString(), is("Congratulations [x] you have won! \n Game Over"));
+		assertThat(outputWriter.toString(), is("Congratulations [X] you have won! \n Game Over"));
 		
 	}
 	

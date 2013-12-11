@@ -1,21 +1,19 @@
 package katas.learning_kata.noughtsAndCrosses;
 
-import static java.lang.String.valueOf;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class Grid {
-	public static final char EMPTY_CELL = '-';
+	//public static final char EMPTY_CELL = '-';
 	public static final int NO_MATCH_FOUND = -1;
-//	public static final int GRID_DIMENSION = dimension;
-//	public static final int CENTER_CELL = (GRID_DIMENSION * GRID_DIMENSION )/2;
-	public static final String O = "o";
-	public static final String X = "x";
-//	public static final int TOP_LEFT_CORNER = 0;
-//	public static final int TOP_RIGHT_CORNER = GRID_DIMENSION - 1;
-//	public static final int BOTTOM_LEFT_CORNER = TOP_RIGHT_CORNER * GRID_DIMENSION;
-//	public static final int BOTTOM_RIGHT_CORNER = (GRID_DIMENSION * GRID_DIMENSION) - 1;
+	//public static final char O = 'o';
+	//public static final char X = 'x';
 	private int dimension;
 	private String board;
 
@@ -25,17 +23,21 @@ public class Grid {
 	}
 
 	public boolean hasFreeSlot() {
-		return board.contains(String.valueOf(EMPTY_CELL));
+		return contains(EMPTY);
+	}
+	
+	private boolean contains(Symbol symbol) {
+		return board.indexOf(charValueOf(symbol)) > -1;
 	}
 
-	public String getWinningSymbol() {
+	public Symbol getWinningSymbol() {
 		List<Row> gridRows = generateRowsFromCurrentGrid();
 		for (Row row : gridRows) {
 			if (row.hasWinner())
 				return row.winningSymbol();
 		}
 
-		return valueOf(NO_MATCH_FOUND);
+		return null;//valueOf(NO_MATCH_FOUND);
 	}
 
 	public List<Row> getHorizontalRows() {
@@ -78,13 +80,18 @@ public class Grid {
 		for (int cellPosition = startingCell, index = 0; 
 				cellPosition < dimension * dimension  && index < dimension; 
 					cellPosition += cellIncrementor, index++) {
-			cells[index] = new Cell(valueOf(board.charAt(cellPosition)), cellPosition);
+			cells[index] = new Cell(getSymbolAt(cellPosition), cellPosition);
 		}
 		
 		return cells;
 	}
 	
 	
+	private Symbol getSymbolAt(int cellPosition) {
+		char charValueOfSymbol = board.charAt(cellPosition);
+		return  Symbol.valueOfChar(charValueOfSymbol);
+	}
+
 	private List<Row> generateRows(int offsetIncrementor, int cellIncrementor) {
 		List<Row> rows = new ArrayList<Row>();
 		for (int offset = 0; offset < dimension * offsetIncrementor; offset += offsetIncrementor) {
@@ -94,8 +101,8 @@ public class Grid {
 		return rows;
 	}
 
-	public Grid takeNextMove(String symbol, int index) {
-		if (board.charAt(index) == EMPTY_CELL) {
+	public Grid takeNextMove(Symbol symbol, int index) {
+		if (board.charAt(index) == charValueOf(EMPTY)) {
 			board = board.substring(0, index) + symbol
 					+ board.substring(index + 1, board.length());
 		}
@@ -103,12 +110,16 @@ public class Grid {
 		return this;
 	}
 
-	public int getIndexOfBlockingMove(String symbol) {
-		String opponentsSymbol = (symbol.equals(X)) ? O : X;
+	private char charValueOf(Symbol symbol) {
+		return symbol.getCharValue();
+	}
+
+	public int getIndexOfBlockingMove(Symbol symbol) {
+		Symbol opponentsSymbol = (symbol == X) ? O : X;
 		return potentialWinningMove(opponentsSymbol);
 	}
 
-	public int potentialWinningMove(String symbol) {
+	public int potentialWinningMove(Symbol symbol) {
 		List<Row> gridRows = generateRowsFromCurrentGrid();
 		for (Row row : gridRows) {
 			if (row.hasPotentialWinner())
@@ -122,7 +133,7 @@ public class Grid {
 	}
 
 	public boolean isCenterTaken() {
-		return !(board.charAt(getCentreCell()) == EMPTY_CELL);
+		return !(board.charAt(getCentreCell()) == charValueOf(EMPTY));
 	}
 
 	public boolean hasFreeCornerPosition() {
@@ -130,13 +141,13 @@ public class Grid {
 	}
 
 	public int getAvailableCorner() {
-		if (board.charAt(topLeftCorner()) == EMPTY_CELL)
+		if (board.charAt(topLeftCorner()) == charValueOf(EMPTY))
 			return topLeftCorner();
-		else if (board.charAt(topRightCorner()) == EMPTY_CELL)
+		else if (board.charAt(topRightCorner()) == charValueOf(EMPTY))
 			return topRightCorner();
-		else if (board.charAt(bottomLeftCorner()) == EMPTY_CELL)
+		else if (board.charAt(bottomLeftCorner()) == charValueOf(EMPTY))
 			return bottomLeftCorner();
-		else if (board.charAt(bottomRightCorner()) == EMPTY_CELL)
+		else if (board.charAt(bottomRightCorner()) == charValueOf(EMPTY))
 			return bottomRightCorner();
 		else
 			return NO_MATCH_FOUND;
@@ -163,7 +174,7 @@ public class Grid {
 	}
 
 	public int getFirstFreeCell() {
-		return board.indexOf(EMPTY_CELL);
+		return board.indexOf(charValueOf(EMPTY));
 	}
 	
 

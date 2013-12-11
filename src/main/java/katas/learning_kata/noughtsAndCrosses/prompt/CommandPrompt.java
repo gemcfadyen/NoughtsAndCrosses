@@ -8,6 +8,7 @@ import java.util.List;
 
 import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Row;
+import katas.learning_kata.noughtsAndCrosses.Symbol;
 
 public class CommandPrompt implements Prompt {
 
@@ -95,10 +96,9 @@ public class CommandPrompt implements Prompt {
 	}
 
 	@Override
-	public void printWinningStatement(String winningSymbol) {
+	public void printWinningStatement(Symbol winningSymbol) {
 		try {
-			outputWriter.write("Congratulations [" + winningSymbol
-					+ "] you have won! \n Game Over");
+			outputWriter.write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
 			outputWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

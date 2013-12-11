@@ -1,9 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses;
 
-import static java.lang.String.valueOf;
-import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.Grid.O;
-import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,11 +25,10 @@ public class NoughtsAndCrosses {
 
 	NoughtsAndCrosses() {
 		commandPrompt = setupCommandPrompt();
-		grid = new Grid(5,  "-----" +
-							"-----" +
-							"-----" +
-							"-----" +
-							"-----");
+		grid = new Grid(4,  "----" +
+							"----" +
+							"----" +
+							"----" );
 		playerX = new AutomatedPlayer(X); //new HumanPlayer(X, setupCommandPrompt());
 		playerO = new HumanPlayer(O, commandPrompt);
 	}
@@ -61,7 +58,7 @@ public class NoughtsAndCrosses {
 	}
 
 	private void evaluateGame() {
-		if(grid.getWinningSymbol().equals(valueOf(Grid.NO_MATCH_FOUND))){
+		if(grid.getWinningSymbol() == null){
 			commandPrompt.printLoosingStatement();
 		}
 		else{
@@ -70,8 +67,8 @@ public class NoughtsAndCrosses {
 	}
 
 	private boolean gameIsInProgress() {
-		String winningStatus = grid.getWinningSymbol();
-		return winningStatus.equals(valueOf(NO_MATCH_FOUND)) && grid.hasFreeSlot();
+		Symbol winningStatus = grid.getWinningSymbol();
+		return winningStatus == null && grid.hasFreeSlot();
 	}
 
 	public void setPlayerX(Player playerX) {

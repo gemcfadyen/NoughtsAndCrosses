@@ -1,9 +1,8 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
-import static java.lang.String.valueOf;
-import static katas.learning_kata.noughtsAndCrosses.Grid.EMPTY_CELL;
-import static katas.learning_kata.noughtsAndCrosses.Grid.O;
-import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
@@ -15,6 +14,7 @@ import java.util.List;
 import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Grid;
 import katas.learning_kata.noughtsAndCrosses.Row;
+import katas.learning_kata.noughtsAndCrosses.Symbol;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,9 +38,9 @@ public class AutomatedPlayerTest {
 
 	@Test
 	public void shouldIdentifyThereIsABlockingMoveToBeMade() {
-		when(grid.potentialWinningMove("o")).thenReturn(1);
+		when(grid.potentialWinningMove(O)).thenReturn(1);
 		when(grid.isACellInTheGrid(1)).thenReturn(true);
-		when(grid.takeNextMove("x", 1)).thenReturn(new Grid(3, "oxo------"));
+		when(grid.takeNextMove(X, 1)).thenReturn(new Grid(3, "oxo------"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
@@ -70,7 +70,7 @@ public class AutomatedPlayerTest {
 
 	@Test
 	public void shouldMakeMoveWithMostPossibleWinningPositions() {
-		when(grid.potentialWinningMove("x")).thenReturn(-1);
+		when(grid.potentialWinningMove(X)).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(false);
 		when(grid.getCentreCell()).thenReturn(4);
 		when(grid.takeNextMove(X, 4)).thenReturn(new Grid(3, "o---x----"));
@@ -78,9 +78,9 @@ public class AutomatedPlayerTest {
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = afterMove.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, O, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)) );
-		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), constructCellsFromPosition(3, valueOf(EMPTY_CELL), X, valueOf(EMPTY_CELL)));
-		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), constructCellsFromPosition(6, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)) );
+		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, O, EMPTY, EMPTY) );
+		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), constructCellsFromPosition(3, EMPTY, X, EMPTY));
+		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), constructCellsFromPosition(6, EMPTY, EMPTY, EMPTY) );
 
 		verify(grid).isCenterTaken();
 		verify(grid).takeNextMove(X, 4);
@@ -98,9 +98,9 @@ public class AutomatedPlayerTest {
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), constructCellsFromPosition(0, X, valueOf(EMPTY_CELL), X)) ;
-		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), constructCellsFromPosition(3, valueOf(EMPTY_CELL), O, valueOf(EMPTY_CELL)));
-		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), constructCellsFromPosition(6, valueOf(EMPTY_CELL), valueOf(EMPTY_CELL), valueOf(EMPTY_CELL)));
+		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), constructCellsFromPosition(0, X, EMPTY, X)) ;
+		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), constructCellsFromPosition(3, EMPTY, O, EMPTY));
+		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), constructCellsFromPosition(6, EMPTY, EMPTY, EMPTY));
 
 		verify(grid).getAvailableCorner();
 	}
@@ -117,7 +117,7 @@ public class AutomatedPlayerTest {
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
 		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, O, X, O) );
-		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), constructCellsFromPosition(3, X, X, valueOf(EMPTY_CELL)));
+		assertThatExpectedSymbolsAreIn( middleRow(horizontalRows), constructCellsFromPosition(3, X, X, EMPTY));
 		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), constructCellsFromPosition(6, X, O, X));
 
 		verify(grid).getFirstFreeCell();
@@ -139,7 +139,7 @@ public class AutomatedPlayerTest {
 		return horizontalRows.get(0);
 	}
 	
-	private Cell[] constructCellsFromPosition(int position, String... symbols) {
+	private Cell[] constructCellsFromPosition(int position, Symbol... symbols) {
 		return new Cell[]{new Cell(symbols[0], position), new Cell(symbols[1], ++position), new Cell(symbols[2], ++position)};
 	}
 

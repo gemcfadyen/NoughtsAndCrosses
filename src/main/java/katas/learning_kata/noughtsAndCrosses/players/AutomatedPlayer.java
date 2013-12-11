@@ -1,14 +1,15 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.Grid.O;
-import static katas.learning_kata.noughtsAndCrosses.Grid.X;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
+import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 import katas.learning_kata.noughtsAndCrosses.Grid;
+import katas.learning_kata.noughtsAndCrosses.Symbol;
 
 public class AutomatedPlayer implements Player {
-	private String symbol;
+	private Symbol symbol;
 
-	public AutomatedPlayer(String symbol) {
+	public AutomatedPlayer(Symbol symbol) {
 		this.symbol = symbol;
 	}
 
@@ -54,7 +55,7 @@ public class AutomatedPlayer implements Player {
 		return NO_MATCH_FOUND;
 	}
 	
-	private int indexOfWinningMoveFor(String symbol, Grid grid){
+	private int indexOfWinningMoveFor(Symbol symbol, Grid grid){
 		int potentialWinningMove = grid.potentialWinningMove(symbol);
 		if(grid.isACellInTheGrid(potentialWinningMove)){
 			return potentialWinningMove;
@@ -62,12 +63,12 @@ public class AutomatedPlayer implements Player {
 		return NO_MATCH_FOUND;
 	}
 	
-	public String opponent() {
+	public Symbol opponent() {
 		return (symbol.equals(X)) ? O : X;
 	}
 
 	@Override
-	public String getSymbol() {
+	public Symbol getSymbol() {
 		return symbol;
 	}
 }
