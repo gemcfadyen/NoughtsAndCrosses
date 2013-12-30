@@ -7,13 +7,9 @@ import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class Grid {
-	//public static final char EMPTY_CELL = '-';
 	public static final int NO_MATCH_FOUND = -1;
-	//public static final char O = 'o';
-	//public static final char X = 'x';
+
 	private int dimension;
 	private String board;
 
@@ -22,6 +18,22 @@ public class Grid {
 		this.board = board;
 	}
 
+	public Grid(int dimension) {
+		this.dimension = dimension;
+		this.board = initialiseBoard(dimension);
+	}
+
+	private String initialiseBoard(int dimension) {
+		StringBuffer initialiseGrid = new StringBuffer();
+
+		for (int i = 0; i < dimension; i++) {
+			for (int j = 0; j < dimension; j++) {
+				initialiseGrid.append(Symbol.EMPTY.getCharValue());
+			}
+
+		}
+		return initialiseGrid.toString();
+	}
 	public boolean hasFreeSlot() {
 		return contains(EMPTY);
 	}
@@ -176,6 +188,4 @@ public class Grid {
 	public int getFirstFreeCell() {
 		return board.indexOf(charValueOf(EMPTY));
 	}
-	
-
 }
