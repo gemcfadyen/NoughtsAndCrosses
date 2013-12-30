@@ -28,28 +28,21 @@ public class CommandPromptTest {
 
 	@Test
 	public void shouldReadTheMoveFromTheCommandPrompt() {
-		Reader inputReader = new StringReader("1");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
-
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent("1"), getStringWriter());
 		assertThat(prompt.readNextMove(), equalTo(1));
 	}
 	
 	@Test
 	public void shouldReadTheDoubleFigureMoveFromTheCommandPrompt(){
-		Reader inputReader = new StringReader("11");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
-
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent("11"), getStringWriter());
 		assertThat(prompt.readNextMove(), equalTo(11));
 	}
 
 	@Test
-	public void shouldDisplayTheBoardUsingTheProvidedDisplay() {
+	public void shouldDisplayA3By3Board() {
 		when(grid.getHorizontalRows()).thenReturn( horizontalRowsRepresentingAGridOfDimension3());
-		Reader inputReader = new StringReader("");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
+		StringWriter outputWriter = getStringWriter();
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
 		
 		prompt.displayBoard(grid.getHorizontalRows());
 		
@@ -58,17 +51,104 @@ public class CommandPromptTest {
 	}
 	
 	@Test
-	public void shouldDisplayTheBoardWithADifferentDimensionUsingTheProvidedDisplay(){
+	public void shouldDisplayA5By5Board(){
 		when(grid.getHorizontalRows()).thenReturn( horizontalRowsRepresentingAGridOfDimension5());
-		Reader inputReader = new StringReader("");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
+		StringWriter outputWriter = getStringWriter();
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
 		
 		prompt.displayBoard(grid.getHorizontalRows());
 		
 		assertThat(outputWriter.toString(), equalTo("xxxxx    0 1 2 3 4 \nxxxxx    5 6 7 8 9 \noxooo    10 11 12 13 14 \noxooo    15 16 17 18 19 \noxooo    20 21 22 23 24 \n"));
 	}
-
+	
+	@Test
+	public void shouldPromptTheUserToTakeAGo(){
+		when(grid.toString()).thenReturn("xxx\nxxx\noxo\n");
+		StringWriter outputWriter = getStringWriter();
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent("1"), outputWriter);
+		
+		prompt.promptUser();
+		
+		assertThat(outputWriter.toString(), equalTo("Enter the index of your next move:\n"));
+	}
+	
+	@Test
+	public void shouldIgnoreNewLineCharacters(){
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent("1\n2"), getStringWriter());
+		
+		int firstValue = prompt.readNextMove();
+		int secondValue = prompt.readNextMove();
+		
+		assertThat(firstValue, is(1));
+		assertThat(secondValue, is(2));
+	}
+	
+	@Test
+	public void shouldPrintALoosingStatementIfNoPlayerHasWonTheGame(){
+		StringWriter outputWriter = getStringWriter();
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
+		
+		prompt.printLoosingStatement();
+		
+		assertThat(outputWriter.toString(), is("NO_WINNER Game Over, there was no winner! \n Game Over"));
+		
+	}
+	
+	@Test
+	public void shouldPrintAWinningStatementIfAPlayerHasWonTheGame() {
+		StringWriter outputWriter = getStringWriter();
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
+		
+		prompt.printWinningStatement(X);
+		
+		assertThat(outputWriter.toString(), is("Congratulations [X] you have won! \n Game Over"));
+	}
+	
+	@Test
+	public void shouldPromptTheUserToEnterAGridDimension(){
+		StringWriter outputWriter = getStringWriter();
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
+		
+		prompt.promptForGridDimension();
+		
+		assertThat(outputWriter.toString(), is("Please enter the grid dimension"));
+	}
+	
+	@Test
+	public void shouldReadInTheGridDimesionEnteredByThePlayer(){
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent("4"), getStringWriter());
+		assertThat(prompt.readGridDimension(), is(4));
+	}
+	
+	@Test
+	public void shouldPromptPlayerToChooseOpponent(){
+		StringWriter outputWriter = getStringWriter();
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
+		
+		prompt.promptForChoiceOfOpponent();
+		
+		assertThat(outputWriter.toString(), is("Enter 'h' to play against another human, Enter 'c' to play against the computer"));
+	}
+	
+	@Test
+	public void shouldReadInPlayersChoiceOfOpponent(){
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent("h"), getStringWriter());
+		assertThat(prompt.readChoiceOfOpponent(), is("h"));
+	}
+	
+	private Prompt initialisePromptWith(Reader reader, StringWriter writer){
+		CommandPrompt prompt = new CommandPrompt(reader, writer);
+		return prompt;
+	}
+	
+	private Reader getInputReaderWithContent(String dataReadIn){
+		return new StringReader(dataReadIn);
+	}
+	
+	private StringWriter getStringWriter(){
+		return new StringWriter();
+	}
+	
 	private List<Row> horizontalRowsRepresentingAGridOfDimension5() {
 		List<Row> horizontalRows = new ArrayList<Row>();
 		Row rowOne = new Row(new Cell[]{new Cell(X, 0), new Cell(X, 1), new Cell(X, 2), new Cell(X, 3), new Cell(X, 4)});
@@ -94,54 +174,5 @@ public class CommandPromptTest {
 		horizontalRows.add(bottomRow);
 		return horizontalRows;
 	}
-	
-	@Test
-	public void shouldPromptTheUserToTakeAGo(){
-		when(grid.toString()).thenReturn("xxx\nxxx\noxo\n");
-		Reader inputReader = new StringReader("1");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
-		
-		prompt.promptUser();
-		
-		assertThat(outputWriter.toString(), equalTo("Enter the index of your next move:\n"));
-	}
-	
-	@Test
-	public void shouldIgnoreNewLineCharacters(){
-		Reader inputReader = new StringReader("1\n2");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
-		
-		int firstValue = prompt.readNextMove();
-		int secondValue = prompt.readNextMove();
-		
-		assertThat(firstValue, is(1));
-		assertThat(secondValue, is(2));
-	}
-	
-	@Test
-	public void shouldPrintALoosingStatementIfNoPlayerHasWonTheGame(){
-		Reader inputReader = new StringReader("");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
-		
-		prompt.printLoosingStatement();
-		
-		assertThat(outputWriter.toString(), is("NO_WINNER Game Over, there was no winner! \n Game Over"));
-		
-	}
-	
-	@Test
-	public void shouldPrintAWinningStatementIfAPlayerHasWonTheGame(){
-		Reader inputReader = new StringReader("");
-		StringWriter outputWriter = new StringWriter();
-		CommandPrompt prompt = new CommandPrompt(inputReader, outputWriter);
-		
-		prompt.printWinningStatement(X);
-		
-		assertThat(outputWriter.toString(), is("Congratulations [X] you have won! \n Game Over"));
-		
-	}
-	
+
 }

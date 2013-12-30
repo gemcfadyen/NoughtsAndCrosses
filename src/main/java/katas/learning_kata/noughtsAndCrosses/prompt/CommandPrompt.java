@@ -1,5 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses.prompt;
 
+import static java.lang.Integer.parseInt;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -11,7 +13,6 @@ import katas.learning_kata.noughtsAndCrosses.Row;
 import katas.learning_kata.noughtsAndCrosses.Symbol;
 
 public class CommandPrompt implements Prompt {
-
 	private BufferedReader inputReader;
 	private Writer outputWriter;
 
@@ -19,30 +20,11 @@ public class CommandPrompt implements Prompt {
 		this.inputReader = new BufferedReader(inputReader);
 		this.outputWriter = outputWriter;
 	}
-
-	@Override
-	public int readNextMove() {
-		return Integer.parseInt(readLine());
-	}
-
-	private String readLine() {
-		try {
-			return inputReader.readLine();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-	}
-
+	
 	@Override
 	public void displayBoard(List<Row> rows) {
-		try {
-			StringBuffer board = drawBoard(rows);
-			outputWriter.write(board.toString());
-			outputWriter.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		StringBuffer board = drawBoard(rows);
+		write(board.toString());
 	}
 
 	private StringBuffer drawBoard(List<Row> rows) {
@@ -50,15 +32,16 @@ public class CommandPrompt implements Prompt {
 		int position = -1;
 		for (Row horizontalRow : rows) {
 			Cell[] cells = horizontalRow.getCells();
-			board.append(addSymbolIn(cells) + "    " + addPositionsFrom(position, cells.length));
-			position+=cells.length;
+			board.append(addSymbolIn(cells) + "    "
+					+ addPositionsFrom(position, cells.length));
+			position += cells.length;
 		}
 		return board;
 	}
-	
-	private StringBuffer addPositionsFrom(int position, int dimension){
+
+	private StringBuffer addPositionsFrom(int position, int dimension) {
 		StringBuffer displayThePositions = new StringBuffer();
-		for(int i=0; i<dimension; i++){
+		for (int i = 0; i < dimension; i++) {
 			displayThePositions.append(++position + " ");
 		}
 		displayThePositions.append("\n");
@@ -75,34 +58,59 @@ public class CommandPrompt implements Prompt {
 
 	@Override
 	public void promptUser() {
-		try {
-			outputWriter.write("Enter the index of your next move:\n");
-			outputWriter.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		write("Enter the index of your next move:\n");
 	}
 
 	@Override
 	public void printLoosingStatement() {
-		try {
-			outputWriter
-					.write("NO_WINNER Game Over, there was no winner! \n Game Over");
-			outputWriter.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		write("NO_WINNER Game Over, there was no winner! \n Game Over");
 	}
 
 	@Override
 	public void printWinningStatement(Symbol winningSymbol) {
+		write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
+	}
+	
+	@Override
+	public void promptForGridDimension() {
+		write("Please enter the grid dimension");
+	}
+
+	@Override
+	public void promptForChoiceOfOpponent() {
+		write("Enter 'h' to play against another human, Enter 'c' to play against the computer");
+	}
+	
+	@Override
+	public int readNextMove() {
+		return parseInt(readLine());
+	}
+	
+	@Override
+	public String readChoiceOfOpponent() {
+		return readLine();
+	}
+	
+	@Override
+	public int readGridDimension() {
+		return parseInt(readLine());
+	}
+	
+	private String readLine() {
 		try {
-			outputWriter.write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
+			return inputReader.readLine();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	private void write(String message){
+		try {
+			outputWriter.write(message);
 			outputWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }
