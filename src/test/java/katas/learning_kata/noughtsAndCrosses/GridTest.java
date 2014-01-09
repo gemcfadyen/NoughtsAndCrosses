@@ -1,11 +1,12 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
 import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
 import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -14,10 +15,18 @@ import java.util.List;
 import org.junit.Test;
 
 public class GridTest {
+	
 	@Test
 	public void shouldReturnTrueIfTheCenterTaken() {
 		Grid grid = new Grid(3, "----x----");
 		assertThat(grid.isCenterTaken(), is(true));
+	}
+	
+	@Test
+	public void shouldCreateAGridWithADimension(){
+		Grid grid = new Grid(2);
+		assertNotNull(grid);
+		assertThat(grid.getHorizontalRows().size(), is(2));
 	}
 
 	@Test
@@ -29,37 +38,7 @@ public class GridTest {
 	@Test
 	public void shouldReturnTheCentreCell() {
 		Grid grid = new Grid(3,"---------");
-		assertThat(grid.getCentreCell(), is(grid.getCentreCell()));
-	}
-
-	@Test
-	public void shouldReturnTrueIfTopLeftCornerIsFree() {
-		Grid grid = new Grid(3,"-xxxxxxxx");
-		assertThat(grid.hasFreeCornerPosition(), is(true));
-	}
-
-	@Test
-	public void shouldReturnTrueIfTopRightCornerIsFree() {
-		Grid grid = new Grid(3,"xx-xxxxxx");
-		assertThat(grid.hasFreeCornerPosition(), is(true));
-	}
-
-	@Test
-	public void shouldReturnTrueIfBottomRightCornerIsFree() {
-		Grid grid = new Grid(3,"xxxxxxxx-");
-		assertThat(grid.hasFreeCornerPosition(), is(true));
-	}
-
-	@Test
-	public void shouldReturnTrueIfBottomLeftCornerIsFree() {
-		Grid grid = new Grid(3,"xxxxxx-xx");
-		assertThat(grid.hasFreeCornerPosition(), is(true));
-	}
-
-	@Test
-	public void shouldReturnFalseIfNoCornerIsFree() {
-		Grid grid = new Grid(3,"x-x---x-x");
-		assertThat(grid.hasFreeCornerPosition(), is(false));
+		assertThat(grid.getCenterCell(), is(grid.getCenterCell()));
 	}
 
 
@@ -90,7 +69,7 @@ public class GridTest {
 	public void shouldPlaceThePlayersSymbolAtTheSpecifiedIndexInTheGrid() {
 		Grid grid = new Grid(3, "---xox---");
 		
-		grid = grid.takeNextMove(O, 0);
+		grid = grid.updateGridWith(O, 0);
 
 		List<Row> horizontalRows = grid.getHorizontalRows();
 	
@@ -99,16 +78,6 @@ public class GridTest {
 		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), constructCellsFromPosition(6, EMPTY, EMPTY, EMPTY));
 	}
 
-	@Test
-	public void shouldNotPlaceThePlayersSymbolInAnOccupiedCell() {
-		Grid grid = new Grid(3, "---xox---");
-		grid.takeNextMove(O, 3);
-
-		List<Row> horizontalRows = grid.getHorizontalRows();
-		assertThatExpectedSymbolsAreIn(topRow(horizontalRows), constructCellsFromPosition(0, EMPTY, EMPTY, EMPTY));
-		assertThatExpectedSymbolsAreIn(middleRow(horizontalRows), constructCellsFromPosition(3, X, O, X));
-		assertThatExpectedSymbolsAreIn(bottomRow(horizontalRows), constructCellsFromPosition(6, EMPTY, EMPTY, EMPTY));
-	}
 
 	@Test
 	public void shouldReturnTheIndexOfTheCellUsedToBlockOpponentFromWinning() {
@@ -124,20 +93,6 @@ public class GridTest {
 		int index = grid.getIndexOfBlockingMove(X);
 
 		assertThat(index, is(-1));
-	}
-
-	@Test
-	public void shouldReturnTrueIfTheIndexIsACellInTheGrid() {
-		Grid grid = new Grid(3, "---------");
-		boolean isFree = grid.isACellInTheGrid(0);
-		assertTrue(isFree);
-	}
-
-	@Test
-	public void shouldReturnFalseIfTheIndexIsNoMatchFound() {
-		Grid grid = new Grid(3, "---------");
-		boolean isFree = grid.isACellInTheGrid(NO_MATCH_FOUND);
-		assertFalse(isFree);
 	}
 
 	@Test
@@ -257,6 +212,48 @@ public class GridTest {
 		Grid grid = new Grid(3, "--x-x-x--");
 		Symbol winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is(X));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfAnEmptyCellIsAtGivenIndex(){
+		Grid grid = new Grid(3, "--x-x-x--");
+		assertTrue(grid.isEmptyCellAt(0));
+	}
+	
+	@Test
+	public void shouldReturnFalseIfNoEmptyCellIsAtGivenIndex(){
+		Grid grid = new Grid(3, "--x-x-x--");
+		assertFalse(grid.isEmptyCellAt(2));
+	}
+	
+	@Test
+	public void shouldReturnIndexOfTopLeftCorner(){
+		Grid grid = new Grid(3, "--x-x-x--");
+		assertThat(grid.getAvailableCorner(), is(0));
+	}
+	
+	@Test
+	public void shouldReturnIndexOfTopRightCorner(){
+		Grid grid = new Grid(3, "x---x-x--");
+		assertThat(grid.getAvailableCorner(), is(2));
+	}
+	
+	@Test
+	public void shouldReturnIndexOfBottomLeftCorner(){
+		Grid grid = new Grid(3, "x-x------");
+		assertThat(grid.getAvailableCorner(), is(6));
+	}
+	
+	@Test
+	public void shouldReturnIndexOfBottomRightCorner(){
+		Grid grid = new Grid(3, "x-x---x--");
+		assertThat(grid.getAvailableCorner(), is(8));
+	}
+	
+	@Test
+	public void shouldReturnNoCornerIndexWhenAllCornerCellsAreOccupied(){
+		Grid grid = new Grid(3, "x-x---x-x");
+		assertThat(grid.getAvailableCorner(), is(NO_MATCH_FOUND));
 	}
 	
 	private Cell[] constructCellsFromPosition(int position, Symbol... symbols) {

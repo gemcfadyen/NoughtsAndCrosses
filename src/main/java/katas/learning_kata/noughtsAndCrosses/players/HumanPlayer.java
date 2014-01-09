@@ -18,7 +18,16 @@ public class HumanPlayer implements Player {
 		prompt.displayBoard(grid.getHorizontalRows());
 		prompt.promptUser();
 		int moveIndex = prompt.readNextMove();
-		return grid.takeNextMove(symbol, moveIndex);
+		return grid.updateGridWith(symbol, validated(moveIndex, grid));
+	}
+	
+	private int validated(int index, Grid grid) {
+		while (!grid.isEmptyCellAt(index)){
+			prompt.promptUser();
+			index = prompt.readNextMove();
+		}
+		return index;
+		
 	}
 
 	@Override

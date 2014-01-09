@@ -16,32 +16,30 @@ public class AutomatedPlayer implements Player {
 	@Override
 	public Grid takesGo(Grid grid) {
 		int indexOfNextMove = getIndexOfNextMove(grid);
-		return grid.takeNextMove(symbol, indexOfNextMove);
+		return grid.updateGridWith(symbol, indexOfNextMove);
 
 	}
 	
-	private int getIndexOfNextMove(Grid grid){		
+	
+	private int getIndexOfNextMove(Grid grid){
 		return automatedPlayersNextMove(indexOfWinningMoveFor(symbol, grid), 
 										indexOfWinningMoveFor(opponent(), grid), 
 										centerCell(grid), 
-										cornerCell(grid),
+										getAvailableCorner(grid),
 										anyFreePosition(grid));
 	}
 
 	private int anyFreePosition(Grid grid) {
 		return grid.getFirstFreeCell();
 	}
-
-	private int cornerCell(Grid grid) {
-		if(grid.hasFreeCornerPosition())
-			return grid.getAvailableCorner();
-		else
-			return NO_MATCH_FOUND;
+	
+	private int getAvailableCorner(Grid grid) {
+		return grid.getAvailableCorner();
 	}
-
+	
 	private int centerCell(Grid grid) {
 		if(!grid.isCenterTaken())
-			return grid.getCentreCell();
+			return grid.getCenterCell();
 		else
 			return NO_MATCH_FOUND;
 	}
@@ -57,10 +55,7 @@ public class AutomatedPlayer implements Player {
 	
 	private int indexOfWinningMoveFor(Symbol symbol, Grid grid){
 		int potentialWinningMove = grid.potentialWinningMove(symbol);
-		if(grid.isACellInTheGrid(potentialWinningMove)){
 			return potentialWinningMove;
-		}
-		return NO_MATCH_FOUND;
 	}
 	
 	public Symbol opponent() {

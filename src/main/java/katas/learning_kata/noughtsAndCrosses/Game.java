@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import katas.learning_kata.noughtsAndCrosses.players.HumanPlayer;
 import katas.learning_kata.noughtsAndCrosses.players.Player;
 import katas.learning_kata.noughtsAndCrosses.prompt.CommandPrompt;
 import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;

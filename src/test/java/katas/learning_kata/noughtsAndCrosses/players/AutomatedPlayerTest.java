@@ -1,5 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
+import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
 import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
 import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
@@ -38,42 +39,40 @@ public class AutomatedPlayerTest {
 
 	@Test
 	public void shouldIdentifyThereIsABlockingMoveToBeMade() {
+		when(grid.potentialWinningMove(X)).thenReturn(Grid.NO_MATCH_FOUND);
 		when(grid.potentialWinningMove(O)).thenReturn(1);
-		when(grid.isACellInTheGrid(1)).thenReturn(true);
-		when(grid.takeNextMove(X, 1)).thenReturn(new Grid(3, "oxo------"));
+		when(grid.updateGridWith(X, 1)).thenReturn(new Grid(3, "oxo------"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
 		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, O, X, O));
 		
-		verify(grid).isACellInTheGrid(1);
-		verify(grid).takeNextMove(X, 1);
-
+		verify(grid).updateGridWith(X, 1);
+ 
 	}
 
 	@Test
 	public void shouldIdentifyThereIsAWinningMoveToBeMade() {
 		when(grid.potentialWinningMove(X)).thenReturn(1);
-		when(grid.isACellInTheGrid(1)).thenReturn(true);
-		when(grid.takeNextMove(X, 1)).thenReturn(new Grid(3, "xxx------"));
+		when(grid.updateGridWith(X, 1)).thenReturn(new Grid(3, "xxx------"));
 
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
 		List<Row> horizontalRows = afterMove.getHorizontalRows();
 		assertThatExpectedSymbolsAreIn( topRow(horizontalRows), constructCellsFromPosition(0, X, X, X));
 		
-		verify(grid).isACellInTheGrid(1);
-		verify(grid).takeNextMove(X, 1);
+		verify(grid).updateGridWith(X, 1);
 	}
 	
 
 	@Test
 	public void shouldMakeMoveWithMostPossibleWinningPositions() {
-		when(grid.potentialWinningMove(X)).thenReturn(-1);
+		when(grid.potentialWinningMove(X)).thenReturn(NO_MATCH_FOUND);
+		when(grid.potentialWinningMove(O)).thenReturn(NO_MATCH_FOUND);
 		when(grid.isCenterTaken()).thenReturn(false);
-		when(grid.getCentreCell()).thenReturn(4);
-		when(grid.takeNextMove(X, 4)).thenReturn(new Grid(3, "o---x----"));
+		when(grid.getCenterCell()).thenReturn(4);
+		when(grid.updateGridWith(X, 4)).thenReturn(new Grid(3, "o---x----"));
 
 		Grid afterMove = automatedPlayer.takesGo(grid);
 
@@ -83,7 +82,7 @@ public class AutomatedPlayerTest {
 		assertThatExpectedSymbolsAreIn( bottomRow(horizontalRows), constructCellsFromPosition(6, EMPTY, EMPTY, EMPTY) );
 
 		verify(grid).isCenterTaken();
-		verify(grid).takeNextMove(X, 4);
+		verify(grid).updateGridWith(X, 4);
 	}
 
 	@Test
@@ -91,9 +90,9 @@ public class AutomatedPlayerTest {
 		when(grid.potentialWinningMove(X)).thenReturn(-1);
 		when(grid.potentialWinningMove(O)).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(true);
-		when(grid.hasFreeCornerPosition()).thenReturn(true);
+		when(grid.isEmptyCellAt(2)).thenReturn(true);
 		when(grid.getAvailableCorner()).thenReturn(2);
-		when(grid.takeNextMove(X, 2)).thenReturn(new Grid(3, "x-x-o----"));
+		when(grid.updateGridWith(X, 2)).thenReturn(new Grid(3, "x-x-o----"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 
@@ -110,9 +109,9 @@ public class AutomatedPlayerTest {
 		when(grid.potentialWinningMove(X)).thenReturn(-1);
 		when(grid.potentialWinningMove(O)).thenReturn(-1);
 		when(grid.isCenterTaken()).thenReturn(true);
-		when(grid.hasFreeCornerPosition()).thenReturn(false);
+		when(grid.getAvailableCorner()).thenReturn(-1);
 		when(grid.getFirstFreeCell()).thenReturn(3);
-		when(grid.takeNextMove(X, 3)).thenReturn(new Grid(3, "oxoxx-xox"));
+		when(grid.updateGridWith(X, 3)).thenReturn(new Grid(3, "oxoxx-xox"));
 
 		Grid startingGrid = automatedPlayer.takesGo(grid);
 		List<Row> horizontalRows = startingGrid.getHorizontalRows();
