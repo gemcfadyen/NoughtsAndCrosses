@@ -1,14 +1,14 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
 import katas.learning_kata.noughtsAndCrosses.Grid;
-import katas.learning_kata.noughtsAndCrosses.Symbol;
 import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class HumanPlayer implements Player {
-	private Symbol symbol;
+	private ValidSymbol symbol;
 	private Prompt prompt;
 
-	public HumanPlayer(Symbol symbol, Prompt prompt){
+	public HumanPlayer(ValidSymbol symbol, Prompt prompt){
 		this.prompt = prompt;
 		this.symbol = symbol;
 	}
@@ -29,10 +29,4 @@ public class HumanPlayer implements Player {
 		return index;
 		
 	}
-
-	@Override
-	public Symbol getSymbol() {
-		return symbol;
-	}
-
 }

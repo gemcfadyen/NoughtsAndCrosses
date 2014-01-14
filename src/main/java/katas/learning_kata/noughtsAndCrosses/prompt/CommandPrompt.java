@@ -10,7 +10,9 @@ import java.util.List;
 
 import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Row;
-import katas.learning_kata.noughtsAndCrosses.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.Some;
+import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
+
 
 public class CommandPrompt implements Prompt {
 	private BufferedReader inputReader;
@@ -62,13 +64,13 @@ public class CommandPrompt implements Prompt {
 	}
 
 	@Override
-	public void printLoosingStatement() {
-		write("NO_WINNER Game Over, there was no winner! \n Game Over");
-	}
-
-	@Override
-	public void printWinningStatement(Symbol winningSymbol) {
-		write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
+	public void printGameOverStatement(Symbol winningSymbol) {
+		if(winningSymbol instanceof Some){
+			write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
+		}
+		else { 
+			write("NO_WINNER Game Over, there was no winner! \n Game Over");
+		}
 	}
 	
 	@Override

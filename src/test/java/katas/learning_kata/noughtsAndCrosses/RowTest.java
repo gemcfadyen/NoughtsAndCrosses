@@ -1,11 +1,13 @@
 package katas.learning_kata.noughtsAndCrosses;
 
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 import org.junit.Test;
 
@@ -82,4 +84,28 @@ public class RowTest {
 		
 		assertThat(row.winningPosition(), is(NO_MATCH_FOUND));
 	}
+	
+	@Test
+	public void shouldReturnTheWinningSymbolIfThereIsAWinningRow(){
+		Cell[] cells = new Cell[3];
+		cells[0] = new Cell(O, 0);
+		cells[1] = new Cell(O, 1);
+		cells[2] = new Cell(O, 2);
+		
+		Row row = new Row(cells);
+		assertThat(row.winningSymbol(), is(ValidSymbol.class));
+		assertThat((ValidSymbol)row.winningSymbol(), is(O));
+	}
+	
+	@Test
+	public void shouldReturnAnInvalidSymbolIfThereIsNoWinningRow(){
+		Cell[] cells = new Cell[3];
+		cells[0] = new Cell(O, 0);
+		cells[1] = new Cell(X, 1);
+		cells[2] = new Cell(O, 2);
+		
+		Row row = new Row(cells);
+		assertThat(row.winningSymbol(), is(InvalidSymbol.class));
+	}
+	
 }

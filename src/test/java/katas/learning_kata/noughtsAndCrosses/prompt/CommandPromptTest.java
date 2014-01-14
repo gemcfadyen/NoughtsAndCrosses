@@ -1,7 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses.prompt;
 
-import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -16,6 +16,8 @@ import java.util.List;
 import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Grid;
 import katas.learning_kata.noughtsAndCrosses.Row;
+import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +90,7 @@ public class CommandPromptTest {
 		StringWriter outputWriter = getStringWriter();
 		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
 		
-		prompt.printLoosingStatement();
+		prompt.printGameOverStatement(InvalidSymbol.NO_SYMBOL);
 		
 		assertThat(outputWriter.toString(), is("NO_WINNER Game Over, there was no winner! \n Game Over"));
 		
@@ -98,8 +100,7 @@ public class CommandPromptTest {
 	public void shouldPrintAWinningStatementIfAPlayerHasWonTheGame() {
 		StringWriter outputWriter = getStringWriter();
 		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
-		
-		prompt.printWinningStatement(X);
+		prompt.printGameOverStatement(ValidSymbol.X);
 		
 		assertThat(outputWriter.toString(), is("Congratulations [X] you have won! \n Game Over"));
 	}

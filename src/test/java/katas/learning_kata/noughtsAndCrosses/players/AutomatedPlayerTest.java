@@ -1,9 +1,9 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
@@ -15,7 +15,7 @@ import java.util.List;
 import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Grid;
 import katas.learning_kata.noughtsAndCrosses.Row;
-import katas.learning_kata.noughtsAndCrosses.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,11 +30,6 @@ public class AutomatedPlayerTest {
 	public void setup() {
 		initMocks(this);
 		automatedPlayer = new AutomatedPlayer(X);
-	}
-
-	@Test
-	public void shouldReturnTheSymbolOfThePlayer() {
-		assertThat(automatedPlayer.getSymbol(), is(X));
 	}
 
 	@Test
@@ -138,7 +133,7 @@ public class AutomatedPlayerTest {
 		return horizontalRows.get(0);
 	}
 	
-	private Cell[] constructCellsFromPosition(int position, Symbol... symbols) {
+	private Cell[] constructCellsFromPosition(int position, ValidSymbol... symbols) {
 		return new Cell[]{new Cell(symbols[0], position), new Cell(symbols[1], ++position), new Cell(symbols[2], ++position)};
 	}
 

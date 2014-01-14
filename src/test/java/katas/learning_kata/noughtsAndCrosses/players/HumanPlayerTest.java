@@ -1,6 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,7 +32,7 @@ public class HumanPlayerTest {
 		
 		human.takesGo(grid);
 		
-		verify(grid).updateGridWith(human.getSymbol(), 1);
+		verify(grid).updateGridWith(X, 1);
 	}
 	
 	@Test
@@ -51,9 +51,9 @@ public class HumanPlayerTest {
 		given(grid.isEmptyCellAt(1)).willReturn(false);
 		given(grid.isEmptyCellAt(2)).willReturn(true);
 		
+		
 		human.takesGo(grid);
 		
 		verify(prompt, times(2)).promptUser();
-		verify(grid).updateGridWith(human.getSymbol(), 2);
 	}
 }

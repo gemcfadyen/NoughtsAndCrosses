@@ -1,15 +1,15 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import katas.learning_kata.noughtsAndCrosses.Grid;
-import katas.learning_kata.noughtsAndCrosses.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class AutomatedPlayer implements Player {
-	private Symbol symbol;
+	private ValidSymbol symbol;
 
-	public AutomatedPlayer(Symbol symbol) {
+	public AutomatedPlayer(ValidSymbol symbol) {
 		this.symbol = symbol;
 	}
 
@@ -22,6 +22,15 @@ public class AutomatedPlayer implements Player {
 	
 	
 	private int getIndexOfNextMove(Grid grid){
+		
+		/*Integer[] stategies = new Integer[]{1, 2, 3};
+		
+		Integer result = -1;
+		for(int i=0; i<stategies.length && result != -1; i++  ) {
+			result = stategies[0]
+		}*/
+		
+		
 		return automatedPlayersNextMove(indexOfWinningMoveFor(symbol, grid), 
 										indexOfWinningMoveFor(opponent(), grid), 
 										centerCell(grid), 
@@ -53,17 +62,13 @@ public class AutomatedPlayer implements Player {
 		return NO_MATCH_FOUND;
 	}
 	
-	private int indexOfWinningMoveFor(Symbol symbol, Grid grid){
+	private int indexOfWinningMoveFor(ValidSymbol symbol, Grid grid){
 		int potentialWinningMove = grid.potentialWinningMove(symbol);
 			return potentialWinningMove;
 	}
 	
-	public Symbol opponent() {
+	public ValidSymbol opponent() {
 		return (symbol.equals(X)) ? O : X;
 	}
 
-	@Override
-	public Symbol getSymbol() {
-		return symbol;
-	}
 }

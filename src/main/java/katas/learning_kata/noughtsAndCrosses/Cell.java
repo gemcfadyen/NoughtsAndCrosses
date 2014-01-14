@@ -1,15 +1,17 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
+
 public class Cell {
-	private Symbol symbol;
+	private ValidSymbol symbol;
 	private int index;
 
-	public Cell(Symbol symbol, int index) {
+	public Cell(ValidSymbol symbol, int index) {
 		this.symbol = symbol;
 		this.index = index;
 	}
 
-	public Symbol getSymbol() {
+	public ValidSymbol getSymbol() {
 		return symbol;
 	}
 	

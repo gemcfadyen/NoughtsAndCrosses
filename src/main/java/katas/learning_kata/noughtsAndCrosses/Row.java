@@ -1,7 +1,12 @@
 package katas.learning_kata.noughtsAndCrosses;
 
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
+import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class Row {
 	private Cell[] cells;
@@ -11,7 +16,7 @@ public class Row {
 	}
 
 	public boolean hasWinner() {
-		Symbol matchingSymbol = cells[0].getSymbol();
+		ValidSymbol matchingSymbol = cells[0].getSymbol();
 
 		for (Cell cell : cells) {
 			if (cell.getSymbol().equals(EMPTY)
@@ -26,7 +31,7 @@ public class Row {
 		if (hasWinner()) {
 			return cells[0].getSymbol();
 		}
-		return null;
+		return InvalidSymbol.NO_SYMBOL;
 	}
 
 	public boolean hasPotentialWinner() {
@@ -43,9 +48,9 @@ public class Row {
 
 		for (Cell cell : cells) {
 			Symbol symbol = cell.getSymbol();
-			if (symbol.equals(Symbol.X)) {
+			if (symbol.equals(X)) {
 				numberOfXs++;
-			} else if (symbol.equals(Symbol.O)) {
+			} else if (symbol.equals(O)) {
 				numberOfOs++;
 			}
 		}
@@ -60,7 +65,7 @@ public class Row {
 	private int numberOfEmptySlots() {
 		int numberOfEmptySlots = 0;
 		for (Cell cell : cells) {
-			if (cell.getSymbol() == (Symbol.EMPTY)) {
+			if (cell.getSymbol() == (EMPTY)) {
 				numberOfEmptySlots++;
 			}
 		}
@@ -70,7 +75,7 @@ public class Row {
 	public int winningPosition() {
 		if (hasPotentialWinner()) {
 			for (Cell cell : cells) {
-				if (cell.getSymbol().equals(Symbol.EMPTY)) {
+				if (cell.getSymbol().equals(EMPTY)) {
 					return cell.getIndex();
 				}
 			}

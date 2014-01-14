@@ -1,11 +1,15 @@
 package katas.learning_kata.noughtsAndCrosses;
 
-import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class Grid {
 	public static final int NO_MATCH_FOUND = -1;
@@ -30,14 +34,14 @@ public class Grid {
 		return contains(EMPTY);
 	}
 
-	public Grid updateGridWith(Symbol symbol, int index) {
+	public Grid updateGridWith(ValidSymbol symbol, int index) {
 		board = board.substring(0, index) + symbol
 				+ board.substring(index + 1, board.length());
 		return this;
 	}
 
 	public boolean isEmptyCellAt(int index) {
-		return board.charAt(index) == charValueOf(EMPTY);
+		return hasACellAt(index) &&  board.charAt(index) == charValueOf(EMPTY);
 	}
 
 	private String initialiseBoard(int dimension) {
@@ -45,7 +49,7 @@ public class Grid {
 
 		for (int i = 0; i < dimension; i++) {
 			for (int j = 0; j < dimension; j++) {
-				initialiseGrid.append(Symbol.EMPTY.getCharValue());
+				initialiseGrid.append(EMPTY.getCharValue());
 			}
 
 		}
@@ -102,13 +106,13 @@ public class Grid {
 		return cells;
 	}
 
-	private boolean contains(Symbol symbol) {
+	private boolean contains(ValidSymbol symbol) {
 		return board.indexOf(charValueOf(symbol)) > NO_MATCH_FOUND;
 	}
 
-	private Symbol getSymbolAt(int cellPosition) {
+	private ValidSymbol getSymbolAt(int cellPosition) {
 		char charValueOfSymbol = board.charAt(cellPosition);
-		return Symbol.valueOfChar(charValueOfSymbol);
+		return ValidSymbol.valueOfChar(charValueOfSymbol);
 	}
 
 	public boolean isCenterTaken() {
@@ -126,7 +130,7 @@ public class Grid {
 			return bottomRightCorner();
 		else
 			return NO_MATCH_FOUND;
-	}
+	} 
 
 	private int bottomRightCorner() {
 		return (dimension * dimension) - 1;
@@ -159,19 +163,19 @@ public class Grid {
 				return row.winningSymbol();
 		}
 
-		return null;
+		return InvalidSymbol.NO_SYMBOL;
 	}
 
-	private char charValueOf(Symbol symbol) {
+	private char charValueOf(ValidSymbol symbol) {
 		return symbol.getCharValue();
 	}
 
-	public int getIndexOfBlockingMove(Symbol symbol) {
-		Symbol opponentsSymbol = (symbol == X) ? O : X;
+	public int getIndexOfBlockingMove(ValidSymbol symbol) {
+		ValidSymbol opponentsSymbol = (symbol == X) ? O : X;
 		return potentialWinningMove(opponentsSymbol);
 	}
 
-	public int potentialWinningMove(Symbol symbol) {
+	public int potentialWinningMove(ValidSymbol symbol) {
 		List<Row> gridRows = generateRowsFromCurrentGrid();
 		for (Row row : gridRows) {
 			if (row.hasPotentialWinner())
@@ -179,5 +183,11 @@ public class Grid {
 		}
 		return NO_MATCH_FOUND;
 	}
-
+	
+	private boolean hasACellAt(int index) {
+		if(index < (dimension * dimension))
+			return true;
+		else
+			return false;
+	}
 }

@@ -1,7 +1,7 @@
 package katas.learning_kata.noughtsAndCrosses;
 
-import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,6 +11,8 @@ import java.io.OutputStreamWriter;
 import katas.learning_kata.noughtsAndCrosses.players.Player;
 import katas.learning_kata.noughtsAndCrosses.prompt.CommandPrompt;
 import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
+import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
 
 public class Game {
 	private static final int FIRST_PLAYER = 0;
@@ -93,16 +95,12 @@ public class Game {
 	}
 
 	private void evaluateGame() {
-		if (grid.getWinningSymbol() == null) {
-			commandPrompt.printLoosingStatement();
-		} else {
-			commandPrompt.printWinningStatement(grid.getWinningSymbol());
-		}
+		commandPrompt.printGameOverStatement(grid.getWinningSymbol());
 	}
 
 	private boolean gameIsInProgress() {
 		Symbol winningStatus = grid.getWinningSymbol();
-		return winningStatus == null && grid.hasFreeSlot();
+		return winningStatus == InvalidSymbol.NO_SYMBOL && grid.hasFreeSlot();
 	}
 	
 	private void displayFinalGrid() {

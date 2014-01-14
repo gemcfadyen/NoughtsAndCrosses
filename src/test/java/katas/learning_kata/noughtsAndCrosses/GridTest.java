@@ -3,14 +3,19 @@ package katas.learning_kata.noughtsAndCrosses;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.EMPTY;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.O;
-import static katas.learning_kata.noughtsAndCrosses.Symbol.X;
+import static katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol.NO_SYMBOL;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
+import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+
+import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 import org.junit.Test;
 
@@ -106,112 +111,74 @@ public class GridTest {
 	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow() {
 		Grid grid = new Grid(3, "o-xxx-o--");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		Symbol expectedResult = null;
-		assertThat(winningSymbol, is(expectedResult));
+		
+		assertThat(winningSymbol, is(InvalidSymbol.class));
+		assertThat((InvalidSymbol)winningSymbol, is(NO_SYMBOL));
 	}
 
-	@Test
-	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow2() {
-		Grid grid = new Grid(3, "o-o-o----");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		Symbol expectedResult = null;
-		assertThat(winningSymbol, is(expectedResult));
-	}
-
-	@Test
-	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow3() {
-		Grid grid = new Grid(3, "---o-o-o-");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		Symbol expectedResult = null;
-		assertThat(winningSymbol, is(expectedResult));
-	}
-
-	@Test
-	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow4() {
-		Grid grid = new Grid(3, "--o-xxx-o");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		Symbol expectedResult = null;
-		assertThat(winningSymbol, is(expectedResult));
-	}
-
-	@Test
-	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow5() {
-		Grid grid = new Grid(3, "--ooxxx-o"); // 0, 2, 8
-		Symbol winningSymbol = grid.getWinningSymbol();
-		Symbol expectedResult = null;
-		assertThat(winningSymbol, is(expectedResult));
-	}
-
-	@Test
-	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow6() {
-		Grid grid = new Grid(3, "o-xxx-oxo"); // 6, 8, 0
-		Symbol winningSymbol = grid.getWinningSymbol();
-		Symbol expectedResult = null;
-		assertThat(winningSymbol, is(expectedResult));
-	}
-
-	@Test
-	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow7() {
-		Grid grid = new Grid(3, "----x-x-x"); // 6, 8, 0
-		Symbol winningSymbol = grid.getWinningSymbol();
-		Symbol expectedResult = null;
-		assertThat(winningSymbol, is(expectedResult));
-	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenTopHorizonalRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "xxx------");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(X));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenMiddleHorizonalRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "---xxx---");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(X));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenBottomHorizonalRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "------xxx");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(X));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenLeftVerticleRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "o--o--o--");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(O));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(O));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenMiddleVerticleRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "-o--o--o-");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(O));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(O));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenRightVerticleRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "--o--o--o");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(O));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(O));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfADiagonalWinner() {
 		Grid grid = new Grid(3, "x---x---x");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(X));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfTheOppositeDiagonalWinner() {
 		Grid grid = new Grid(3, "--x-x-x--");
 		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(X));
+		assertThat(winningSymbol, is(ValidSymbol.class));
+		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 	
 	@Test
@@ -224,6 +191,12 @@ public class GridTest {
 	public void shouldReturnFalseIfNoEmptyCellIsAtGivenIndex(){
 		Grid grid = new Grid(3, "--x-x-x--");
 		assertFalse(grid.isEmptyCellAt(2));
+	}
+	
+	@Test
+	public void shouldReturnTrueIfIndexIsOutsideOfTheGridDimension(){
+		Grid grid = new Grid(3, "--x-x-x--");
+		assertFalse(grid.isEmptyCellAt(11));
 	}
 	
 	@Test
@@ -256,7 +229,7 @@ public class GridTest {
 		assertThat(grid.getAvailableCorner(), is(NO_MATCH_FOUND));
 	}
 	
-	private Cell[] constructCellsFromPosition(int position, Symbol... symbols) {
+	private Cell[] constructCellsFromPosition(int position, ValidSymbol... symbols) {
 		return new Cell[]{new Cell(symbols[0], position), new Cell(symbols[1], ++position), new Cell(symbols[2], ++position)};
 	}
 	
