@@ -120,16 +120,22 @@ public class Grid {
 	}
 
 	public int getAvailableCorner() {
-		if (isEmptyCellAt(topLeftCorner()))
-			return topLeftCorner();
-		else if (isEmptyCellAt(topRightCorner()))
-			return topRightCorner();
-		else if (isEmptyCellAt(bottomLeftCorner()))
-			return bottomLeftCorner();
-		else if (isEmptyCellAt(bottomRightCorner()))
-			return bottomRightCorner();
-		else
-			return NO_MATCH_FOUND;
+		int[] corners = cornerIndexes(); 
+		
+		for (int i = 0; i < corners.length; i++) {
+			if(isEmptyCellAt(corners[i])) {
+				return corners[i];
+			}
+		}
+		return Grid.NO_MATCH_FOUND;
+	}
+
+	private int[] cornerIndexes() {
+		return new int[]{ topLeftCorner(), 
+						  topRightCorner(), 
+						  bottomLeftCorner(),	
+						  bottomRightCorner()
+						 };
 	} 
 
 	private int bottomRightCorner() {
