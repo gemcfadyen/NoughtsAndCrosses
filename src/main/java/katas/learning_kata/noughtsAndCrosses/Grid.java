@@ -97,9 +97,9 @@ public class Grid {
 
 	private Cell[] constructCells(int startingCell, int cellIncrementor) {
 		Cell[] cells = new Cell[dimension];
-		for (int cellPosition = startingCell, index = 0; cellPosition < dimension
-				* dimension
-				&& index < dimension; cellPosition += cellIncrementor, index++) {
+		for (int cellPosition = startingCell, index = 0; 
+				cellPosition < dimension * dimension && index < dimension; 
+					cellPosition += cellIncrementor, index++) {
 			cells[index] = new Cell(getSymbolAt(cellPosition), cellPosition);
 		}
 

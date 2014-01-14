@@ -1,9 +1,12 @@
 package katas.learning_kata.noughtsAndCrosses.players;
 
-import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
-import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import katas.learning_kata.noughtsAndCrosses.Grid;
+import katas.learning_kata.noughtsAndCrosses.players.strategies.BlockingMoveStrategy;
+import katas.learning_kata.noughtsAndCrosses.players.strategies.CenterMoveStrategy;
+import katas.learning_kata.noughtsAndCrosses.players.strategies.CornerStrategy;
+import katas.learning_kata.noughtsAndCrosses.players.strategies.FirstFreeCellStrategy;
+import katas.learning_kata.noughtsAndCrosses.players.strategies.PlayersStrategy;
+import katas.learning_kata.noughtsAndCrosses.players.strategies.WinningMoveStrategy;
 import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class AutomatedPlayer implements Player {
@@ -19,56 +22,27 @@ public class AutomatedPlayer implements Player {
 		return grid.updateGridWith(symbol, indexOfNextMove);
 
 	}
-	
-	
-	private int getIndexOfNextMove(Grid grid){
+
+	private int getIndexOfNextMove(Grid grid) {
+		PlayersStrategy[] strategies = automatedPlayersGamePlan(grid);
 		
-		/*Integer[] stategies = new Integer[]{1, 2, 3};
-		
-		Integer result = -1;
-		for(int i=0; i<stategies.length && result != -1; i++  ) {
-			result = stategies[0]
-		}*/
-		
-		
-		return automatedPlayersNextMove(indexOfWinningMoveFor(symbol, grid), 
-										indexOfWinningMoveFor(opponent(), grid), 
-										centerCell(grid), 
-										getAvailableCorner(grid),
-										anyFreePosition(grid));
+		int nextMove = Grid.NO_MATCH_FOUND;
+		for (int i = 0; i < strategies.length; i++) {
+			nextMove = strategies[i].move();
+			
+			if(nextMove != Grid.NO_MATCH_FOUND)
+				return nextMove;
+		}
+		return nextMove;
 	}
 
-	private int anyFreePosition(Grid grid) {
-		return grid.getFirstFreeCell();
-	}
-	
-	private int getAvailableCorner(Grid grid) {
-		return grid.getAvailableCorner();
-	}
-	
-	private int centerCell(Grid grid) {
-		if(!grid.isCenterTaken())
-			return grid.getCenterCell();
-		else
-			return NO_MATCH_FOUND;
-	}
-	
-	private int automatedPlayersNextMove(int... potentialMoves){
-		for(int move : potentialMoves){
-			if(move != NO_MATCH_FOUND){
-				return move;
-			}
-		}
-		return NO_MATCH_FOUND;
-	}
-	
-	private int indexOfWinningMoveFor(ValidSymbol symbol, Grid grid){
-		int potentialWinningMove = grid.potentialWinningMove(symbol);
-			return potentialWinningMove;
-	}
-	
-	public ValidSymbol opponent() {
-		return (symbol.equals(X)) ? O : X;
+	private PlayersStrategy[] automatedPlayersGamePlan(Grid grid) {
+		return new PlayersStrategy[] {   new WinningMoveStrategy(symbol, grid),
+										 new BlockingMoveStrategy(symbol, grid),
+         								 new CenterMoveStrategy(grid), 
+         								 new CornerStrategy(grid),
+										 new FirstFreeCellStrategy(grid)
+									   };
 	}
 
 }
