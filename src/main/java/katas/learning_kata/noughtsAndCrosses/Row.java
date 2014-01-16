@@ -4,8 +4,6 @@ import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
-import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
-import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
 import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class Row {
@@ -27,11 +25,15 @@ public class Row {
 		return true;
 	}
 
-	public Symbol winningSymbol() {
+	public ValidSymbol winningSymbol() {
 		if (hasWinner()) {
 			return cells[0].getSymbol();
 		}
-		return InvalidSymbol.NO_SYMBOL;
+		return noWinner();
+	}
+	
+	private ValidSymbol noWinner() {
+		return null;
 	}
 
 	public boolean hasPotentialWinner() {
@@ -47,7 +49,7 @@ public class Row {
 		int numberOfOs = 0;
 
 		for (Cell cell : cells) {
-			Symbol symbol = cell.getSymbol();
+			ValidSymbol symbol = cell.getSymbol();
 			if (symbol.equals(X)) {
 				numberOfXs++;
 			} else if (symbol.equals(O)) {

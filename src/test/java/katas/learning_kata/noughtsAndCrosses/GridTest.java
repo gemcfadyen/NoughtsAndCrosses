@@ -3,7 +3,6 @@ package katas.learning_kata.noughtsAndCrosses;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
-import static katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol.NO_SYMBOL;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
@@ -13,10 +12,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
-import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
 import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 public class GridTest {
@@ -110,57 +108,51 @@ public class GridTest {
 	@Test
 	public void shouldNotReturnAWinningMoveWhenThereIsNotThreeMatchingSymbolsInARow() {
 		Grid grid = new Grid(3, "o-xxx-o--");
-		Symbol winningSymbol = grid.getWinningSymbol();
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		
-		assertThat(winningSymbol, is(InvalidSymbol.class));
-		assertThat((InvalidSymbol)winningSymbol, is(NO_SYMBOL));
+		assertThat(winningSymbol, CoreMatchers.nullValue());
 	}
 
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenTopHorizonalRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "xxx------");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(ValidSymbol.class));
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenMiddleHorizonalRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "---xxx---");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(ValidSymbol.class));
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenBottomHorizonalRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "------xxx");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(ValidSymbol.class));
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenLeftVerticleRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "o--o--o--");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(ValidSymbol.class));
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat((ValidSymbol)winningSymbol, is(O));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenMiddleVerticleRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "-o--o--o-");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(ValidSymbol.class));
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat((ValidSymbol)winningSymbol, is(O));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfARowWinnerWhenRightVerticleRowHasMatchingSymbols() {
 		Grid grid = new Grid(3, "--o--o--o");
-		Symbol winningSymbol = grid.getWinningSymbol();
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat(winningSymbol, is(ValidSymbol.class));
 		assertThat((ValidSymbol)winningSymbol, is(O));
 	}
@@ -168,16 +160,14 @@ public class GridTest {
 	@Test
 	public void shouldReturnTheSymbolOfADiagonalWinner() {
 		Grid grid = new Grid(3, "x---x---x");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(ValidSymbol.class));
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 
 	@Test
 	public void shouldReturnTheSymbolOfTheOppositeDiagonalWinner() {
 		Grid grid = new Grid(3, "--x-x-x--");
-		Symbol winningSymbol = grid.getWinningSymbol();
-		assertThat(winningSymbol, is(ValidSymbol.class));
+		ValidSymbol winningSymbol = grid.getWinningSymbol();
 		assertThat((ValidSymbol)winningSymbol, is(X));
 	}
 	

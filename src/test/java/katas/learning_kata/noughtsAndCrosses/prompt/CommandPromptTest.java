@@ -16,7 +16,6 @@ import java.util.List;
 import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Grid;
 import katas.learning_kata.noughtsAndCrosses.Row;
-import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
 import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 import org.junit.Test;
@@ -90,7 +89,7 @@ public class CommandPromptTest {
 		StringWriter outputWriter = getStringWriter();
 		Prompt prompt = initialisePromptWith(getInputReaderWithContent(""), outputWriter);
 		
-		prompt.printGameOverStatement(InvalidSymbol.NO_SYMBOL);
+		prompt.printGameOverStatement(null);
 		
 		assertThat(outputWriter.toString(), is("NO_WINNER Game Over, there was no winner! \n Game Over"));
 		

@@ -12,11 +12,6 @@ import org.junit.Test;
 public class ValidSymbolTest {
 	
 	@Test
-	public void shouldReturnValidSymbolsAsHavingSomeValue() {
-		assertThat(ValidSymbol.X, is(Some.class));
-	}
-	
-	@Test
 	public void shouldReturnTheCharValueOfAValidSymbol() {
 		assertThat(X.getCharValue(), is('x'));
 	}

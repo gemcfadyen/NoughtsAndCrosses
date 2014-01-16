@@ -1,6 +1,5 @@
 package katas.learning_kata.noughtsAndCrosses;
 
-import static katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol.NO_SYMBOL;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import static org.mockito.Mockito.times;
@@ -9,7 +8,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import katas.learning_kata.noughtsAndCrosses.players.Player;
 import katas.learning_kata.noughtsAndCrosses.prompt.Prompt;
-import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,12 +49,12 @@ public class GameTest {
 		when(commandPrompt.readGridDimension()).thenReturn(3);
 		when(playersFactory.createOpponentPlayer("c", X, commandPrompt)).thenReturn(playerX);
 		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
-		when(grid.getWinningSymbol()).thenReturn(NO_SYMBOL);
+		when(grid.getWinningSymbol()).thenReturn(null);
 		when(grid.hasFreeSlot()).thenReturn(false);
 
 		noughtsAndCrosses.play();
 
-		verify(commandPrompt).printGameOverStatement(NO_SYMBOL);
+		verify(commandPrompt).printGameOverStatement(null);
 		verifyNoMoreInteractions(playerX);
 		verifyNoMoreInteractions(playerO);
 	} 
@@ -67,7 +65,7 @@ public class GameTest {
 		when(commandPrompt.readGridDimension()).thenReturn(3);
 		when(playersFactory.createOpponentPlayer("c", X, commandPrompt)).thenReturn(playerX);
 		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
-		when(grid.getWinningSymbol()).thenReturn(InvalidSymbol.NO_SYMBOL);
+		when(grid.getWinningSymbol()).thenReturn(null);
 		when(grid.hasFreeSlot()).thenReturn(true).thenReturn(true)
 		.thenReturn(true).thenReturn(true).thenReturn(true)
 		.thenReturn(true).thenReturn(true).thenReturn(true)
@@ -75,7 +73,7 @@ public class GameTest {
 		
 		noughtsAndCrosses.play();
 		
-		verify(commandPrompt).printGameOverStatement(NO_SYMBOL);		
+		verify(commandPrompt).printGameOverStatement(null);		
 		verify(playerX, times(5)).takesGo(grid);
 		verify(playerO, times(4)).takesGo(grid);
 	}	

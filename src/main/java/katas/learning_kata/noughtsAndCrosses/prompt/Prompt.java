@@ -3,7 +3,7 @@ package katas.learning_kata.noughtsAndCrosses.prompt;
 import java.util.List;
 
 import katas.learning_kata.noughtsAndCrosses.Row;
-import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public interface Prompt {
 	int readNextMove();
@@ -13,6 +13,6 @@ public interface Prompt {
 	void promptUser();
 	void promptForChoiceOfOpponent();
 	void displayBoard(List<Row> board);
-	void printGameOverStatement(Symbol winningSymbol);
+	void printGameOverStatement(ValidSymbol winningSymbol);
 
 }

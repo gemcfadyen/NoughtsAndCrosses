@@ -24,7 +24,7 @@ public class AutomatedPlayer implements Player {
 	}
 
 	private int getIndexOfNextMove(Grid grid) {
-		PlayersStrategy[] strategies = automatedPlayersGamePlan(grid);
+		PlayersStrategy[] strategies = prioritisedGamePlan(grid);
 		
 		int nextMove = Grid.NO_MATCH_FOUND;
 		for (int i = 0; i < strategies.length; i++) {
@@ -36,7 +36,7 @@ public class AutomatedPlayer implements Player {
 		return nextMove;
 	}
 
-	private PlayersStrategy[] automatedPlayersGamePlan(Grid grid) {
+	private PlayersStrategy[] prioritisedGamePlan(Grid grid) {
 		return new PlayersStrategy[] {   new WinningMoveStrategy(symbol, grid),
 										 new BlockingMoveStrategy(symbol, grid),
          								 new CenterMoveStrategy(grid), 

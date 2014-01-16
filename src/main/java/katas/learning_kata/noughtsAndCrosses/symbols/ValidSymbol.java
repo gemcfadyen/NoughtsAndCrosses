@@ -1,6 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses.symbols;
 
-public enum ValidSymbol implements Some, Symbol {
+public enum ValidSymbol  {
 	 X('x'), O('o'), EMPTY('-');
      private char value;
      
@@ -18,4 +18,6 @@ public enum ValidSymbol implements Some, Symbol {
              String value = String.valueOf(charValue).toUpperCase();
              return ValidSymbol.valueOf(value);
      }
+     
+     
 }

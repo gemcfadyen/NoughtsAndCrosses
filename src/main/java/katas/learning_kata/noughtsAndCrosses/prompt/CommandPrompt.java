@@ -10,8 +10,7 @@ import java.util.List;
 
 import katas.learning_kata.noughtsAndCrosses.Cell;
 import katas.learning_kata.noughtsAndCrosses.Row;
-import katas.learning_kata.noughtsAndCrosses.symbols.Some;
-import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
+import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 
 public class CommandPrompt implements Prompt {
@@ -64,8 +63,8 @@ public class CommandPrompt implements Prompt {
 	}
 
 	@Override
-	public void printGameOverStatement(Symbol winningSymbol) {
-		if(winningSymbol instanceof Some){
+	public void printGameOverStatement(ValidSymbol winningSymbol) {
+		if(winningSymbol != null){
 			write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
 		}
 		else { 

@@ -4,9 +4,9 @@ import static katas.learning_kata.noughtsAndCrosses.Grid.NO_MATCH_FOUND;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.EMPTY;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
 import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 import org.junit.Test;
@@ -105,7 +105,7 @@ public class RowTest {
 		cells[2] = new Cell(O, 2);
 		
 		Row row = new Row(cells);
-		assertThat(row.winningSymbol(), is(InvalidSymbol.class));
+		assertThat(row.winningSymbol(), nullValue());
 	}
 	
 }

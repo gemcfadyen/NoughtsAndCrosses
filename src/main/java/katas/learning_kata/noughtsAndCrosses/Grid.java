@@ -7,8 +7,6 @@ import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 import java.util.ArrayList;
 import java.util.List;
 
-import katas.learning_kata.noughtsAndCrosses.symbols.InvalidSymbol;
-import katas.learning_kata.noughtsAndCrosses.symbols.Symbol;
 import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class Grid {
@@ -162,14 +160,18 @@ public class Grid {
 		return board.indexOf(charValueOf(EMPTY));
 	}
 
-	public Symbol getWinningSymbol() {
+	public ValidSymbol getWinningSymbol() {
 		List<Row> gridRows = generateRowsFromCurrentGrid();
 		for (Row row : gridRows) {
 			if (row.hasWinner())
 				return row.winningSymbol();
 		}
 
-		return InvalidSymbol.NO_SYMBOL;
+		return noWinner();
+	}
+	
+	private ValidSymbol noWinner(){
+		return null;
 	}
 
 	private char charValueOf(ValidSymbol symbol) {
