@@ -1,5 +1,6 @@
 package katas.learning_kata.noughtsAndCrosses;
 
+import static java.lang.Integer.valueOf;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.O;
 import static katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol.X;
 
@@ -58,9 +59,24 @@ public class Game {
 
 	private void initialiseGridToSpecifiedDimension() {
 		commandPrompt.promptForGridDimension();
-		int gridDimension = commandPrompt.readGridDimension();
-		grid = gridFactory.createGridWithDimension(gridDimension);
+		String gridDimension = commandPrompt.readGridDimension();
+		grid = gridFactory.createGridWithDimension(numeric(gridDimension));
 	}
+	
+	private boolean isOnlyNumbers(String input) {
+		return input.matches("\\d+");
+	}
+	
+	private int numeric(String input) {
+		while(!isOnlyNumbers(input) || input.equals("0")){
+			commandPrompt.promptForGridDimension();
+			input = commandPrompt.readGridDimension();
+		}
+		
+		return valueOf(input);
+	}
+	
+	
 	
 	private Player initialiseOpponent() {
 		commandPrompt.promptForChoiceOfOpponent();

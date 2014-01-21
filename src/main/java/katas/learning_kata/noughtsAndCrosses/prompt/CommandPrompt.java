@@ -1,7 +1,5 @@
 package katas.learning_kata.noughtsAndCrosses.prompt;
 
-import static java.lang.Integer.parseInt;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -83,8 +81,8 @@ public class CommandPrompt implements Prompt {
 	}
 	
 	@Override
-	public int readNextMove() {
-		return parseInt(readLine());
+	public String readNextMove() {
+		return readLine();
 	}
 	
 	@Override
@@ -93,8 +91,8 @@ public class CommandPrompt implements Prompt {
 	}
 	
 	@Override
-	public int readGridDimension() {
-		return parseInt(readLine());
+	public String readGridDimension() {
+		return readLine();
 	}
 	
 	private String readLine() {

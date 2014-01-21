@@ -30,13 +30,19 @@ public class CommandPromptTest {
 	@Test
 	public void shouldReadTheMoveFromTheCommandPrompt() {
 		Prompt prompt = initialisePromptWith(getInputReaderWithContent("1"), getStringWriter());
-		assertThat(prompt.readNextMove(), equalTo(1));
+		assertThat(prompt.readNextMove(), equalTo("1"));
 	}
 	
 	@Test
 	public void shouldReadTheDoubleFigureMoveFromTheCommandPrompt(){
 		Prompt prompt = initialisePromptWith(getInputReaderWithContent("11"), getStringWriter());
-		assertThat(prompt.readNextMove(), equalTo(11));
+		assertThat(prompt.readNextMove(), equalTo("11"));
+	}
+	
+	@Test
+	public void shouldReadTheMoveEvenIfItIsNotANumberFromTheCommandPrompt() {
+		Prompt prompt = initialisePromptWith(getInputReaderWithContent("z"), getStringWriter());
+		assertThat(prompt.readNextMove(), equalTo("z"));
 	}
 
 	@Test
@@ -77,11 +83,11 @@ public class CommandPromptTest {
 	public void shouldIgnoreNewLineCharacters(){
 		Prompt prompt = initialisePromptWith(getInputReaderWithContent("1\n2"), getStringWriter());
 		
-		int firstValue = prompt.readNextMove();
-		int secondValue = prompt.readNextMove();
+		String firstValue = prompt.readNextMove();
+		String secondValue = prompt.readNextMove();
 		
-		assertThat(firstValue, is(1));
-		assertThat(secondValue, is(2));
+		assertThat(firstValue, is("1"));
+		assertThat(secondValue, is("2"));
 	}
 	
 	@Test
@@ -117,7 +123,7 @@ public class CommandPromptTest {
 	@Test
 	public void shouldReadInTheGridDimesionEnteredByThePlayer(){
 		Prompt prompt = initialisePromptWith(getInputReaderWithContent("4"), getStringWriter());
-		assertThat(prompt.readGridDimension(), is(4));
+		assertThat(prompt.readGridDimension(), is("4"));
 	}
 	
 	@Test
@@ -172,6 +178,7 @@ public class CommandPromptTest {
 		horizontalRows.add(topRow);
 		horizontalRows.add(middleRow);
 		horizontalRows.add(bottomRow);
+		
 		return horizontalRows;
 	}
 

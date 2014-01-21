@@ -46,7 +46,7 @@ public class AutomatedPlayerTest {
 		verify(grid).updateGridWith(X, 1);
  
 	}
-
+ 
 	@Test
 	public void shouldIdentifyThereIsAWinningMoveToBeMade() {
 		when(grid.potentialWinningMove(X)).thenReturn(1);
@@ -82,8 +82,8 @@ public class AutomatedPlayerTest {
 
 	@Test
 	public void shouldMakeMoveWithMostPossibleWinningPositionsIfCenterCellIsTaken() {
-		when(grid.potentialWinningMove(X)).thenReturn(-1);
-		when(grid.potentialWinningMove(O)).thenReturn(-1);
+		when(grid.potentialWinningMove(X)).thenReturn(NO_MATCH_FOUND);
+		when(grid.potentialWinningMove(O)).thenReturn(NO_MATCH_FOUND);
 		when(grid.isCenterTaken()).thenReturn(true);
 		when(grid.isEmptyCellAt(2)).thenReturn(true);
 		when(grid.getAvailableCorner()).thenReturn(2);
@@ -101,10 +101,10 @@ public class AutomatedPlayerTest {
 
 	@Test
 	public void shouldMakeMoveInAnyFreeSpaceIfTheCenterCellAndCornerCellsAreTaken() {
-		when(grid.potentialWinningMove(X)).thenReturn(-1);
-		when(grid.potentialWinningMove(O)).thenReturn(-1);
+		when(grid.potentialWinningMove(X)).thenReturn(NO_MATCH_FOUND);
+		when(grid.potentialWinningMove(O)).thenReturn(NO_MATCH_FOUND);
 		when(grid.isCenterTaken()).thenReturn(true);
-		when(grid.getAvailableCorner()).thenReturn(-1);
+		when(grid.getAvailableCorner()).thenReturn(NO_MATCH_FOUND);
 		when(grid.getFirstFreeCell()).thenReturn(3);
 		when(grid.updateGridWith(X, 3)).thenReturn(new Grid(3, "oxoxx-xox"));
 

@@ -27,7 +27,7 @@ public class HumanPlayerTest {
 	
 	@Test
 	public void shouldTakeTheChosenMoveFromThePrompt() {
-		given(prompt.readNextMove()).willReturn(1);
+		given(prompt.readNextMove()).willReturn("1");
 		given(grid.isEmptyCellAt(1)).willReturn(true);
 		
 		human.takesGo(grid);
@@ -37,7 +37,7 @@ public class HumanPlayerTest {
 	
 	@Test
 	public void shouldDisplayTheCurrentBoardWhenPromptingTheUserForNextMove() {
-		given(prompt.readNextMove()).willReturn(1);
+		given(prompt.readNextMove()).willReturn("1");
 		given(grid.isEmptyCellAt(1)).willReturn(true);
 		
 		human.takesGo(grid);
@@ -47,7 +47,7 @@ public class HumanPlayerTest {
 	
 	@Test
 	public void shouldRepromptUserForAnotherChoiceIfCellTheyChooseIsAlreadyOccupied() {
-		given(prompt.readNextMove()).willReturn(1).willReturn(2);
+		given(prompt.readNextMove()).willReturn("1").willReturn("2");
 		given(grid.isEmptyCellAt(1)).willReturn(false);
 		given(grid.isEmptyCellAt(2)).willReturn(true);
 		
@@ -55,5 +55,26 @@ public class HumanPlayerTest {
 		human.takesGo(grid);
 		
 		verify(prompt, times(2)).promptUser();
+	}
+	
+	@Test
+	public void shouldRepromptTheUserIfTheyEnterANonNumericCellPosition() {
+		given(prompt.readNextMove()).willReturn("a").willReturn("2");
+		given(grid.isEmptyCellAt(2)).willReturn(true);
+		
+		human.takesGo(grid);
+		
+		verify(prompt, times(2)).promptUser();
+	}
+	
+	@Test
+	public void shouldRepromptTheUserUntilAValidCellPositionIsReceived() {
+		given(prompt.readNextMove()).willReturn("a").willReturn("1").willReturn("2");
+		given(grid.isEmptyCellAt(1)).willReturn(false);
+		given(grid.isEmptyCellAt(2)).willReturn(true);
+		
+		human.takesGo(grid);
+		
+		verify(prompt, times(3)).promptUser();
 	}
 }

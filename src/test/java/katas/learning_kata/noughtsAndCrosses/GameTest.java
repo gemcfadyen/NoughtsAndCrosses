@@ -33,7 +33,7 @@ public class GameTest {
 	@Test
 	public void gameShouldEndIfThereIsAWinningRowInTheGrid() {		
 		when(commandPrompt.readChoiceOfOpponent()).thenReturn("c");
-		when(commandPrompt.readGridDimension()).thenReturn(3);
+		when(commandPrompt.readGridDimension()).thenReturn("3");
 		when(playersFactory.createOpponentPlayer("c", X, commandPrompt)).thenReturn(playerX);
 		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
 		when(grid.getWinningSymbol()).thenReturn(O);
@@ -46,7 +46,7 @@ public class GameTest {
 	@Test
 	public void gameShouldEndIfThereAreNoFreeSlotsLeftInGrid() {
 		when(commandPrompt.readChoiceOfOpponent()).thenReturn("c");
-		when(commandPrompt.readGridDimension()).thenReturn(3);
+		when(commandPrompt.readGridDimension()).thenReturn("3");
 		when(playersFactory.createOpponentPlayer("c", X, commandPrompt)).thenReturn(playerX);
 		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
 		when(grid.getWinningSymbol()).thenReturn(null);
@@ -62,7 +62,7 @@ public class GameTest {
 	@Test
 	public void gameShouldEndIfNineGoesHaveTakenPlaceInA3By3GridAndThereIsNoWinningRow(){
 		when(commandPrompt.readChoiceOfOpponent()).thenReturn("c");
-		when(commandPrompt.readGridDimension()).thenReturn(3);
+		when(commandPrompt.readGridDimension()).thenReturn("3");
 		when(playersFactory.createOpponentPlayer("c", X, commandPrompt)).thenReturn(playerX);
 		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
 		when(grid.getWinningSymbol()).thenReturn(null);
@@ -77,16 +77,40 @@ public class GameTest {
 		verify(playerX, times(5)).takesGo(grid);
 		verify(playerO, times(4)).takesGo(grid);
 	}	
-	
+	 
 	@Test
 	public void gameShouldRepromptUserIfTheySelectAnInvalidOptionForOpponent() {
 		when(commandPrompt.readChoiceOfOpponent()).thenReturn("e").thenReturn("h");
-		when(commandPrompt.readGridDimension()).thenReturn(3);
+		when(commandPrompt.readGridDimension()).thenReturn("3");
 		when(playersFactory.createOpponentPlayer("h", X, commandPrompt)).thenReturn(playerX);
 		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
 		
 		noughtsAndCrosses.play();
 		
 		verify(commandPrompt, times(2)).promptForChoiceOfOpponent();
+	}
+	
+	@Test
+	public void gameShouldRepromptUserIfTheyDontProvideANumericDimension() {
+		when(commandPrompt.readChoiceOfOpponent()).thenReturn("h");
+		when(commandPrompt.readGridDimension()).thenReturn("e").thenReturn("3");
+		when(playersFactory.createOpponentPlayer("h", X, commandPrompt)).thenReturn(playerX);
+		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
+		
+		noughtsAndCrosses.play();
+		
+		verify(commandPrompt, times(2)).promptForGridDimension();
+	}
+	
+	@Test
+	public void gameShouldRepromptUserIfTheProvideADimensionOfZero() {
+		when(commandPrompt.readChoiceOfOpponent()).thenReturn("h");
+		when(commandPrompt.readGridDimension()).thenReturn("0").thenReturn("3");
+		when(playersFactory.createOpponentPlayer("h", X, commandPrompt)).thenReturn(playerX);
+		when(gridFactory.createGridWithDimension(3)).thenReturn(grid);
+		
+		noughtsAndCrosses.play();
+		
+		verify(commandPrompt, times(2)).promptForGridDimension();
 	}
 }
