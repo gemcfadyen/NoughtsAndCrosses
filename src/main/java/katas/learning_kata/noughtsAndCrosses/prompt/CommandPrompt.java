@@ -66,7 +66,7 @@ public class CommandPrompt implements Prompt {
 			write("Congratulations [" + winningSymbol + "] you have won! \n Game Over");
 		}
 		else { 
-			write("NO_WINNER Game Over, there was no winner! \n Game Over");
+			write("No Winner! \n Game Over");
 		}
 	}
 	

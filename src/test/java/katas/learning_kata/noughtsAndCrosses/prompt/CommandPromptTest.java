@@ -97,7 +97,7 @@ public class CommandPromptTest {
 		
 		prompt.printGameOverStatement(null);
 		
-		assertThat(outputWriter.toString(), is("NO_WINNER Game Over, there was no winner! \n Game Over"));
+		assertThat(outputWriter.toString(), is("No Winner! \n Game Over"));
 		
 	}
 	

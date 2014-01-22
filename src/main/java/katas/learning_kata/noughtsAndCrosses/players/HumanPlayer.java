@@ -42,6 +42,7 @@ public class HumanPlayer implements Player {
 			prompt.promptUser();
 			input = prompt.readNextMove();
 		}
+		
 		return valueOf(input);
 	}
 	
