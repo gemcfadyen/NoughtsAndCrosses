@@ -109,7 +109,7 @@ public class CommandPrompt implements Prompt {
 			outputWriter.write(message);
 			outputWriter.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 }
