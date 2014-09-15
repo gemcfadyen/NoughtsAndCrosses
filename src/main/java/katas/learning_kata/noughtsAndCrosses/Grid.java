@@ -10,6 +10,7 @@ import java.util.List;
 import katas.learning_kata.noughtsAndCrosses.symbols.ValidSymbol;
 
 public class Grid {
+
 	public static final int NO_MATCH_FOUND = -1;
 	private int dimension;
 	private String board;
